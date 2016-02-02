@@ -2,14 +2,14 @@
 
 **Group roles**
 
-D'Anna,Michael        - Tester
-
 Gaspar,Calvin Jose    - Team Leader
+
+Seo,Jaeduk            - Client
 
 Jack,Daniel Peter     - Developer
 
 Pereira,Lionel        - Developer
 
-Seo,Jaeduk            - Client
-
 Wong,Man Hay          - Requirement Engineer
+
+D'Anna,Michael        - Tester
