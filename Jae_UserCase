@@ -3,9 +3,9 @@ Use Case - Jae Duk Seo
 Some random situation that the user may face.
 1. The customer may be in a hurry and it would be nice for him to have a system, where when he can just push a button and the money will come out. 
 2. The User wants to take a large amount of money, (Maybe there could be some commands to do this)
-3.
-4.
-5.
+3. The user inputs two card for interaction amoung those two cards. 
+4. The User is a dead person but still have some money in the card, how do we get that money out? 
+5. The user want to acces their account in a different country. 
 
 Use_cases 
 1. Money withdraw
