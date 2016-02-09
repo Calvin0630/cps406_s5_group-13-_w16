@@ -23,3 +23,11 @@ Use_cases
   d. Count the money and have the user verify the amount of money. 
   e. If every thing seems good then inoput that amont of money to the account. 
   
+3. Connect to the bank for service 
+  a.The user have a problem that they can`t solve.
+  b. inform the user that they can be connected to the bank for help. 
+  c. Ask the user for the input of card. 
+  d. ask the user for the pin number 
+  e. Connect the user and the service by via teleaphone or visual chat.
+  f. if eveything goes well, proceced with helpping the user out. 
+  
