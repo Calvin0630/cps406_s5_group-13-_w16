@@ -1,7 +1,25 @@
 Use Case - Jae Duk Seo 
 
 1. The customer may be in a hurry and it would be nice for him to have a system, where when he can just push a button and the money will come out. 
-2. 
+2. The User wants to take a large amount of money, (Maybe there could be some commands to do this)
 3.
 4.
 5.
+
+Use_cases 
+1. Money withdraw
+  a. ask the user for input of card
+  b. ask the user for the pass word 
+  c. Process the data, matching if the password is correct from the database. 
+  d. Let the user know either if the process was succesful or not (password correct or not)
+  e. Let the user choose how much money they want to out put (by mutiple of 2)
+  f. Check first if the user have that amount. 
+  g. if they do get the money and print out the state message. 
+  
+2. Money deposit
+  a. ask the user for an input of a card or such things. 
+  b. ask the user where to put the money (which account)
+  c. Ask the user for input of money.
+  d. Count the money and have the user verify the amount of money. 
+  e. If every thing seems good then inoput that amont of money to the account. 
+  
