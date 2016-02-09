@@ -1,5 +1,6 @@
 Use Case - Jae Duk Seo 
 
+Some random situation that the user may face.
 1. The customer may be in a hurry and it would be nice for him to have a system, where when he can just push a button and the money will come out. 
 2. The User wants to take a large amount of money, (Maybe there could be some commands to do this)
 3.
@@ -30,4 +31,28 @@ Use_cases
   d. ask the user for the pin number 
   e. Connect the user and the service by via teleaphone or visual chat.
   f. if eveything goes well, proceced with helpping the user out. 
+
+4. Deposite money by via chequ 
+  a. ask the user for the card 
+  b. ask the user the format of money. 
+  c. On the selection screen if the user chooses something, then show up another panel following that operation. 
+  d. ask for the user for a chequ. 
+  e. determine the amount of cash in that chequ and ask user for a confirmation. 
+  f. Deposite the amont of money to the card that was read. 
+  g. Done baby DONE
   
+5. Transfer money 
+  a.Ask the ser for an input card or somthing. 
+  b.If the user chooses transfer money then procced. 
+  c. Ask the user for the details of location of the money, where it goes. 
+  d. After having all of the details, ask the user for the amount of money that they want to transfer.
+  e. ask the user for input of the money. 
+  f. count the money and confirm with the user. 
+  g. Or take it out of the users account. 
+  h. Send the money and print out the receipt. 
+
+
+(bad idea)
+6. If the user have asked for higher level of security
+  a. Ask the user for a card. 
+  b. 
