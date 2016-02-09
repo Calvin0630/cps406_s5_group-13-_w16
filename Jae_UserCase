@@ -6,6 +6,9 @@ Some random situation that the user may face.
 3. The user inputs two card for interaction amoung those two cards. 
 4. The User is a dead person but still have some money in the card, how do we get that money out? 
 5. The user want to acces their account in a different country. 
+6. Withdraw money but they
+    a. Can have the pin code wrong
+    b. want to bring out large amount of money more then they have! BABYABABABYA
 
 Use_cases 
 1. Money withdraw
