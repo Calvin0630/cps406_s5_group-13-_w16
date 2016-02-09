@@ -1,6 +1,7 @@
 Use Cases
 
   1.  Withdraw Money:
+      SYSTEM prompts for card 
       USER puts card in slot
       SYSTEM prompts for PIN
       USER enters PIN
@@ -13,6 +14,7 @@ Use Cases
       SYSTEM checks if enough total > withdraw_amount if yes give money/ask if receipt wanted, exit
                                                       if no dialog error box, go back to option screen for withdraw
   2.  Transfer Money
+      SYSTEM prompts for card 
       USER puts card in slot
       SYSTEM prompts for PIN
       USER enters PIN
@@ -28,9 +30,10 @@ Use Cases
                                                       if no dialog error box, go back to option screen for withdraw
       SYSTEM asks if USER wants to do anything else
       USER selects "no"
-      SYSTEM gives back card
+      SYSTEM gives back card, returns to card prompt
 
   3.  Deposit Cheque
+      SYSTEM prompts for card 
       USER puts card in slot
       SYSTEM prompts for PIN
       USER enters PIN
@@ -40,9 +43,10 @@ Use Cases
       USER places envelope in slot
       SYSTEM asks if USER wants to do anything else
       USER selects "no"
-      SYSTEM gives back card
+      SYSTEM gives back card, returns to card prompt
   
   4.  Change Language
+      SYSTEM prompts for card 
       USER puts card in slot
       SYSTEM prompts for PIN
       USER enters PIN
@@ -53,6 +57,7 @@ Use Cases
       SYSTEM goes back to operation options
 
   5.  Check amount in account(s)
+      SYSTEM prompts for card 
       USER puts card in slot
       SYSTEM prompts for PIN
       USER enters PIN
@@ -63,4 +68,4 @@ Use Cases
       SYSTEM prints amount to screen/receipt
       SYSTEM asks if USER wants to do anything else
       USER selects "no"
-      SYSTEM gives back card      
+      SYSTEM gives back card, returns to card prompt
