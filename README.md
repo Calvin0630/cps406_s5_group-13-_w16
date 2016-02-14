@@ -2,9 +2,9 @@
 
 **Group roles**
 
-Gaspar,Calvin Jose    - Team Leader
+Seo,Jaeduk    - Team Leader
 
-Seo,Jaeduk            - Client
+Gaspar,Calvin Jose    - Client
 
 Jack,Daniel Peter     - Developer
 
