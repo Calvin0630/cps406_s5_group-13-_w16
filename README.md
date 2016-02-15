@@ -10,10 +10,12 @@ Jack,Daniel Peter     - Developer
 
 Pereira,Lionel        - Developer
 
-Wong,Man Hay          - Requirement Engineer
+Wong,Man Hay          - Requirement Engineer (This guy is not present)
 
 D'Anna,Michael        - Tester
 
 
 Using Microsoft Visual Studio 
+
+
 Language : C++
