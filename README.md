@@ -13,3 +13,7 @@ Pereira,Lionel        - Developer
 Wong,Man Hay          - Requirement Engineer
 
 D'Anna,Michael        - Tester
+
+
+Using Microsoft Visual Studio 
+Language : C++
