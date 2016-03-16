@@ -8,17 +8,17 @@ public class ATM_GUI extends JFrame {
     protected static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     protected static final int FRAME_WIDTH = screenSize.width;
     protected static final int FRAME_HEIGHT = screenSize.height;
-    protected static final int NUM_PAD_DIMENSION = 300;
-    protected static final Point NUM_PAD_POINT = new Point(FRAME_WIDTH / 5,3 * (FRAME_HEIGHT / 5));
-    protected static final int SCREEN_WIDTH = 400;
-    protected static final int SCREEN_HEIGHT = 300;
+    protected static final int NUM_PAD_DIMENSION = FRAME_HEIGHT / 4;
 
     public ATM_GUI(){
         setSize(screenSize);
         this.getContentPane().setLayout(null);;
-        add(createNumPad());
-        add(createScreen());
-        add(createScreenButtonsLeft());
+        JPanel numpad = createNumPad();
+        JPanel screen = createScreen();
+        add(numpad);
+        add(screen);
+        add(createScreenLeftButtons(screen));
+        add(createScreenRightButtons(screen));
         setResizable(false);
         setVisible(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -26,45 +26,69 @@ public class ATM_GUI extends JFrame {
 
     public JPanel createNumPad(){
         JPanel numPad = new JPanel(new GridLayout(4, 3, 10, 10));
-        numPad.setLocation(NUM_PAD_POINT);
         JButton button;
-        for(int i = 1; i < 13; i++){
+        for(int i = 1; i < 10; i++){
             button = new JButton();
             button.setText(Integer.toString(i));
-            if( i < 10) button.setText(Integer.toString(i));
-            if( i == 10) button.setText("CLEAR");
-            if( i == 11) button.setText("0");
-            if( i == 12) button.setText("CANCEL");
             numPad.add(button);
         }
+        button = new JButton("0");
         numPad.setSize(NUM_PAD_DIMENSION, NUM_PAD_DIMENSION);
-        return numPad;
+        JPanel optionPanel = new JPanel(new GridLayout(3, 1,0, 10));
+        optionPanel.setSize(2 * (numPad.getWidth() / 3), numPad.getHeight());
+        button = new JButton("ENTER");
+        optionPanel.add(button);
+        button = new JButton("CORRECTION");
+        optionPanel.add(button);
+        button = new JButton("CANCEL");
+        optionPanel.add(button);
+        JPanel inputPanel = new JPanel();
+        inputPanel.setLayout(new BoxLayout(inputPanel,BoxLayout.LINE_AXIS));
+        inputPanel.setLocation(FRAME_WIDTH / 5, 5 * (FRAME_HEIGHT / 8));
+        inputPanel.add(numPad);
+        inputPanel.add(optionPanel);
+        //optionPanel.setLocation(numPad.getX() + numPad.getWidth()+ 10, numPad.getY());
+        inputPanel.setSize(numPad.getWidth() + optionPanel.getWidth() + 10,
+                numPad.getHeight());
+        return inputPanel;
     }
 
     public JPanel createScreen(){
         JPanel screen = new JPanel();
         screen.setBackground(Color.GRAY);
+        screen.setSize(FRAME_WIDTH / 3, 2 * (FRAME_HEIGHT / 5));
         JTextArea output = new JTextArea("Test");
-        output.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
         screen.add(output);
-        screen.setVisible(true);
-        screen.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
-        screen.setLocation(200,100);
+        screen.setLocation(FRAME_WIDTH / 6, FRAME_HEIGHT / 10);
+        output.setSize(screen.getSize());
         output.setBackground(screen.getBackground());
+        output.setLocation(screen.getLocation());
         return screen;
     }
 
-    public JPanel createScreenButtonsLeft(){
-        JPanel leftPanel = new JPanel();
-        leftPanel.setSize(100, 300);
-        leftPanel.setLocation(100,100);
-        leftPanel.setLayout(new GridLayout(3,1,10,30));
+    public JPanel createScreenLeftButtons(JPanel screen){
+        JPanel leftPanel = new JPanel(new GridLayout(3, 1, 0, screen.getHeight() / 3));
         JButton button;
-        for (int i = 0; i < 3; i++) {
-            button = new JButton(Integer.toString(i));
+        for (int i = 1; i <= 3; i++) {
+            button = new JButton("Option " + Integer.toString(i));
             leftPanel.add(button);
         }
-        leftPanel.setVisible(true);
+        leftPanel.setSize(screen.getX() / 3, screen.getHeight());
+        leftPanel.setLocation(screen.getX() - leftPanel.getWidth(),
+                screen.getY());
         return leftPanel;
+    }
+
+    public JPanel createScreenRightButtons(JPanel screen){
+        JPanel rightPanel = new JPanel(new GridLayout(3, 1, 0, screen.getHeight() / 3));
+        JButton button;
+        for (int i = 1; i <= 3; i++) {
+            button = new JButton("Option " + Integer.toString(i));
+            rightPanel.add(button);
+        }
+        rightPanel.setLocation(screen.getX() + screen.getWidth(),
+                screen.getY());
+        rightPanel.setSize(screen.getX() / 3, screen.getHeight());
+        return rightPanel;
     }
 }
