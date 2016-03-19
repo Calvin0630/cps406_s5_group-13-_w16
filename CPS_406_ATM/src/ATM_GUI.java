@@ -28,7 +28,7 @@ public class ATM_GUI extends JFrame {
 		add(createScreenRightButtons(screen));
 		ATMFields fields = new ATMFields();
 		add(fields);
-		//	setResizable(false);
+		setResizable(false);
 		setVisible(true);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 	}
@@ -48,7 +48,7 @@ public class ATM_GUI extends JFrame {
 		numPad.add(button);
 		numPad.setSize(NUM_PAD_DIMENSION, NUM_PAD_DIMENSION);
 		numPad.setLocation(screen.getX()+screen.getWidth()/4-numPad.getWidth()/2,
-				(FRAME_HEIGHT+screen.getY()+screen.getHeight())/2-numPad.getHeight()/2 );
+				screen.getY()+screen.getHeight() + NUM_PAD_DIMENSION/3 );
 		return numPad;
 	}
 	public JPanel createOptionPanel(){
