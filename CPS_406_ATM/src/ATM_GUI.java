@@ -89,26 +89,26 @@ public class ATM_GUI extends JFrame {
 	}
 
 	public JPanel createScreenLeftButtons(JPanel screen){
-		JPanel leftPanel = new JPanel(new GridLayout(3, 1, 0, screen.getHeight() / 5));
+		JPanel leftPanel = new JPanel(new GridLayout(3, 1, 0, screen.getHeight() / 10));
 		JButton button;
 		for (int i = 1; i <= 3; i++) {
-			button = new JButton("Left Option " + Integer.toString(i));
+			button = new BasicArrowButton(BasicArrowButton.EAST);
 			leftPanel.add(button);
 		}
-		leftPanel.setSize(screen.getX() / 2, screen.getY() + screen.getHeight() * 4 / 7);
-		leftPanel.setLocation(screen.getX() - leftPanel.getWidth() - leftPanel.getWidth()/5, screen.getY()* 9 / 7);
+		leftPanel.setSize(screen.getX() / 2, screen.getY() + screen.getHeight() * 3 / 7);
+		leftPanel.setLocation(screen.getX() - leftPanel.getWidth() - 10, screen.getY()+screen.getHeight() * 3/10);
 		return leftPanel;
 	}
 
 	public JPanel createScreenRightButtons(JPanel screen){
-		JPanel rightPanel = new JPanel(new GridLayout(3, 1, 0, screen.getHeight() / 5));
+		JPanel rightPanel = new JPanel(new GridLayout(3, 1, 0, screen.getHeight() / 10));
 		JButton button;
 		for (int i = 1; i <= 3; i++) {
-			button = new JButton("Right Option " + Integer.toString(i));
+			button = new BasicArrowButton(BasicArrowButton.WEST);
 			rightPanel.add(button);
 		}
-		rightPanel.setSize(screen.getX() / 2, screen.getY() + screen.getHeight() * 4 / 7);
-		rightPanel.setLocation(screen.getX() + screen.getWidth() + rightPanel.getWidth()/5 , screen.getY()* 9 / 7);
+		rightPanel.setSize(screen.getX() / 2, screen.getY() + screen.getHeight() * 3 / 7);
+		rightPanel.setLocation(screen.getX() + screen.getWidth() + 10 , screen.getY()+screen.getHeight() * 3/10);
 		return rightPanel;
 	}
 }
