@@ -13,7 +13,7 @@ public class ATM_GUI extends JFrame {
 
     public ATM_GUI(){
         setSize(screenSize);
-        this.getContentPane().setLayout(null);;
+        this.getContentPane().setLayout(null);
         JPanel numpad = createNumPad();
         JPanel screen = createScreen();
         add(numpad);
