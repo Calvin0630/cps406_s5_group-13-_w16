@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicArrowButton;
 import java.awt.*;
 import java.awt.Graphics;
 import java.awt.Rectangle;
@@ -12,66 +13,59 @@ public class ATM_GUI extends JFrame {
 	public final int FRAME_WIDTH = screenSize.width;
 	public final int FRAME_HEIGHT = screenSize.height;
 	protected final int NUM_PAD_DIMENSION = FRAME_HEIGHT / 4;
-	private JPanel numPad;
+	private JPanel numPad, optionPanel;
 	private  JPanel screen;
 
 	public ATM_GUI(){
 		setSize(screenSize);
 		screen = createScreen();
 		numPad = createNumPad();
+		optionPanel = createOptionPanel();
 		add(screen);
 		add(numPad);
+		add(optionPanel);
 		add(createScreenLeftButtons(screen));
 		add(createScreenRightButtons(screen));
 		ATMFields fields = new ATMFields();
 		add(fields);
-		setResizable(false);
+		//	setResizable(false);
 		setVisible(true);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 	}
 
 	public JPanel createNumPad(){
-
 		JPanel numPad = new JPanel(new GridLayout(4, 3, 10, 10));
 		JButton button;
-		{
-			for(int i = 1; i <= 9; i++){
-				button = new JButton();
-				button.setText(Integer.toString(i));
-				numPad.add(button);
-			}
-			JButton blankButton = new JButton();
-			blankButton.setVisible(false);
-			numPad.add(blankButton);
-			button = new JButton("0");
+		for(int i = 1; i <= 9; i++){
+			button = new JButton();
+			button.setText(Integer.toString(i));
 			numPad.add(button);
-			numPad.setSize(NUM_PAD_DIMENSION, NUM_PAD_DIMENSION);
 		}
-		JPanel buffer = new JPanel();
-		buffer.setSize(numPad.getWidth()/2,0);
+		JButton blankButton = new JButton();
+		blankButton.setVisible(false);
+		numPad.add(blankButton);
+		button = new JButton("0");
+		numPad.add(button);
+		numPad.setSize(NUM_PAD_DIMENSION, NUM_PAD_DIMENSION);
+		numPad.setLocation(screen.getX()+screen.getWidth()/4-numPad.getWidth()/2,
+				(FRAME_HEIGHT+screen.getY()+screen.getHeight())/2-numPad.getHeight()/2 );
+		return numPad;
+	}
+	public JPanel createOptionPanel(){
 		JPanel optionPanel = new JPanel(new GridLayout(4, 1, 0, 10));
-		{
-			button = new JButton("ENTER");
-			button.setBackground(Color.green);
-			optionPanel.add(button);
-			button = new JButton("CORRECTION");
-			button.setBackground(Color.yellow);
-			optionPanel.add(button);
-			button = new JButton("CANCEL");
-			button.setBackground(Color.red);
-			optionPanel.add(button);
-		}
-		JPanel inputPanel = new JPanel();
-		{
-			inputPanel.setLayout(new BoxLayout(inputPanel,BoxLayout.LINE_AXIS));
-			inputPanel.setSize(numPad.getWidth()*4/3+buffer.getWidth(), numPad.getHeight());
-			inputPanel.setLocation(screen.getX()+screen.getWidth()/2- inputPanel.getWidth()/2,
-					(FRAME_HEIGHT-screen.getY()+screen.getHeight())/2);
-			inputPanel.add(numPad);
-			inputPanel.add(buffer);
-			inputPanel.add(optionPanel);
-		}
-		return inputPanel;
+		JButton button;
+		button = new JButton("ENTER");
+		button.setBackground(Color.green);
+		optionPanel.add(button);
+		button = new JButton("CORRECTION");
+		button.setBackground(Color.yellow);
+		optionPanel.add(button);
+		button = new JButton("CANCEL");
+		button.setBackground(Color.red);
+		optionPanel.add(button);
+		optionPanel.setSize(NUM_PAD_DIMENSION,NUM_PAD_DIMENSION);
+		optionPanel.setLocation(numPad.getX()+numPad.getWidth()+NUM_PAD_DIMENSION/8, numPad.getY());
+		return optionPanel;
 	}
 
 	public JPanel createScreen(){
