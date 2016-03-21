@@ -26,15 +26,16 @@ protected static final Dimension screenSize = Toolkit.getDefaultToolkit().getScr
 		screen = new ATMScreen(FRAME_WIDTH / 10, FRAME_HEIGHT / 10,FRAME_WIDTH / 3, 2 * (FRAME_HEIGHT / 5));
 		numPad = new ATMNumPad(listener);
 		optionPanel = new ATMOptionPanel(listener);
+		screenLeftButtons = new ATMLeftScreenButtons(screen, listener);
+		screenRightButtons = new ATMRightScreenButtons(screen, listener);
 		add(screen);
 		add(numPad);
 		add(optionPanel);
-		JPanel screenLeftButtons = createScreenLeftButtons(screen);
 		add(screenLeftButtons);
-		JPanel screenRightButtons = createScreenRightButtons(screen);
 		add(screenRightButtons);
 		ATMFields fields = new ATMFields();
 		add(fields);
+		
 		setResizable(false);
 		setVisible(true);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
