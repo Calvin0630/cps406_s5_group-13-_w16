@@ -21,7 +21,6 @@ public class ATMScreen extends JPanel{
         JPanel ATMinstructions = new JPanel(new GridLayout(3,1));
         title = new JLabel("TEST", JLabel.CENTER);
         ATMinstructions.add(title);
-        title.setText("Poop");
         instruction = new JLabel("DO BANKING THINGS", JLabel.CENTER);
         ATMinstructions.add(instruction);
         input = new JLabel("Sample input", JLabel.CENTER);
@@ -46,6 +45,7 @@ public class ATMScreen extends JPanel{
         rightThree = new JLabel("RIGHT THREE", JLabel.RIGHT);
         OptionText.add(rightThree);
         add(OptionText);
+        acceptInput = true;
     }
 
     public void welcome(){
