@@ -13,17 +13,17 @@ public class ATMRightScreenButtons extends JPanel{
         super(new GridLayout(3, 1, 0, screen.getHeight() / 10));
         setBackground(ATM_GUI.background);
 
-        rightOne = new BasicArrowButton(BasicArrowButton.EAST);
+        rightOne = new BasicArrowButton(BasicArrowButton.WEST);
         rightOne.setBackground(ATM_GUI.buttonsBackColor);
         rightOne.addActionListener(listener);
         add(rightOne);
 
-        rightTwo = new BasicArrowButton(BasicArrowButton.EAST);
+        rightTwo = new BasicArrowButton(BasicArrowButton.WEST);
         rightTwo.setBackground(ATM_GUI.buttonsBackColor);
         rightTwo.addActionListener(listener);
         add(rightTwo);
 
-        rightThree = new BasicArrowButton(BasicArrowButton.EAST);
+        rightThree = new BasicArrowButton(BasicArrowButton.WEST);
         rightThree.setBackground(ATM_GUI.buttonsBackColor);
         rightThree.addActionListener(listener);
         add(rightThree);
