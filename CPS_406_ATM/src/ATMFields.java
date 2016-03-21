@@ -1,8 +1,10 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
 
 class ATMFields extends JComponent {
 	public Rectangle printer,cardSlot,cashDispensor;
+	public Ellipse2D  NFC;
 
 	public void drawPrinter(Graphics2D g2){
 		printer = new Rectangle((int) ATM_GUI.screenSize.getWidth() / 2 + ATM_GUI.NUM_PAD_DIMENSION/10,
@@ -41,8 +43,12 @@ class ATMFields extends JComponent {
 				(int)(cashDispensor.getY()+cashDispensor.getHeight()*2/3) - 10);
 	}
 	public void drawNFC(Graphics2D g2){
-		Rectangle nfc = new Rectangle((int) ATM_GUI.screenSize.getWidth() / 2 + 100,
-				700,  300, 100);
+		double r = cardSlot.getWidth()*2/3;
+		NFC = new Ellipse2D.Double(cardSlot.getX() + cardSlot.getWidth()/6,
+				cardSlot.getMaxY()+r/10,
+				r,r);
+		g2.draw(NFC);
+		g2.drawString("Tap NFC Phone", (int)(NFC.getX()+NFC.getWidth()/4), (int)NFC.getCenterY());
 	}
 
 	protected void paintComponent(Graphics g){
@@ -55,6 +61,7 @@ class ATMFields extends JComponent {
 		drawPrinter(g2);
 		drawCardSlot(g2);
 		drawCashDispensor(g2);
+		drawNFC(g2);
 	}
 }
 
