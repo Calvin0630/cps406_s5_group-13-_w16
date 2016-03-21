@@ -1,111 +1,43 @@
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicArrowButton;
 import java.awt.*;
-import java.awt.Graphics;
-import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 /**
  * Created by Lionel on 2016-03-10.
  * Daniel hopping on 2016-03-17
  */
-@SuppressWarnings("serial")
-public class ATM_GUI extends JFrame {
-	protected static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-	public final int FRAME_WIDTH = screenSize.width;
-	public final int FRAME_HEIGHT = screenSize.height;
-	protected final int NUM_PAD_DIMENSION = FRAME_HEIGHT / 4;
-	private JPanel numPad, optionPanel;
-	private  JPanel screen;
+
+protected static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	public static final int FRAME_WIDTH = screenSize.width;
+	public static final int FRAME_HEIGHT = screenSize.height;
+	protected static final int NUM_PAD_DIMENSION = FRAME_HEIGHT / 4;
 	public final static Color background = 	Color.lightGray;
 	public final static Color buttonsBackColor = Color.white;
 
+	private ATMListener listener;
+	protected static ATMScreen screen;
+	protected static ATMNumPad numPad;
+	private static ATMOptionPanel optionPanel;
+
 	public ATM_GUI(){
 		setSize(screenSize);
-		screen = createScreen();
-		numPad = createNumPad();
-		optionPanel = createOptionPanel();
+		listener = new ATMListener();
+		screen = new ATMScreen(FRAME_WIDTH / 10, FRAME_HEIGHT / 10,FRAME_WIDTH / 3, 2 * (FRAME_HEIGHT / 5));
+		numPad = new ATMNumPad(listener);
+		optionPanel = new ATMOptionPanel(listener);
 		add(screen);
 		add(numPad);
 		add(optionPanel);
-		add(createScreenLeftButtons(screen));
-		add(createScreenRightButtons(screen));
+		JPanel screenLeftButtons = createScreenLeftButtons(screen);
+		add(screenLeftButtons);
+		JPanel screenRightButtons = createScreenRightButtons(screen);
+		add(screenRightButtons);
 		ATMFields fields = new ATMFields();
 		add(fields);
 		setResizable(false);
 		setVisible(true);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-	}
-
-	public JPanel createNumPad(){
-		JPanel numPad = new JPanel(new GridLayout(4, 3, 10, 10));
-		numPad.setBackground(background);
-		JButton button;
-		for(int i = 1; i <= 9; i++){
-			button = new JButton();
-			button.setText(Integer.toString(i));
-			button.setBackground(buttonsBackColor); 
-			button.setSize((NUM_PAD_DIMENSION-20) / 3, (NUM_PAD_DIMENSION-30) /4);
-			button.setFont(new Font(button.getFont().getName(),
-					button.getFont().getStyle(),
-					button.getHeight()*1/2));
-			numPad.add(button);
-		}
-		JButton blankButton = new JButton();
-		blankButton.setVisible(false);
-		numPad.add(blankButton);
-		button = new JButton("0");
-		button.setBackground(buttonsBackColor);
-		button.setSize((NUM_PAD_DIMENSION-20) / 3, (NUM_PAD_DIMENSION-30) /4);
-		button.setFont(new Font(button.getFont().getName(),
-				button.getFont().getStyle(),
-				button.getHeight()*1/2));
-		numPad.add(button);
-		numPad.setSize(NUM_PAD_DIMENSION, NUM_PAD_DIMENSION);
-		numPad.setLocation(screen.getX()+screen.getWidth()/4-numPad.getWidth()/2,
-				screen.getY()+screen.getHeight() + NUM_PAD_DIMENSION/3 );
-		return numPad;
-	}
-	public JPanel createOptionPanel(){
-		JPanel optionPanel = new JPanel(new GridLayout(4, 1, 0, 10));
-		optionPanel.setBackground(background);
-		JButton button;
-		button = new JButton("ENTER");
-		button.setSize(NUM_PAD_DIMENSION,(NUM_PAD_DIMENSION - 30)/4);
-		button.setFont(new Font(button.getFont().getName(),
-				button.getFont().getStyle(),
-				button.getHeight()*1/2));
-		button.setBackground(Color.green);
-		optionPanel.add(button);
-		button = new JButton("CORRECTION");
-		button.setSize(NUM_PAD_DIMENSION,(NUM_PAD_DIMENSION - 30)/4);
-		button.setFont(new Font(button.getFont().getName(),
-				button.getFont().getStyle(),
-				button.getHeight()*1/2));
-		button.setBackground(Color.yellow);
-		optionPanel.add(button);
-		button = new JButton("CANCEL");
-		button.setSize(NUM_PAD_DIMENSION,(NUM_PAD_DIMENSION - 30)/4);
-		button.setFont(new Font(button.getFont().getName(),
-				button.getFont().getStyle(),
-				button.getHeight()*1/2));
-		button.setBackground(Color.red);
-		optionPanel.add(button);
-		optionPanel.setSize(NUM_PAD_DIMENSION,NUM_PAD_DIMENSION);
-		optionPanel.setLocation(numPad.getX()+numPad.getWidth()+NUM_PAD_DIMENSION/8, numPad.getY());
-		return optionPanel;
-	}
-
-	public JPanel createScreen(){
-		JPanel screen = new JPanel();
-		screen.setBackground(Color.GRAY);
-		screen.setSize(FRAME_WIDTH / 3, 2 * (FRAME_HEIGHT / 5));
-		JTextArea output = new JTextArea("Test");
-		output.setEditable(false);
-		screen.add(output);
-		screen.setLocation(FRAME_WIDTH / 10, FRAME_HEIGHT / 10);
-		output.setSize(screen.getSize());
-		output.setBackground(screen.getBackground());
-		output.setLocation(screen.getLocation());
-		return screen;
 	}
 
 	public JPanel createScreenLeftButtons(JPanel screen){
@@ -135,28 +67,44 @@ public class ATM_GUI extends JFrame {
 		rightPanel.setLocation(screen.getX() + screen.getWidth() + 10 , screen.getY()+screen.getHeight() * 3/10);
 		return rightPanel;
 	}
-}
-@SuppressWarnings("serial")
-class ATMFields extends JComponent{
-	Rectangle cardSlot = new Rectangle((int) ATM_GUI.screenSize.getWidth() / 2 + 100,
-			100, 300, 100);
-	Rectangle cashDispensor = new Rectangle((int) ATM_GUI.screenSize.getWidth() / 2 + 100,
-			300, 300, 100);
-	Rectangle printer = new Rectangle((int) ATM_GUI.screenSize.getWidth() / 2 + 100,
-			500,  300, 100);
-	Rectangle nfc = new Rectangle((int) ATM_GUI.screenSize.getWidth() / 2 + 100,
-			700,  300, 100);
-
-	protected void paintComponent(Graphics g){
-		super.paintComponent(g);
-		Graphics2D g2 = (Graphics2D) g;
-
-		g2.setColor(ATM_GUI.background);
-		g2.fillRect(0,0,(int)ATM_GUI.screenSize.getWidth(),(int)ATM_GUI.screenSize.getHeight());
-		g2.setColor(Color.black);
-		g2.draw(cardSlot);
-		g2.draw(cashDispensor);
-		g2.draw(printer);
-		g2.draw(nfc);
+	class ATMListener implements ActionListener{
+		public void actionPerformed(ActionEvent event){
+			if(event.getSource().equals(numPad.zero)){
+				screen.storeInput("0");
+			}
+			if(event.getSource().equals(numPad.one)){
+				screen.storeInput("1");
+			}
+			if(event.getSource().equals(numPad.two)){
+				screen.storeInput("2");
+			}
+			if(event.getSource().equals(numPad.three)){
+				screen.storeInput("3");
+			}
+			if(event.getSource().equals(numPad.four)){
+				screen.storeInput("4");
+			}
+			if(event.getSource().equals(numPad.five)){
+				screen.storeInput("5");
+			}
+			if(event.getSource().equals(numPad.six)){
+				screen.storeInput("6");
+			}
+			if(event.getSource().equals(numPad.seven)){
+				screen.storeInput("7");
+			}
+			if(event.getSource().equals(numPad.eight)){
+				screen.storeInput("8");
+			}
+			if(event.getSource().equals(numPad.nine)){
+				screen.storeInput("9");
+			}
+			if(event.getSource().equals(optionPanel.cancel)){
+				screen.cancel();
+			}
+			if(event.getSource().equals(optionPanel.correction)){
+				screen.correction();
+			}
+		}
 	}
 }
