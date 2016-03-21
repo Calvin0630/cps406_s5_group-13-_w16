@@ -7,8 +7,8 @@ import java.awt.event.ActionListener;
  * Created by Lionel on 2016-03-10.
  * Daniel hopping on 2016-03-17
  */
-
-protected static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+public class ATM_GUI extends JFrame{
+	protected static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	public static final int FRAME_WIDTH = screenSize.width;
 	public static final int FRAME_HEIGHT = screenSize.height;
 	protected static final int NUM_PAD_DIMENSION = FRAME_HEIGHT / 4;
