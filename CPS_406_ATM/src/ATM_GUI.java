@@ -49,33 +49,41 @@ public class ATM_GUI extends JFrame {
 	}
 	
 	public void getAccountInfo(){
-		        JTextField pinField = new JTextField("1234");
-		        JTextField saveField = new JTextField("9876.54");
-		        JTextField chequeField = new JTextField("321.01");
-		        JTextField creditField = new JTextField("23.45");
-		        JPanel panel = new JPanel(new GridLayout(0, 1));
-		        panel.add(new JLabel("PIN:"));
-		        panel.add(pinField);
-		        panel.add(new JLabel("Savings Balance:"));
-		        panel.add(saveField);
-		        panel.add(new JLabel("Chequing Balance:"));
-		        panel.add(chequeField);
-		        panel.add(new JLabel("Credit debt:"));
-		        panel.add(creditField);
-		        int result = JOptionPane.showConfirmDialog(null, panel, "Welcome!",
-		            JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-		        if (result == JOptionPane.OK_OPTION) {
-		            accountDatabase.setPIN(Integer.parseInt(pinField.getText()));
-		            accountDatabase.setSavingsBalance((Double.parseDouble(saveField.getText())));
-		            accountDatabase.setChequingBalance((Double.parseDouble(chequeField.getText())));
-		            accountDatabase.setCreditDebt(Double.parseDouble(creditField.getText()));
-		            accountDatabase.setAccountNumber(0001);
-		        } else {
-		            System.exit(1);
-		        }
-		    
-	}
+		boolean error = false;
+		do{
+			try{
+				JTextField pinField = new JTextField("1234");
+				JTextField saveField = new JTextField("9876.54");
+				JTextField chequeField = new JTextField("321.01");
+				JTextField creditField = new JTextField("23.45");
+				JPanel panel = new JPanel(new GridLayout(0, 1));
+				panel.add(new JLabel("PIN:"));
+				panel.add(pinField);
+				panel.add(new JLabel("Savings Balance:"));
+				panel.add(saveField);
+				panel.add(new JLabel("Chequing Balance:"));
+				panel.add(chequeField);
+				panel.add(new JLabel("Credit debt:"));
+				panel.add(creditField);
+				int result = JOptionPane.showConfirmDialog(null, panel, "Welcome!",
+						JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+				if (result == JOptionPane.OK_OPTION) {
 
+					accountDatabase.setPIN(Integer.parseInt(pinField.getText()));
+					accountDatabase.setSavingsBalance((Double.parseDouble(saveField.getText())));
+					accountDatabase.setChequingBalance((Double.parseDouble(chequeField.getText())));
+					accountDatabase.setCreditDebt(Double.parseDouble(creditField.getText()));
+					accountDatabase.setAccountNumber(0001);
+					error = false;
+				} else {
+					System.exit(1);
+				}
+			}catch(Exception e){
+				JOptionPane.showMessageDialog(null, "Invalid input fields.","Error!",JOptionPane.ERROR_MESSAGE);
+				error = true;
+			}
+		}while (error) ;  
+	}
 	class ATMListener implements ActionListener{
 		public void actionPerformed(ActionEvent event){
 			if(event.getSource().equals(numPad.zero)){
