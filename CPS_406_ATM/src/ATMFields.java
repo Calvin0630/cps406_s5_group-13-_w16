@@ -5,13 +5,23 @@ import java.awt.geom.Ellipse2D;
 class ATMFields extends JComponent {
 	public Rectangle printer,cardSlot,cashDispensor;
 	public Ellipse2D  NFC;
-	Phone nonNFCPhone, NFCPhone;
+	public Phone nonNFCPhone, NFCPhone;
+	public Card debitCard;
+	public Cash twentyBill;
+	public Cheque cheque;
 	
 	public ATMFields (){
 		nonNFCPhone = new Phone (false,ATM_GUI.FRAME_WIDTH-ATM_GUI.NUM_PAD_DIMENSION*3/2,
 				10,0,0);
 		NFCPhone = new Phone (true,ATM_GUI.FRAME_WIDTH-ATM_GUI.NUM_PAD_DIMENSION*3/4,
 				10,ATM_GUI.accountDatabase.getPIN(),ATM_GUI.accountDatabase.getAccountNumber());
+		debitCard = new Card (ATM_GUI.accountDatabase.getAccountNumber(),
+				ATM_GUI.FRAME_WIDTH-ATM_GUI.NUM_PAD_DIMENSION*4/3,
+				ATM_GUI.FRAME_HEIGHT/3);
+		twentyBill = new Cash (20,ATM_GUI.FRAME_WIDTH-ATM_GUI.NUM_PAD_DIMENSION*5/3,
+				ATM_GUI.FRAME_HEIGHT*2/4+ATM_GUI.NUM_PAD_DIMENSION*1/10);
+		cheque = new Cheque(1906.55,ATM_GUI.FRAME_WIDTH-ATM_GUI.NUM_PAD_DIMENSION*5/3,
+				ATM_GUI.FRAME_HEIGHT*3/4);
 	}
 
 	public void drawPrinter(Graphics2D g2){
@@ -72,6 +82,9 @@ class ATMFields extends JComponent {
 		drawNFC(g2);
 		nonNFCPhone.paint(g2);
 		NFCPhone.paint(g2);
+		debitCard.paint(g2);
+		twentyBill.paint(g2);
+		cheque.paint(g2);
 	}
 }
 
