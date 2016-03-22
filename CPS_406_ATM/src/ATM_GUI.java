@@ -23,7 +23,7 @@ public class ATM_GUI extends JFrame {
 	protected static ATMOptionPanel optionPanel;
 	protected static ATMLeftScreenButtons screenLeftButtons;
 	protected static ATMRightScreenButtons screenRightButtons;
-	AccountDatabase accountDatabase;
+	public static AccountDatabase accountDatabase;
 	
 	public ATM_GUI(){
 		setSize(screenSize);
@@ -69,6 +69,7 @@ public class ATM_GUI extends JFrame {
 		            accountDatabase.setSavingsBalance((Double.parseDouble(saveField.getText())));
 		            accountDatabase.setChequingBalance((Double.parseDouble(chequeField.getText())));
 		            accountDatabase.setCreditDebt(Double.parseDouble(creditField.getText()));
+		            accountDatabase.setAccountNumber(0001);
 		        } else {
 		            System.exit(1);
 		        }
