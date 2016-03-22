@@ -3,11 +3,13 @@ import javax.swing.plaf.basic.BasicArrowButton;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 /**
  * Created by Lionel on 2016-03-10.
  * Daniel hopping on 2016-03-17
  */
-public class ATM_GUI extends JFrame{
+
+public class ATM_GUI extends JFrame {
 	protected static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	public static final int FRAME_WIDTH = screenSize.width;
 	public static final int FRAME_HEIGHT = screenSize.height;
@@ -18,10 +20,15 @@ public class ATM_GUI extends JFrame{
 	private ATMListener listener;
 	protected static ATMScreen screen;
 	protected static ATMNumPad numPad;
-	private static ATMOptionPanel optionPanel;
-
+	protected static ATMOptionPanel optionPanel;
+	protected static ATMLeftScreenButtons screenLeftButtons;
+	protected static ATMRightScreenButtons screenRightButtons;
+	AccountDatabase accountDatabase;
+	
 	public ATM_GUI(){
 		setSize(screenSize);
+		accountDatabase = new AccountDatabase();
+		getAccountInfo();
 		listener = new ATMListener();
 		screen = new ATMScreen(FRAME_WIDTH / 10, FRAME_HEIGHT / 10,FRAME_WIDTH / 3, 2 * (FRAME_HEIGHT / 5));
 		numPad = new ATMNumPad(listener);
@@ -35,39 +42,39 @@ public class ATM_GUI extends JFrame{
 		add(screenRightButtons);
 		ATMFields fields = new ATMFields();
 		add(fields);
-		
+
 		setResizable(false);
 		setVisible(true);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 	}
-
-	public JPanel createScreenLeftButtons(JPanel screen){
-		JPanel leftPanel = new JPanel(new GridLayout(3, 1, 0, screen.getHeight() / 10));
-		leftPanel.setBackground(background);
-		JButton button;
-		for (int i = 1; i <= 3; i++) {
-			button = new BasicArrowButton(BasicArrowButton.EAST);
-			button.setBackground(buttonsBackColor);
-			leftPanel.add(button);
-		}
-		leftPanel.setSize(screen.getX() / 2, screen.getY() + screen.getHeight() * 3 / 7);
-		leftPanel.setLocation(screen.getX() - leftPanel.getWidth() - 10, screen.getY()+screen.getHeight() * 3/10);
-		return leftPanel;
+	
+	public void getAccountInfo(){
+		        JTextField pinField = new JTextField("1234");
+		        JTextField saveField = new JTextField("9876.54");
+		        JTextField chequeField = new JTextField("321.01");
+		        JTextField creditField = new JTextField("23.45");
+		        JPanel panel = new JPanel(new GridLayout(0, 1));
+		        panel.add(new JLabel("PIN:"));
+		        panel.add(pinField);
+		        panel.add(new JLabel("Savings Balance:"));
+		        panel.add(saveField);
+		        panel.add(new JLabel("Chequing Balance:"));
+		        panel.add(chequeField);
+		        panel.add(new JLabel("Credit debt:"));
+		        panel.add(creditField);
+		        int result = JOptionPane.showConfirmDialog(null, panel, "Welcome!",
+		            JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+		        if (result == JOptionPane.OK_OPTION) {
+		            accountDatabase.setPIN(Integer.parseInt(pinField.getText()));
+		            accountDatabase.setSavingsBalance((Double.parseDouble(saveField.getText())));
+		            accountDatabase.setChequingBalance((Double.parseDouble(chequeField.getText())));
+		            accountDatabase.setCreditDebt(Double.parseDouble(creditField.getText()));
+		        } else {
+		            System.exit(1);
+		        }
+		    
 	}
 
-	public JPanel createScreenRightButtons(JPanel screen){
-		JPanel rightPanel = new JPanel(new GridLayout(3, 1, 0, screen.getHeight() / 10));
-		rightPanel.setBackground(background);
-		JButton button;
-		for (int i = 1; i <= 3; i++) {
-			button = new BasicArrowButton(BasicArrowButton.WEST);
-			button.setBackground(buttonsBackColor);
-			rightPanel.add(button);
-		}
-		rightPanel.setSize(screen.getX() / 2, screen.getY() + screen.getHeight() * 3 / 7);
-		rightPanel.setLocation(screen.getX() + screen.getWidth() + 10 , screen.getY()+screen.getHeight() * 3/10);
-		return rightPanel;
-	}
 	class ATMListener implements ActionListener{
 		public void actionPerformed(ActionEvent event){
 			if(event.getSource().equals(numPad.zero)){
