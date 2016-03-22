@@ -15,7 +15,7 @@ Wong,Man Hay          - Requirement Engineer (This guy is not present)
 D'Anna,Michael        - Tester
 
 
-Using Ecsiple
+Using Eclipse
 
 
 Language : Java
