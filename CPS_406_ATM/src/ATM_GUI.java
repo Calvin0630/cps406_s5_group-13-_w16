@@ -27,6 +27,8 @@ public class ATM_GUI extends JFrame {
 	protected static ATMRightScreenButtons screenRightButtons;
 	public static AccountDatabase accountDatabase;
 	public ATMFieldsMouseListener fieldsListener;
+
+	protected static ATMMovableFields selected;
 	
 	public ATM_GUI(){
 		setSize(screenSize);
@@ -43,9 +45,11 @@ public class ATM_GUI extends JFrame {
 		add(optionPanel);
 		add(screenLeftButtons);
 		add(screenRightButtons);
+		screen.welcome();
 		ATMFields fields = new ATMFields();
 		add(fields);
 		fieldsListener = new ATMFieldsMouseListener();
+		addMouseListener(fieldsListener);
 		addMouseMotionListener(fieldsListener);
 
 		setResizable(false);
@@ -127,10 +131,13 @@ public class ATM_GUI extends JFrame {
 			if(event.getSource().equals(optionPanel.correction)){
 				screen.correction();
 			}
+			if(event.getSource().equals(screenLeftButtons.leftOne)){
+				screen.setCurrentScreen(screen.leftOneFunc);
+			}
 		}
 	}
 	class ATMFieldsMouseListener extends MouseAdapter {
-		private ATMMovableFields selected;
+
 
 		public void mouseDragged(MouseEvent e){
 			if(ATMFields.NFCPhone.body.contains(e.getPoint())) {
@@ -155,20 +162,20 @@ public class ATM_GUI extends JFrame {
 				selected.moveField(e);
 				repaint();
 			}
+
 		}
 
-		public void mouseReleased(MouseEvent e){
-			if(selected != null){
-				if(selected.equals(ATMFields.NFCPhone)){
-					if(selected.collides(ATMFields.NFC)){
-						//Do Something
+		public void mouseReleased(MouseEvent e) {
+			if(selected != null) {
+				if(selected.equals(ATMFields.NFCPhone) && selected.collides(ATMFields.NFC)){
+					if(screen.getCurrentScreen() == ATMScreen.NFC_INPUT){
+						if(accountDatabase.getPIN() == ATMFields.NFCPhone.getPIN() &&
+								accountDatabase.getAccountNumber() == ATMFields.NFCPhone.getAccountNumber()){
+								screen.setCurrentScreen(ATMScreen.MAIN_MENU);
+						}
 					}
 				}
-				if(selected.equals(ATMFields.debitCard)){
-					if(selected.collides(ATMFields.cardSlot)){
-						// Do something
-					}
-				}
+				selected = null;
 			}
 		}
 	}

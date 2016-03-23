@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.concurrent.Callable;
 
 /**
  * Created by Lionel on 2016-03-18.
@@ -8,7 +9,17 @@ public class ATMScreen extends JPanel{
     private JLabel title, instruction, input;
     private JLabel leftOne, leftTwo, leftThree;
     private JLabel rightOne, rightTwo, rightThree;
-    boolean acceptInput;
+
+    protected int leftOneFunc, leftTwoFunc, leftThreeFunc;
+    protected int rightOneFunc, rightTwoFunc, rightThreeFunc;
+
+    private boolean acceptInput;
+    protected int currentScreen;
+
+    protected static final int WELCOME = 0;
+    protected static final int CARD_INPUT = 1;
+    protected static final int NFC_INPUT = 2;
+    protected static final int MAIN_MENU = 3;
 
     public ATMScreen(int xPos, int yPos, int wth, int hth){
         super();
@@ -48,12 +59,69 @@ public class ATMScreen extends JPanel{
         acceptInput = true;
     }
 
+    public int getCurrentScreen(){
+        return currentScreen;
+    }
+
+    public void setCurrentScreen(int screen){
+        System.out.println(screen);
+        if(screen== WELCOME){
+            welcome();
+        }
+        else if(screen == NFC_INPUT){
+            nfcInput();
+        }
+    }
+
     public void welcome(){
+        currentScreen = WELCOME;
         acceptInput = false;
         title.setText("Welcome to the ATM");
         instruction.setText("Select Option");
+        leftOne.setText("Phone / NFC");
+        rightOne.setText("Debit Card");
+
+        leftOneFunc = NFC_INPUT;
+        rightOneFunc = CARD_INPUT;
+
+        title.setVisible(true);
+        instruction.setVisible(true);
+        leftOne.setVisible(true);
+        rightOne.setVisible(true);
+
         input.setVisible(false);
+        leftTwo.setVisible(false);
+        leftThree.setVisible(false);
+        rightTwo.setVisible(false);
+        rightThree.setVisible(false);
     }
+
+    public void nfcInput(){
+        currentScreen = NFC_INPUT;
+        acceptInput = false;
+        title.setText("Phone / NFC");
+        instruction.setText("Tap phone on NFC thingy");
+
+        title.setVisible(true);
+        instruction.setVisible(true);
+
+        leftOne.setVisible(false);
+        rightOne.setVisible(false);
+        input.setVisible(false);
+        leftTwo.setVisible(false);
+        leftThree.setVisible(false);
+        rightTwo.setVisible(false);
+        rightThree.setVisible(false);
+    }
+
+    public void mainMenu(){
+        currentScreen = MAIN_MENU;
+        acceptInput = false;
+        title.setText("Main Menu");
+        instruction.setText("Select Option");
+    }
+
+
 
     public void storeInput(String inp){
         if(acceptInput) {
