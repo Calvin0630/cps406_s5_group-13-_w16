@@ -1,5 +1,3 @@
-import javafx.scene.AmbientLight;
-
 import javax.swing.*;
 import java.awt.*;
 
