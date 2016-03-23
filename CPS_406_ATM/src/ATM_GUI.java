@@ -159,7 +159,16 @@ public class ATM_GUI extends JFrame {
 
 		public void mouseReleased(MouseEvent e){
 			if(selected != null){
-
+				if(selected.equals(ATMFields.NFCPhone)){
+					if(selected.collides(ATMFields.NFC)){
+						//Do Something
+					}
+				}
+				if(selected.equals(ATMFields.debitCard)){
+					if(selected.collides(ATMFields.cardSlot)){
+						// Do something
+					}
+				}
 			}
 		}
 	}

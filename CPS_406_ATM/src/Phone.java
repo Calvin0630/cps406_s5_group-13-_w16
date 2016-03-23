@@ -66,4 +66,9 @@ public class Phone extends JComponent implements ATMMovableFields{
 		yPos = event.getY();
 		body.setLocation(event.getPoint());
 	}
+
+	@Override
+	public boolean collides(JComponent item) {
+		return item.contains(body.getLocation());
+	}
 }
