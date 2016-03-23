@@ -3,12 +3,13 @@ import java.awt.*;
 import java.awt.geom.Ellipse2D;
 
 class ATMFields extends JComponent {
-	public Rectangle printer,cardSlot,cashDispensor;
-	public Ellipse2D  NFC;
-	public Phone nonNFCPhone, NFCPhone;
-	public Card debitCard;
-	public Cash twentyBill;
-	public Cheque cheque;
+	public static Rectangle printer,cardSlot,cashDispensor;
+	public static Ellipse2D  NFC;
+	public static Phone nonNFCPhone;
+	public static Phone NFCPhone;
+	public static Card debitCard;
+	public static Cash twentyBill;
+	public static Cheque cheque;
 	
 	public ATMFields (){
 		nonNFCPhone = new Phone (false,ATM_GUI.FRAME_WIDTH-ATM_GUI.NUM_PAD_DIMENSION*3/2,
