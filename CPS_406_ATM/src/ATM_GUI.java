@@ -3,6 +3,8 @@ import javax.swing.plaf.basic.BasicArrowButton;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 /**
  * Created by Lionel on 2016-03-10.
@@ -24,6 +26,7 @@ public class ATM_GUI extends JFrame {
 	protected static ATMLeftScreenButtons screenLeftButtons;
 	protected static ATMRightScreenButtons screenRightButtons;
 	public static AccountDatabase accountDatabase;
+	public ATMFieldsMouseListener fieldsListener;
 	
 	public ATM_GUI(){
 		setSize(screenSize);
@@ -42,6 +45,8 @@ public class ATM_GUI extends JFrame {
 		add(screenRightButtons);
 		ATMFields fields = new ATMFields();
 		add(fields);
+		fieldsListener = new ATMFieldsMouseListener();
+		addMouseMotionListener(fieldsListener);
 
 		setResizable(false);
 		setVisible(true);
@@ -121,6 +126,40 @@ public class ATM_GUI extends JFrame {
 			}
 			if(event.getSource().equals(optionPanel.correction)){
 				screen.correction();
+			}
+		}
+	}
+	class ATMFieldsMouseListener extends MouseAdapter {
+		private ATMMovableFields selected;
+
+		public void mouseDragged(MouseEvent e){
+			if(ATMFields.NFCPhone.body.contains(e.getPoint())) {
+				selected = ATMFields.NFCPhone;
+			}
+			else if(ATMFields.nonNFCPhone.body.contains(e.getPoint())){
+				selected = ATMFields.nonNFCPhone;
+			}
+			else if(ATMFields.debitCard.body.contains(e.getPoint())){
+				selected = ATMFields.debitCard;
+			}
+			else if(ATMFields.cheque.body.contains(e.getPoint())){
+				selected = ATMFields.cheque;
+			}
+			else if(ATMFields.twentyBill.body.contains(e.getPoint())){
+				selected = ATMFields.twentyBill;
+			}
+			else if(ATMFields.cheque.body.contains(e.getPoint())){
+				selected = ATMFields.cheque;
+			}
+			if(selected != null){
+				selected.moveField(e);
+				repaint();
+			}
+		}
+
+		public void mouseReleased(MouseEvent e){
+			if(selected != null){
+
 			}
 		}
 	}
