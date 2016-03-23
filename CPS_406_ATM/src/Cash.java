@@ -2,6 +2,8 @@ import javax.swing.JComponent;
 import java.awt.* ;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.RectangularShape;
+
 public class Cash extends JComponent implements ATMMovableFields{
 	int width = ATM_GUI.NUM_PAD_DIMENSION*3/2, height = width/2;
 	int xPos, yPos;
@@ -73,7 +75,8 @@ public class Cash extends JComponent implements ATMMovableFields{
 	}
 
 	@Override
-	public boolean collides(JComponent item) {
+	public boolean collides(RectangularShape item) {
 		return item.contains(body.getLocation());
 	}
+
 }

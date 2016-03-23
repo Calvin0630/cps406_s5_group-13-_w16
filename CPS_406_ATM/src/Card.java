@@ -1,5 +1,6 @@
 import java.awt.* ;
 import java.awt.event.MouseEvent;
+import java.awt.geom.RectangularShape;
 import javax.swing.JComponent;
 
 public class Card extends JComponent implements ATMMovableFields{
@@ -68,7 +69,7 @@ public class Card extends JComponent implements ATMMovableFields{
 	}
 
 	@Override
-	public boolean collides(JComponent item) {
+	public boolean collides(RectangularShape item) {
 		return item.contains(body.getLocation());
 	}
 }
