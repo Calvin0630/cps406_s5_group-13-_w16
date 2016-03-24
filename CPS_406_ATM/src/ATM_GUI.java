@@ -175,6 +175,10 @@ public class ATM_GUI extends JFrame {
 
 		public void mouseReleased(MouseEvent e) {
 			if(selected != null) {
+				
+				/*
+				 * Use Case #3. User accessing with card
+				 */
 				if (screen.getCurrentScreen() == ATMScreen.WELCOME && selected.equals("debitCard"))
 				{
 					if (ATMFields.debitCard.getBounds().intersects(ATMFields.cardSlot.getBounds())){
