@@ -58,13 +58,17 @@ public class Cash extends JComponent implements ATMMovableFields{
 		g2.setFont(f);
 		Rectangle body = new Rectangle ( xPos,yPos,width, height);
 		g2.draw(body);
+		g2.setColor(Color.GREEN);
+		g2.fill(body);
+		g2.setColor(Color.black);
 		g2.drawString("$"+getValue(), xPos, yPos+height/4);
 		g2.drawString("$"+getValue(), xPos+width*3/4, yPos+height);
 		int radius = height*2/3;
+		g2.setColor(Color.white);
 		Ellipse2D.Double circle = new Ellipse2D.Double(getBounds().getCenterX()-radius/2,
 				getBounds().getCenterY()-radius/2,radius,radius);
 		g2.draw(circle);
-
+		g2.fill(circle);
 	}
 
 	@Override
