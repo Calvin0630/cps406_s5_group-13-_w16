@@ -27,7 +27,6 @@ public class ATM_GUI extends JFrame {
 	public static AccountDatabase accountDatabase;
 	public ATMFieldsMouseListener fieldsListener;
 
-	//protected static ATMMovableFields selected;
 	protected static String selected;
 
 	public ATM_GUI(){
@@ -160,6 +159,9 @@ public class ATM_GUI extends JFrame {
 				selected="twentyBill";
 			}
 			
+			/*
+			 * Use Case #1 User accessing with phone.
+			 */
 			if (screen.getCurrentScreen() == ATMScreen.PIN_INPUT && selected.equals("NFCPhone")){
 				if (ATMFields.NFCPhone.getBounds().intersects(ATMFields.NFC.getBounds())){
 					if (ATMFields.NFCPhone.getPIN() == accountDatabase.getPIN()){
