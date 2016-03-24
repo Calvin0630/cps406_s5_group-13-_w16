@@ -131,8 +131,9 @@ public class ATM_GUI extends JFrame {
 				screen.correction();
 			}
 			if(event.getSource().equals(screenLeftButtons.leftOne)){
-				screen.setCurrentScreen(screen.leftOneFunc);
+
 			}
+			repaint();
 		}
 	}
 	class ATMFieldsMouseListener extends MouseAdapter {
@@ -142,7 +143,6 @@ public class ATM_GUI extends JFrame {
 				selected="NFCPhone";
 			}
 			else if(ATMFields.nonNFCPhone.getBounds().contains(e.getPoint())){
-				// = ATMFields.nonNFCPhone;
 				ATMFields.nonNFCPhone.moveField(e);
 				selected="nonNFCPhone";
 			}
@@ -158,7 +158,7 @@ public class ATM_GUI extends JFrame {
 				ATMFields.twentyBill.moveField(e);
 				selected="twentyBill";
 			}
-			
+
 			/*
 			 * Use Case #1 User accessing with phone.
 			 */
@@ -169,13 +169,13 @@ public class ATM_GUI extends JFrame {
 					}
 				}
 			}
-			
+
 			repaint();
 		}
 
 		public void mouseReleased(MouseEvent e) {
 			if(selected != null) {
-				
+
 				/*
 				 * Use Case #3. User accessing with card
 				 */
@@ -187,7 +187,7 @@ public class ATM_GUI extends JFrame {
 						ATMFields.debitCard.setX(ATMFields.debitCard.getX()+1000);
 					}
 				}
-				
+
 				selected = null;
 			}
 			repaint();
