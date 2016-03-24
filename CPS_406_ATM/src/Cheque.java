@@ -80,7 +80,6 @@ public class Cheque extends JComponent implements ATMMovableFields{
 		Font f = new Font("Times New Roman", Font.BOLD, fontSize);
 		g2.setFont(f);
 		Rectangle body = new Rectangle ( xPos,yPos,width, height);
-		g2.draw(body);
 		g2.setColor(Color.pink);
 		g2.fill(body);
 		g2.setColor(Color.black);
