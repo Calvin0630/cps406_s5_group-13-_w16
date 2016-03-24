@@ -15,7 +15,6 @@ public class Card extends JComponent implements ATMMovableFields{
 		xPos = x;
 		yPos = y;
 		accountNumber = accntNmbr;
-		body = new Rectangle ( xPos,yPos,width, height);
 	}
 
 	public int getX(){
@@ -50,11 +49,12 @@ public class Card extends JComponent implements ATMMovableFields{
 	public int getHeight (){
 		return height;
 	}
-	
+
 	protected void paintComponent(Graphics g){
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setColor(Color.black);
+		Rectangle body = new Rectangle ( xPos,yPos,width, height);
 		g2.draw(body);
 		g2.drawString("Debit Card", xPos+5, yPos+height/10);
 		g2.drawString("0000 0000 000"+getAccountNumber(),(int)(xPos+body.getWidth()/4),(int)(body.getCenterY()));
@@ -63,14 +63,13 @@ public class Card extends JComponent implements ATMMovableFields{
 
 	@Override
 	public void moveField(MouseEvent event) {
-		xPos = event.getX();
-		yPos = event.getY();
-		body.setLocation(event.getPoint());
+		setX((int)event.getPoint().getX()-width/2);
+		setY((int)event.getPoint().getY()-height/2);
 	}
 
 	@Override
 	public boolean collides(RectangularShape item) {
-		return item.contains(body.getLocation());
+		return item.contains(getBounds());
 	}
 
 	@Override
