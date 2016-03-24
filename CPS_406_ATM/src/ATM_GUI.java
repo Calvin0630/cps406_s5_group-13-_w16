@@ -148,7 +148,7 @@ public class ATM_GUI extends JFrame {
 				selected="nonNFCPhone";
 			}
 			else if(ATMFields.debitCard.getBounds().contains(e.getPoint())){
-			ATMFields.debitCard.moveField(e);
+				ATMFields.debitCard.moveField(e);
 				selected="debitCard";
 			}
 			else if(ATMFields.cheque.getBounds().contains(e.getPoint())){
@@ -159,27 +159,32 @@ public class ATM_GUI extends JFrame {
 				ATMFields.twentyBill.moveField(e);
 				selected="twentyBill";
 			}
+			
+			if (screen.getCurrentScreen() == ATMScreen.PIN_INPUT && selected.equals("NFCPhone")){
+				if (ATMFields.NFCPhone.getBounds().intersects(ATMFields.NFC.getBounds())){
+					if (ATMFields.NFCPhone.getPIN() == accountDatabase.getPIN()){
+						screen.setCurrentScreen(ATMScreen.MAIN_MENU);
+					}
+				}
+			}
+			
 			repaint();
 		}
 
 		public void mouseReleased(MouseEvent e) {
 			if(selected != null) {
-
-				if (screen.getCurrentScreen() == ATMScreen.WELCOME)
+				if (screen.getCurrentScreen() == ATMScreen.WELCOME && selected.equals("debitCard"))
 				{
-					if (selected.equals("debitCard")){
-
-						if (ATMFields.debitCard.getBounds().intersects(ATMFields.cardSlot.getBounds())){
-							ATMFields.debitCard.setVisible(false);
-							screen.setCurrentScreen(ATMScreen.PIN_INPUT);
-							ATMFields.debitCard.setX(ATMFields.debitCard.getX()+1000);
-						}
-
+					if (ATMFields.debitCard.getBounds().intersects(ATMFields.cardSlot.getBounds())){
+						ATMFields.debitCard.setVisible(false);
+						screen.setCurrentScreen(ATMScreen.PIN_INPUT);
+						ATMFields.debitCard.setX(ATMFields.debitCard.getX()+1000);
 					}
-					selected = null;
-
 				}
+				
+				selected = null;
 			}
+			repaint();
 		}
 	}
 }
