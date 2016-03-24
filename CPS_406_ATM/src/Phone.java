@@ -12,7 +12,7 @@ public class Phone extends JComponent implements ATMMovableFields{
 	String yesNFC = "NFC";
 	String noNFC = "Non-NFC";
 	int PIN, accountNumber;
-	Rectangle body;
+
 
 	public Phone (boolean NFC, int x, int y, int newPIN, int accntNmbr){
 		isNFC = NFC; 
@@ -20,7 +20,6 @@ public class Phone extends JComponent implements ATMMovableFields{
 		yPos = y;
 		PIN = newPIN;
 		accountNumber = accntNmbr;
-		body = new Rectangle ( xPos,yPos,width, height);
 	}
 
 	public boolean getNFC (){
@@ -30,9 +29,17 @@ public class Phone extends JComponent implements ATMMovableFields{
 	public int getX(){
 		return xPos;
 	}
+	
+	public void setX(int x){
+		xPos = x;
+	}
 
 	public int getY(){
 		return yPos;
+	}
+	
+	public void setY(int y){
+		yPos = y;
 	}
 
 	public int getPIN(){return PIN;}
@@ -41,7 +48,7 @@ public class Phone extends JComponent implements ATMMovableFields{
 
 
 	public Rectangle getBounds (){
-		return body.getBounds();
+		return new Rectangle (xPos, yPos, width, height);
 	}
 
 	public int getWidth(){
@@ -57,6 +64,7 @@ public class Phone extends JComponent implements ATMMovableFields{
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setColor(Color.black);
+		Rectangle body = new Rectangle ( xPos,yPos,width, height);
 		g2.draw(body);
 		g2.drawOval((int)(body.getX()+body.getWidth()/2-ATM_GUI.NUM_PAD_DIMENSION*1/20),(int)(body.getY()+body.getHeight() * 9/10), 
 				(int) ATM_GUI.NUM_PAD_DIMENSION*1/10,(int) ATM_GUI.NUM_PAD_DIMENSION*1/10);
@@ -67,14 +75,13 @@ public class Phone extends JComponent implements ATMMovableFields{
 
 	@Override
 	public void moveField(MouseEvent event) {
-		xPos = event.getX();
-		yPos = event.getY();
-		body.setLocation(event.getPoint());
+		setX((int)event.getPoint().getX()-width/2);
+		setY((int)event.getPoint().getY()-height/2);
 	}
 
 	@Override
 	public boolean collides(RectangularShape item) {
-		return item.contains(body.getLocation());
+		return item.contains(getBounds());
 	}
 
 	@Override
