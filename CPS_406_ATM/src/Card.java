@@ -53,9 +53,11 @@ public class Card extends JComponent implements ATMMovableFields{
 	protected void paintComponent(Graphics g){
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
-		g2.setColor(Color.black);
-		Rectangle body = new Rectangle ( xPos,yPos,width, height);
+		Rectangle body = new Rectangle (xPos,yPos,width, height);
 		g2.draw(body);
+		g2.setColor(Color.WHITE);
+		g2.fill(body);
+		g2.setColor(Color.black);
 		g2.drawString("Debit Card", xPos+5, yPos+height/10);
 		g2.drawString("0000 0000 000"+getAccountNumber(),(int)(xPos+body.getWidth()/4),(int)(body.getCenterY()));
 		g2.drawString("Client's Name Here",xPos+5,yPos+height-5);
