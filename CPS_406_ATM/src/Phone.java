@@ -60,17 +60,21 @@ public class Phone extends JComponent implements ATMMovableFields{
 	}
 
 	protected void paintComponent(Graphics g){
-
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
+		g2.setColor(Color.DARK_GRAY);
+		RoundRectangle2D body = new RoundRectangle2D.Float (xPos, yPos, width, height, width/5, width/5);
+		g2.fill(body);
+		g2.setColor(Color.white);
+		g2.fillRect(xPos+width/10, yPos+height/10, width*4/5, height*3/4);
 		g2.setColor(Color.black);
-		Rectangle body = new Rectangle ( xPos,yPos,width, height);
-		g2.draw(body);
-		g2.drawOval((int)(body.getX()+body.getWidth()/2-ATM_GUI.NUM_PAD_DIMENSION*1/20),(int)(body.getY()+body.getHeight() * 9/10), 
-				(int) ATM_GUI.NUM_PAD_DIMENSION*1/10,(int) ATM_GUI.NUM_PAD_DIMENSION*1/10);
 		String display = noNFC;
 		if (isNFC) display = yesNFC;
-		g2.drawString(display, (int) body.getX()+10, (int) (body.getY()+body.getHeight()/2));
+		g2.drawString(display, (int) body.getX()+width/4, (int) (body.getY()+body.getHeight()/2));
+		g2.setColor(Color.LIGHT_GRAY);
+		g2.fillOval((int)(body.getX()+body.getWidth()/2-ATM_GUI.NUM_PAD_DIMENSION*1/20),
+				(int)(body.getY()+body.getHeight() *87/100), 
+				(int) ATM_GUI.NUM_PAD_DIMENSION*1/10,(int) ATM_GUI.NUM_PAD_DIMENSION*1/10);
 	}
 
 	@Override
