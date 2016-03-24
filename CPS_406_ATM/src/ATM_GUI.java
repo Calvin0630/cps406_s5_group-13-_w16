@@ -140,22 +140,22 @@ public class ATM_GUI extends JFrame {
 
 
 		public void mouseDragged(MouseEvent e){
-			if(ATMFields.NFCPhone.body.contains(e.getPoint())) {
+			if(ATMFields.NFCPhone.getBounds().contains(e.getPoint())) {
 				selected = ATMFields.NFCPhone;
 			}
-			else if(ATMFields.nonNFCPhone.body.contains(e.getPoint())){
+			else if(ATMFields.nonNFCPhone.getBounds().contains(e.getPoint())){
 				selected = ATMFields.nonNFCPhone;
 			}
-			else if(ATMFields.debitCard.body.contains(e.getPoint())){
+			else if(ATMFields.debitCard.getBounds().contains(e.getPoint())){
 				selected = ATMFields.debitCard;
 			}
-			else if(ATMFields.cheque.body.contains(e.getPoint())){
+			else if(ATMFields.cheque.getBounds().contains(e.getPoint())){
 				selected = ATMFields.cheque;
 			}
-			else if(ATMFields.twentyBill.body.contains(e.getPoint())){
+			else if(ATMFields.twentyBill.getBounds().contains(e.getPoint())){
 				selected = ATMFields.twentyBill;
 			}
-			else if(ATMFields.cheque.body.contains(e.getPoint())){
+			else if(ATMFields.cheque.getBounds().contains(e.getPoint())){
 				selected = ATMFields.cheque;
 			}
 			if(selected != null){
