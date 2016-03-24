@@ -18,7 +18,7 @@ public class ATMScreen extends JPanel{
 
     protected static final int WELCOME = 0;
     protected static final int CARD_INPUT = 1;
-    protected static final int NFC_INPUT = 2;
+    protected static final int PIN_INPUT = 2;
     protected static final int MAIN_MENU = 3;
 
     public ATMScreen(int xPos, int yPos, int wth, int hth){
@@ -68,8 +68,8 @@ public class ATMScreen extends JPanel{
         if(screen== WELCOME){
             welcome();
         }
-        else if(screen == NFC_INPUT){
-            nfcInput();
+        else if(screen == CARD_INPUT){
+            cardInput();
         }
     }
 
@@ -81,31 +81,13 @@ public class ATMScreen extends JPanel{
         leftOne.setText("Phone / NFC");
         rightOne.setText("Debit Card");
 
-        leftOneFunc = NFC_INPUT;
-        rightOneFunc = CARD_INPUT;
+        leftOneFunc = CARD_INPUT;
+
 
         title.setVisible(true);
         instruction.setVisible(true);
         leftOne.setVisible(true);
-        rightOne.setVisible(true);
 
-        input.setVisible(false);
-        leftTwo.setVisible(false);
-        leftThree.setVisible(false);
-        rightTwo.setVisible(false);
-        rightThree.setVisible(false);
-    }
-
-    public void nfcInput(){
-        currentScreen = NFC_INPUT;
-        acceptInput = false;
-        title.setText("Phone / NFC");
-        instruction.setText("Tap phone on NFC thingy");
-
-        title.setVisible(true);
-        instruction.setVisible(true);
-
-        leftOne.setVisible(false);
         rightOne.setVisible(false);
         input.setVisible(false);
         leftTwo.setVisible(false);
@@ -113,6 +95,45 @@ public class ATMScreen extends JPanel{
         rightTwo.setVisible(false);
         rightThree.setVisible(false);
     }
+
+    public void cardInput(){
+        currentScreen = CARD_INPUT;
+        acceptInput = false;
+        title.setText("CARD INPUT");
+        instruction.setText("Insert Card");
+
+        title.setVisible(true);
+        instruction.setVisible(true);
+
+        input.setVisible(false);
+        leftOne.setVisible(false);
+        leftTwo.setVisible(false);
+        leftThree.setVisible(false);
+        rightOne.setVisible(false);
+        rightTwo.setVisible(false);
+        rightThree.setVisible(false);
+    }
+
+    public void inputPIN(){
+        currentScreen = PIN_INPUT;
+        acceptInput = true;
+        title.setText("PIN INPUT");
+        instruction.setText("Enter PIN via number pad or tap phone on NFC");
+
+        title.setVisible(true);
+        instruction.setVisible(true);
+        input.setVisible(true);
+        input.setText("");
+
+        input.setVisible(false);
+        leftOne.setVisible(false);
+        leftTwo.setVisible(false);
+        leftThree.setVisible(false);
+        rightOne.setVisible(false);
+        rightTwo.setVisible(false);
+        rightThree.setVisible(false);
+    }
+
 
     public void mainMenu(){
         currentScreen = MAIN_MENU;

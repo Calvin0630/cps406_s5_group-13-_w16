@@ -72,4 +72,9 @@ public class Card extends JComponent implements ATMMovableFields{
 	public boolean collides(RectangularShape item) {
 		return item.contains(body.getLocation());
 	}
+
+	@Override
+	public boolean equals(ATMMovableFields other) {
+		return false;
+	}
 }

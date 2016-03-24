@@ -35,6 +35,10 @@ public class Phone extends JComponent implements ATMMovableFields{
 		return yPos;
 	}
 
+	public int getPIN(){return PIN;}
+
+	public int getAccountNumber(){return  accountNumber;}
+
 
 	public Rectangle getBounds (){
 		return body.getBounds();
@@ -71,5 +75,14 @@ public class Phone extends JComponent implements ATMMovableFields{
 	@Override
 	public boolean collides(RectangularShape item) {
 		return item.contains(body.getLocation());
+	}
+
+	@Override
+	public boolean equals(ATMMovableFields other) {
+		if(other.getClass() == getClass()){
+			Phone otherPhone = (Phone) other;
+			return otherPhone.getPIN() == getPIN() && otherPhone.getAccountNumber() == getAccountNumber();
+		}
+		return false;
 	}
 }

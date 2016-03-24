@@ -79,4 +79,9 @@ public class Cash extends JComponent implements ATMMovableFields{
 		return item.contains(body.getLocation());
 	}
 
+	@Override
+	public boolean equals(ATMMovableFields other) {
+		return false;
+	}
+
 }

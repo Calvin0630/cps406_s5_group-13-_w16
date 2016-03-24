@@ -8,4 +8,5 @@ import java.awt.geom.RectangularShape;
 public interface ATMMovableFields {
     void moveField(MouseEvent event);
     boolean collides(RectangularShape item);
+    boolean equals(ATMMovableFields other);
 }
