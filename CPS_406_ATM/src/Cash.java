@@ -8,13 +8,12 @@ public class Cash extends JComponent implements ATMMovableFields{
 	int width = ATM_GUI.NUM_PAD_DIMENSION*3/2, height = width/2;
 	int xPos, yPos;
 	int value;
-	Rectangle body;
+
 
 	public Cash (int val, int x, int y){
 		value = val;
 		xPos = x;
 		yPos = y;
-		body = new Rectangle ( xPos,yPos,width, height);
 	}
 
 	public int getX(){
@@ -57,6 +56,7 @@ public class Cash extends JComponent implements ATMMovableFields{
 		int fontSize = height/3;
 		Font f = new Font("Times New Roman", Font.BOLD, fontSize);
 		g2.setFont(f);
+		Rectangle body = new Rectangle ( xPos,yPos,width, height);
 		g2.draw(body);
 		g2.drawString("$"+getValue(), xPos, yPos+height/4);
 		g2.drawString("$"+getValue(), xPos+width*3/4, yPos+height);
@@ -69,14 +69,13 @@ public class Cash extends JComponent implements ATMMovableFields{
 
 	@Override
 	public void moveField(MouseEvent event) {
-		xPos = event.getX();
-		yPos = event.getY();
-		body.setLocation(event.getPoint());
+		setX((int)event.getPoint().getX()-width/2);
+		setY((int)event.getPoint().getY()-height/2);
 	}
 
 	@Override
 	public boolean collides(RectangularShape item) {
-		return item.contains(body.getLocation());
+		return item.contains(getBounds());
 	}
 
 	@Override
