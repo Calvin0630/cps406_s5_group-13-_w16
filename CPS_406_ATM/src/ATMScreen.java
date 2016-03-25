@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class ATMScreen extends JPanel{
 	private JLabel title, instruction, input;
@@ -17,6 +19,7 @@ public class ATMScreen extends JPanel{
 	protected static final int WELCOME = 0;
 	protected static final int PIN_INPUT = 1;
 	protected static final int MAIN_MENU = 2;
+	Timer timer;
 
 	public ATMScreen(int xPos, int yPos, int wth, int hth){
 		super();
@@ -110,6 +113,19 @@ public class ATMScreen extends JPanel{
 		title.setVisible(true);
 		instruction.setVisible(true);
 		input.setVisible(true);
+
+		/*
+		 * Daniel Jack
+		 * Use Case 2: Inactivity timeout for NFC/PIN
+		 */
+		ActionListener taskPerformer = new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				if (input.getText() == " " && PINattempts == 0)
+					exitSystem();
+			}
+		};
+		timer = new Timer(30*1000,taskPerformer);
+		timer.start();
 	}
 
 
@@ -181,8 +197,10 @@ public class ATMScreen extends JPanel{
 
 	public void enter(){
 		if(currentScreen == PIN_INPUT){
-			if (Integer.parseInt(inputString) == ATM_GUI.accountDatabase.getPIN())
+			if (Integer.parseInt(inputString) == ATM_GUI.accountDatabase.getPIN()){
 				setCurrentScreen(MAIN_MENU);
+				timer.stop();
+			}
 			else {
 				/*
 				 * Daniel Jack
@@ -191,15 +209,20 @@ public class ATMScreen extends JPanel{
 				PINattempts++;
 				instruction.setText("Incorrect PIN, " + (5-PINattempts) + " attempts remaining.");
 				if (PINattempts == 5){
-					wait(1000);
-					setCurrentScreen(WELCOME);
 					PINattempts=0;
-					ATMFields.debitCard.setX(ATMFields.debitCard.getX()-1000);
+					exitSystem();
 				}
 			}
 		}
 	}
 
+	public void exitSystem()
+	{
+
+		setCurrentScreen(WELCOME);
+		ATMFields.debitCard.setX(ATMFields.debitCard.getX()-1000);
+		ATM_GUI.fields.repaint();
+	}
 	public void wait(int delay){
 		try {
 			Thread.sleep(delay);
