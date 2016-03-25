@@ -170,24 +170,43 @@ public class ATM_GUI extends JFrame {
 	class ATMFieldsMouseListener extends MouseAdapter {
 		public void mouseDragged(MouseEvent e){
 			if(ATMFields.NFCPhone.getBounds().contains(e.getPoint())) {
-				ATMFields.NFCPhone.moveField(e);
-				selected="NFCPhone";
+				if (selected != "nonNFCPhone" && selected != "debitCard" && 
+						selected != "cheque" && selected != "twentyBill")
+				{
+					ATMFields.NFCPhone.moveField(e);
+					selected="NFCPhone";
+				}
 			}
-			else if(ATMFields.nonNFCPhone.getBounds().contains(e.getPoint())){
-				ATMFields.nonNFCPhone.moveField(e);
+			if(ATMFields.nonNFCPhone.getBounds().contains(e.getPoint())){
+				if (selected != "NFCPhone" && selected != "debitCard" && 
+						selected != "cheque" && selected != "twentyBill")
+				{ATMFields.nonNFCPhone.moveField(e);
 				selected="nonNFCPhone";
+				}
 			}
-			else if(ATMFields.debitCard.getBounds().contains(e.getPoint())){
-				ATMFields.debitCard.moveField(e);
-				selected="debitCard";
+			if(ATMFields.debitCard.getBounds().contains(e.getPoint())){
+				if (selected != "nonNFCPhone" && selected != "NFCPhone" && 
+						selected != "cheque" && selected != "twentyBill")
+				{
+					ATMFields.debitCard.moveField(e);
+					selected="debitCard";
+				}
 			}
-			else if(ATMFields.cheque.getBounds().contains(e.getPoint())){
-				ATMFields.cheque.moveField(e);
-				selected="cheque";
+			if(ATMFields.cheque.getBounds().contains(e.getPoint())){
+				if (selected != "nonNFCPhone" && selected != "debitCard" && 
+						selected != "NFCPhone" && selected != "twentyBill")
+				{
+					ATMFields.cheque.moveField(e);
+					selected="cheque";
+				}
 			}
-			else if(ATMFields.twentyBill.getBounds().contains(e.getPoint())){
-				ATMFields.twentyBill.moveField(e);
-				selected="twentyBill";
+			if(ATMFields.twentyBill.getBounds().contains(e.getPoint())){
+				if (selected != "nonNFCPhone" && selected != "debitCard" && 
+						selected != "cheque" && selected != "NFCPhone")
+				{
+					ATMFields.twentyBill.moveField(e);
+					selected="twentyBill";
+				}
 			}
 
 			/*
@@ -202,13 +221,11 @@ public class ATM_GUI extends JFrame {
 					}
 				}
 			}catch(Exception phone){}
-
 			repaint();
 		}
 
 		public void mouseReleased(MouseEvent e) {
 			if(selected != null) {
-
 				/*
 				 * Use Case #3. User accessing with card
 				 */
@@ -228,7 +245,6 @@ public class ATM_GUI extends JFrame {
 						JOptionPane.showMessageDialog(null, "Card insert error!");
 					}
 				}
-
 				selected = null;
 			}
 			repaint();
