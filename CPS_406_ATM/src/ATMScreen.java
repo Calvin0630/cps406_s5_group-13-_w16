@@ -237,6 +237,7 @@ public class ATMScreen extends JPanel{
 		leftOneFunc = leftTwoFunc = leftThreeFunc = -1;
 		rightOneFunc = rightTwoFunc = rightThreeFunc = -1;
 		input.setText("");
+		inputString = "";
 		acceptInput = false;
 		leftOne.setVisible(false);
 		leftTwo.setVisible(false);
@@ -323,7 +324,7 @@ public class ATMScreen extends JPanel{
 
 	public void exitSystem()
 	{
-
+		resetValues();
 		setCurrentScreen(WELCOME);
 		ATMFields.debitCard.setX(ATMFields.debitCard.getX()-1000);
 		ATM_GUI.fields.repaint();
