@@ -91,6 +91,9 @@ public class ATMScreen extends JPanel{
 		else if(screen == CHECK_BALANCE_CHEQUING){
 			checkBalanceChequing();
 		}
+		else if (screen == CHANGE_PIN){
+			changePIN();
+		}
 	}
 
 	public void leftOneButton(){
@@ -116,6 +119,7 @@ public class ATMScreen extends JPanel{
 	}
 
 	public void inputPIN(){
+		inputString = "";
 		currentScreen = PIN_INPUT;
 		acceptInput = true;
 		title.setText("PIN INPUT");
@@ -156,6 +160,8 @@ public class ATMScreen extends JPanel{
 		rightThree.setText("Pay Debt");
 
 		leftTwoFunc = CHECK_BALANCE;
+		
+		rightTwoFunc = CHANGE_PIN;
 
 		leftOne.setVisible(true);
 		leftTwo.setVisible(true);
@@ -216,9 +222,15 @@ public class ATMScreen extends JPanel{
 		currentScreen = CHANGE_PIN;
 		title.setText("Change Pin");
 		instruction.setText("Enter new pin via num pad");
+		inputString = "";
+		input.setText("");
+		acceptInput = true;
 		title.setVisible(true);
 		instruction.setVisible(true);
 		input.setVisible(true);
+		leftOne.setText("Cancel");
+		leftOne.setVisible(true);
+		leftOneFunc = MAIN_MENU;
 	}
 
 	public void resetValues(){
@@ -240,7 +252,7 @@ public class ATMScreen extends JPanel{
 			 *  Daniel Jack
 			 * 	Use Case 5: User enters PIN
 			 */
-			if (currentScreen == PIN_INPUT){
+			if (currentScreen == PIN_INPUT || currentScreen == CHANGE_PIN){
 				if (inputString.length() < 4){
 					input.setText(input.getText() + "*");
 					inputString = inputString + inp;
@@ -292,6 +304,17 @@ public class ATMScreen extends JPanel{
 				}
 			}
 		}
+		if(currentScreen == CHANGE_PIN){
+			if(inputString.length() != 4){
+				instruction.setText("PIN must be 4 characters long");
+			}
+			else{
+				ATM_GUI.accountDatabase.setPIN(Integer.parseInt(inputString));
+				setCurrentScreen(WELCOME);
+				ATMFields.debitCard.setX(ATMFields.debitCard.getX()-1000);
+				}
+		}
+		
 	}
 
 	public void exitSystem()
