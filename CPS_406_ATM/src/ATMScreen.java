@@ -97,7 +97,7 @@ public class ATMScreen extends JPanel{
 		}
 	}
 
-	private void welcome(){
+	public void welcome(){
 		currentScreen = WELCOME;
 		acceptInput = false;
 		title.setText("Welcome to the ATM");
