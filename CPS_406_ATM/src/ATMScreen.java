@@ -114,9 +114,6 @@ public class ATMScreen extends JPanel{
 		}
 	}
 
-	public void leftOneButton(){
-		leftOneFunc = 1 - leftOneFunc;
-	}
 
 	public void welcome(){
 		currentScreen = WELCOME;
