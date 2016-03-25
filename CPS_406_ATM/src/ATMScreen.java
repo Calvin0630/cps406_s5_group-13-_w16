@@ -223,14 +223,14 @@ public class ATMScreen extends JPanel{
 		title.setText("Change Pin");
 		instruction.setText("Enter new pin via num pad");
 		inputString = "";
-		input.setText("");
+		input.setText(" ");
 		acceptInput = true;
 		title.setVisible(true);
 		instruction.setVisible(true);
 		input.setVisible(true);
 		leftOne.setText("Cancel");
 		leftOne.setVisible(true);
-		leftOneFunc = MAIN_MENU;
+		leftThreeFunc = MAIN_MENU;
 	}
 
 	public void resetValues(){
