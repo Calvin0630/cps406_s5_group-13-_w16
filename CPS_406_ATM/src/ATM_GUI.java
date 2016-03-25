@@ -135,7 +135,34 @@ public class ATM_GUI extends JFrame {
 				screen.enter();
 			}
 			if(event.getSource().equals(screenLeftButtons.leftOne)){
-
+				if(screen.leftOneFunc != -1){
+					screen.setCurrentScreen(screen.leftOneFunc);
+				}
+			}
+			if(event.getSource().equals(screenLeftButtons.leftTwo)){
+				if(screen.leftTwoFunc != -1){
+					screen.setCurrentScreen(screen.leftTwoFunc);
+				}
+			}
+			if(event.getSource().equals(screenLeftButtons.leftThree)){
+				if(screen.leftThreeFunc != -1){
+					screen.setCurrentScreen(screen.leftThreeFunc);
+				}
+			}
+			if(event.getSource().equals(screenRightButtons.rightOne)){
+				if(screen.rightOneFunc != -1){
+					screen.setCurrentScreen(screen.rightOneFunc);
+				}
+			}
+			if(event.getSource().equals(screenRightButtons.rightTwo)){
+				if(screen.rightTwoFunc != -1){
+					screen.setCurrentScreen(screen.rightTwoFunc);
+				}
+			}
+			if(event.getSource().equals(screenRightButtons.rightThree)){
+				if(screen.rightThreeFunc != -1){
+					screen.setCurrentScreen(screen.rightThreeFunc);
+				}
 			}
 			repaint();
 		}
