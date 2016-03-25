@@ -95,6 +95,9 @@ public class ATMScreen extends JPanel{
 		else if (screen == CHANGE_PIN){
 			changePIN();
 		}
+		else if (screen == CHANGE_DISPLAY_LANGUAGE){
+			changeDisplayLanguage();
+		}
 	}
 
 	public void welcome(){
@@ -157,8 +160,8 @@ public class ATMScreen extends JPanel{
 		rightThree.setText("Change Display Language");
 
 		leftTwoFunc = CHECK_BALANCE;
-		
 		rightTwoFunc = CHANGE_PIN;
+		rightThreeFunc = CHANGE_DISPLAY_LANGUAGE;
 
 		leftOne.setVisible(true);
 		leftTwo.setVisible(true);
@@ -229,9 +232,19 @@ public class ATMScreen extends JPanel{
 		leftOne.setVisible(true);
 		leftThreeFunc = MAIN_MENU;
 	}
-	
+
 	private void changeDisplayLanguage(){
-		
+		resetValues();
+		currentScreen = CHANGE_DISPLAY_LANGUAGE;
+		title.setText("Select Display Language");
+		instruction.setVisible(false);
+		title.setVisible(true);
+		rightOne.setText("English (UK)");
+		rightTwo.setText("English (Canada)");
+		rightThree.setText("English (US)");
+		rightOneFunc = MAIN_MENU;
+		rightTwoFunc = MAIN_MENU;
+		rightThreeFunc = MAIN_MENU;
 	}
 
 	private void resetValues(){
@@ -306,10 +319,10 @@ public class ATMScreen extends JPanel{
 				}
 			}
 		}
-			/*
-			 *  Michael D'Anna
-			 * 	Use Case 10: User changes PIN
-			 */
+		/*
+		 *  Michael D'Anna
+		 * 	Use Case 10: User changes PIN
+		 */
 		if(currentScreen == CHANGE_PIN){
 			if(inputString.length() != 4){
 				instruction.setText("PIN must be 4 characters long");
@@ -318,9 +331,9 @@ public class ATMScreen extends JPanel{
 				ATM_GUI.accountDatabase.setPIN(Integer.parseInt(inputString));
 				setCurrentScreen(WELCOME);
 				ATMFields.debitCard.setX(ATMFields.debitCard.getX()-1000);
-				}
+			}
 		}
-		
+
 	}
 
 	public void exitSystem()
