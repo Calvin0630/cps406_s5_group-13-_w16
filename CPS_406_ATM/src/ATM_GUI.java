@@ -26,6 +26,7 @@ public class ATM_GUI extends JFrame {
 	protected static ATMRightScreenButtons screenRightButtons;
 	public static AccountDatabase accountDatabase;
 	public ATMFieldsMouseListener fieldsListener;
+	public static ATMFields fields;
 
 	protected static String selected;
 
@@ -45,13 +46,13 @@ public class ATM_GUI extends JFrame {
 		add(screenLeftButtons);
 		add(screenRightButtons);
 		screen.welcome();
-		ATMFields fields = new ATMFields();
+		fields = new ATMFields();
 		add(fields);
 		fieldsListener = new ATMFieldsMouseListener();
 		addMouseListener(fieldsListener);
 		addMouseMotionListener(fieldsListener);
 
-		setResizable(false);
+		setResizable(true);
 		setVisible(true);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 	}
@@ -130,6 +131,9 @@ public class ATM_GUI extends JFrame {
 			if(event.getSource().equals(optionPanel.correction)){
 				screen.correction();
 			}
+			if(event.getSource().equals(optionPanel.enter)){
+				screen.enter();
+			}
 			if(event.getSource().equals(screenLeftButtons.leftOne)){
 
 			}
@@ -160,7 +164,6 @@ public class ATM_GUI extends JFrame {
 			}
 
 			/*
-			 * Daniel Jack
 			 * Use Case #1 User accessing with phone.
 			 */
 			try{
@@ -180,7 +183,6 @@ public class ATM_GUI extends JFrame {
 			if(selected != null) {
 
 				/*
-				 * Daniel Jack
 				 * Use Case #3. User accessing with card
 				 */
 				if (screen.getCurrentScreen() == ATMScreen.WELCOME && selected.equals("debitCard"))
@@ -197,4 +199,5 @@ public class ATM_GUI extends JFrame {
 			repaint();
 		}
 	}
+
 }
