@@ -242,6 +242,9 @@ public class ATMScreen extends JPanel{
 		rightOne.setText("English (UK)");
 		rightTwo.setText("English (Canada)");
 		rightThree.setText("English (US)");
+		rightOne.setVisible(true);
+		rightTwo.setVisible(true);
+		rightThree.setVisible(true);
 		rightOneFunc = MAIN_MENU;
 		rightTwoFunc = MAIN_MENU;
 		rightThreeFunc = MAIN_MENU;
