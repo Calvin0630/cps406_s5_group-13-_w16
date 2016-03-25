@@ -208,7 +208,7 @@ public class ATMScreen extends JPanel{
 		resetValues();
 		currentScreen = CHECK_BALANCE_SAVINGS;
 		title.setText("Balance of Savings Account");
-		instruction.setText("Account Number: " + ATM_GUI.accountDatabase.getAccountNumber());
+		instruction.setText("Account Number: " + String.format("%03d",ATM_GUI.accountDatabase.getAccountNumber()));
 		input.setText(nf.format(ATM_GUI.accountDatabase.getSavingsBalance()));
 		leftOne.setText("Return to Main Menu");
 		rightOne.setText("Print Reciept");
@@ -224,7 +224,7 @@ public class ATMScreen extends JPanel{
 		resetValues();
 		currentScreen = CHECK_BALANCE_CHEQUING;
 		title.setText("Balance of Chequing Account");
-		instruction.setText("Account Number: " + ATM_GUI.accountDatabase.getAccountNumber());
+		instruction.setText("Account Number: " + String.format("%03d",ATM_GUI.accountDatabase.getAccountNumber()));
 		input.setText(nf.format(ATM_GUI.accountDatabase.getChequingBalance()));
 		leftOne.setText("Return to Main Menu");
 		rightOne.setText("Print Reciept");
@@ -372,6 +372,8 @@ public class ATMScreen extends JPanel{
 				 * Daniel Jack
 				 * Use Case 6: Incorrect PIN
 				 */
+				inputString="";
+				input.setText(" ");
 				PINattempts++;
 				instruction.setText("Incorrect PIN, " + (5-PINattempts) + " attempts remaining.");
 				if (PINattempts == 5){
