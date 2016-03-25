@@ -160,6 +160,7 @@ public class ATM_GUI extends JFrame {
 			}
 
 			/*
+			 * Daniel Jack
 			 * Use Case #1 User accessing with phone.
 			 */
 			try{
@@ -179,6 +180,7 @@ public class ATM_GUI extends JFrame {
 			if(selected != null) {
 
 				/*
+				 * Daniel Jack
 				 * Use Case #3. User accessing with card
 				 */
 				if (screen.getCurrentScreen() == ATMScreen.WELCOME && selected.equals("debitCard"))
