@@ -104,13 +104,12 @@ public class ATMScreen extends JPanel{
 		title.setText("PIN INPUT");
 		instruction.setText("Enter PIN via number pad or tap phone on NFC");
 		input.setText("");
-		input.setFont(new Font("Times New Roman",Font.BOLD,ATM_GUI.FRAME_HEIGHT/10));
-		
+		input.setFont(new Font("Calibri",Font.PLAIN,ATM_GUI.FRAME_HEIGHT/10));
 
 		title.setVisible(true);
 		instruction.setVisible(true);
 		input.setVisible(true);
-		}
+	}
 
 
 	public void mainMenu(){
@@ -119,6 +118,13 @@ public class ATMScreen extends JPanel{
 		acceptInput = false;
 		title.setText("Main Menu");
 		instruction.setText("Select Option");
+
+		leftOne.setVisible(true);
+		leftTwo.setVisible(true);
+		leftThree.setVisible(true);
+		rightOne.setVisible(true);
+		rightTwo.setVisible(true);
+		rightThree.setVisible(true);
 	}
 
 	public void resetValues(){
@@ -158,6 +164,8 @@ public class ATMScreen extends JPanel{
 
 	public void cancel(){
 		input.setText("");
+		if (currentScreen != PIN_INPUT && currentScreen != WELCOME)
+			setCurrentScreen(MAIN_MENU);
 	}
 
 }
