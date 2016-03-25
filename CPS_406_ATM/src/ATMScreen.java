@@ -15,6 +15,7 @@ public class ATMScreen extends JPanel{
 	private boolean acceptInput;
 	protected int currentScreen;
 	int PINattempts = 0;
+	int currentAccount = 0;
 
 	protected static final int WELCOME = 0;
 	protected static final int PIN_INPUT = 1;
@@ -23,7 +24,11 @@ public class ATMScreen extends JPanel{
 	protected static final int CHECK_BALANCE_SAVINGS = 4;
 	protected static final int CHECK_BALANCE_CHEQUING = 5;
 	protected static final int CHANGE_PIN = 6;
-	protected static final int CHANGE_DISPLAY_LANGUAGE = 7;
+	protected static final int SELECT_ACCOUNT = 7;
+	protected static final int SELECT_ACCOUNT_CHEQUING = 71;
+	protected static final int SELECT_ACCOUNT_SAVINGS = 72;
+	protected static final int WITHDRAW = 8;
+	protected static final int CHANGE_DISPLAY_LANGUAGE = 9;
 	Timer timer;
 
 	public ATMScreen(int xPos, int yPos, int wth, int hth){
@@ -32,7 +37,7 @@ public class ATMScreen extends JPanel{
 		rightOneFunc = rightTwoFunc = rightThreeFunc = 0;
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		setSize(wth, hth);
-		setLocation(xPos, yPos);	
+		setLocation(xPos, yPos);
 		setBackground(Color.white);
 		JPanel ATMinstructions = new JPanel(new GridLayout(3,1));
 		title = new JLabel("TEST", JLabel.CENTER);
@@ -95,9 +100,22 @@ public class ATMScreen extends JPanel{
 		else if (screen == CHANGE_PIN){
 			changePIN();
 		}
+		else if(screen == SELECT_ACCOUNT){
+			selectAccount();
+		}
+		else if(screen == SELECT_ACCOUNT_CHEQUING){
+			withdraw(SELECT_ACCOUNT_CHEQUING);
+		}
+		else if(screen == SELECT_ACCOUNT_SAVINGS){
+			withdraw(SELECT_ACCOUNT_SAVINGS);
+		}
 		else if (screen == CHANGE_DISPLAY_LANGUAGE){
 			changeDisplayLanguage();
 		}
+	}
+
+	public void leftOneButton(){
+		leftOneFunc = 1 - leftOneFunc;
 	}
 
 	public void welcome(){
@@ -118,7 +136,7 @@ public class ATMScreen extends JPanel{
 		rightThree.setVisible(false);
 	}
 
-	private void inputPIN(){
+	public void inputPIN(){
 		inputString = "";
 		currentScreen = PIN_INPUT;
 		acceptInput = true;
@@ -146,7 +164,7 @@ public class ATMScreen extends JPanel{
 	}
 
 
-	private void mainMenu(){
+	public void mainMenu(){
 		resetValues();
 		currentScreen = MAIN_MENU;
 		acceptInput = false;
@@ -154,12 +172,14 @@ public class ATMScreen extends JPanel{
 		instruction.setText("Select Option");
 		leftOne.setText("Withdraw Money");
 		leftTwo.setText("Check Balance");
-		leftThree.setText("Transfer Funds/Pay Debt");
+		leftThree.setText("Transfer funds / Pay Debt");
 		rightOne.setText("Deposit Money");
 		rightTwo.setText("Change Pin");
 		rightThree.setText("Change Display Language");
 
+		leftOneFunc = SELECT_ACCOUNT;
 		leftTwoFunc = CHECK_BALANCE;
+
 		rightTwoFunc = CHANGE_PIN;
 		rightThreeFunc = CHANGE_DISPLAY_LANGUAGE;
 
@@ -171,7 +191,7 @@ public class ATMScreen extends JPanel{
 		rightThree.setVisible(true);
 	}
 
-	private void checkBalance(){
+	public void checkBalance(){
 		resetValues();
 		currentScreen = CHECK_BALANCE;
 		acceptInput = false;
@@ -185,7 +205,7 @@ public class ATMScreen extends JPanel{
 		rightTwo.setVisible(true);
 	}
 
-	private void checkBalanceSavings(){
+	public void checkBalanceSavings(){
 		resetValues();
 		currentScreen = CHECK_BALANCE_SAVINGS;
 		title.setText("Balance of Savings Account");
@@ -201,7 +221,7 @@ public class ATMScreen extends JPanel{
 		leftThreeFunc = MAIN_MENU;
 	}
 
-	private void checkBalanceChequing(){
+	public void checkBalanceChequing(){
 		resetValues();
 		currentScreen = CHECK_BALANCE_CHEQUING;
 		title.setText("Balance of Chequing Account");
@@ -217,7 +237,7 @@ public class ATMScreen extends JPanel{
 		leftThreeFunc = MAIN_MENU;
 	}
 
-	private void changePIN(){
+	public void changePIN(){
 		resetValues();
 		currentScreen = CHANGE_PIN;
 		title.setText("Change Pin");
@@ -231,6 +251,41 @@ public class ATMScreen extends JPanel{
 		leftOne.setText("Cancel");
 		leftOne.setVisible(true);
 		leftThreeFunc = MAIN_MENU;
+	}
+
+	public void  selectAccount(){
+		resetValues();
+		currentScreen = SELECT_ACCOUNT;
+		title.setText("Select Account");
+		instruction.setText("Select either Chequing or Savings account");
+		leftOne.setText("Chequing");
+		rightOne.setText("Savings");
+		leftOneFunc = SELECT_ACCOUNT_CHEQUING;
+		rightOneFunc = SELECT_ACCOUNT_SAVINGS;
+		leftOne.setVisible(true);
+		rightOne.setVisible(true);
+	}
+
+	/*
+
+	 */
+	public void withdraw(int accountType){
+		currentScreen = WITHDRAW;
+		currentAccount = accountType;
+		title.setText("Withdraw");
+		acceptInput = true;
+		instruction.setText("Enter withdrawal amount via num pad");
+		input.setVisible(true);
+	}
+
+	public void error(String msg){
+		resetValues();
+		title.setText("Error");
+		instruction.setText(msg);
+
+		leftOne.setText("Return to Main Menu");
+		leftOneFunc = MAIN_MENU;
+		leftOne.setVisible(true);
 	}
 
 	private void changeDisplayLanguage(){
@@ -250,7 +305,7 @@ public class ATMScreen extends JPanel{
 		rightThreeFunc = MAIN_MENU;
 	}
 
-	private void resetValues(){
+	public void resetValues(){
 		leftOneFunc = leftTwoFunc = leftThreeFunc = -1;
 		rightOneFunc = rightTwoFunc = rightThreeFunc = -1;
 		input.setText("");
@@ -322,10 +377,10 @@ public class ATMScreen extends JPanel{
 				}
 			}
 		}
-		/*
-		 *  Michael D'Anna
-		 * 	Use Case 10: User changes PIN
-		 */
+			/*
+			 *  Michael D'Anna
+			 * 	Use Case 10: User changes PIN
+			 */
 		if(currentScreen == CHANGE_PIN){
 			if(inputString.length() != 4){
 				instruction.setText("PIN must be 4 characters long");
@@ -334,6 +389,34 @@ public class ATMScreen extends JPanel{
 				ATM_GUI.accountDatabase.setPIN(Integer.parseInt(inputString));
 				setCurrentScreen(WELCOME);
 				ATMFields.debitCard.setX(ATMFields.debitCard.getX()-1000);
+			}
+		}
+		/*
+			Lionel Pereira
+			Use Case 7: User withdraws money
+		 */
+		if(currentScreen == WITHDRAW){
+			if(currentAccount == SELECT_ACCOUNT_CHEQUING ){
+				if(ATM_GUI.accountDatabase.getChequingBalance() > Double.parseDouble(input.getText())
+						&& input.getText().length() > 0){
+					ATM_GUI.accountDatabase.setChequingBalance(ATM_GUI.accountDatabase.getChequingBalance() -
+							Double.parseDouble(input.getText()));
+					checkBalanceChequing();
+				}
+				else{
+					error(Double.parseDouble(input.getText()) + "greater than current Chequing balance");
+				}
+			}
+			if(currentAccount == SELECT_ACCOUNT_SAVINGS ){
+				if(ATM_GUI.accountDatabase.getSavingsBalance() > Double.parseDouble(input.getText())
+						&& input.getText().length() > 0){
+					ATM_GUI.accountDatabase.setSavingsBalance(ATM_GUI.accountDatabase.getSavingsBalance() -
+							Double.parseDouble(input.getText()));
+					checkBalanceSavings();
+				}
+				else{
+					error(Double.parseDouble(input.getText()) + "greater than current Savings balance");
+				}
 			}
 		}
 
