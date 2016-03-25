@@ -277,9 +277,9 @@ public class ATMScreen extends JPanel{
 		input.setText("");
 		if (currentScreen == PIN_INPUT || currentScreen == WELCOME)
 			setCurrentScreen(WELCOME);
-		if (currentScreen != PIN_INPUT && currentScreen != WELCOME)
+		else if (currentScreen != PIN_INPUT && currentScreen != WELCOME)
 			setCurrentScreen(MAIN_MENU);
-		if (currentScreen == MAIN_MENU){
+		else if (currentScreen == MAIN_MENU){
 			setCurrentScreen(WELCOME);
 			ATMFields.debitCard.setX(ATMFields.debitCard.getX()-1000);
 		}
