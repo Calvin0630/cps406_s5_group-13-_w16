@@ -287,7 +287,10 @@ public class ATMScreen extends JPanel{
 		leftOneFunc = MAIN_MENU;
 		leftOne.setVisible(true);
 	}
-
+	/*
+	 * Daniel Jack
+	 * Use Case 16. Change Display Language
+	 */
 	private void changeDisplayLanguage(){
 		resetValues();
 		currentScreen = CHANGE_DISPLAY_LANGUAGE;
