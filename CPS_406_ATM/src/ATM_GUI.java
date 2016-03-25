@@ -214,10 +214,18 @@ public class ATM_GUI extends JFrame {
 				 */
 				if (screen.getCurrentScreen() == ATMScreen.WELCOME && selected.equals("debitCard"))
 				{
-					if (ATMFields.debitCard.getBounds().intersects(ATMFields.cardSlot.getBounds())){
-						ATMFields.debitCard.setVisible(false);
-						screen.setCurrentScreen(ATMScreen.PIN_INPUT);
-						ATMFields.debitCard.setX(ATMFields.debitCard.getX()+1000);
+					/*
+					 * Daniel Jack
+					 * Use Case 4.Card Read Error
+					 */
+					try{
+						if (ATMFields.debitCard.getBounds().intersects(ATMFields.cardSlot.getBounds())){
+							ATMFields.debitCard.setVisible(false);
+							screen.setCurrentScreen(ATMScreen.PIN_INPUT);
+							ATMFields.debitCard.setX(ATMFields.debitCard.getX()+1000);
+						}
+					}catch(Exception cardError){
+						JOptionPane.showMessageDialog(null, "Card insert error!");
 					}
 				}
 
