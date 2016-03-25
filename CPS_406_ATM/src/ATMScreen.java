@@ -389,7 +389,7 @@ public class ATMScreen extends JPanel{
 			}
 			else{
 				ATM_GUI.accountDatabase.setPIN(Integer.parseInt(inputString));
-				setCurrentScreen(WELCOME);
+				setCurrentScreen(MAIN_MENU);
 			}
 		}
 		/*
