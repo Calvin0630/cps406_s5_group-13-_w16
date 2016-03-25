@@ -23,6 +23,7 @@ public class ATMScreen extends JPanel{
 	protected static final int CHECK_BALANCE_SAVINGS = 4;
 	protected static final int CHECK_BALANCE_CHEQUING = 5;
 	protected static final int CHANGE_PIN = 6;
+	protected static final int CHANGE_DISPLAY_LANGUAGE = 7;
 	Timer timer;
 
 	public ATMScreen(int xPos, int yPos, int wth, int hth){
@@ -96,11 +97,7 @@ public class ATMScreen extends JPanel{
 		}
 	}
 
-	public void leftOneButton(){
-		leftOneFunc = 1 - leftOneFunc;
-	}
-
-	public void welcome(){
+	private void welcome(){
 		currentScreen = WELCOME;
 		acceptInput = false;
 		title.setText("Welcome to the ATM");
@@ -118,7 +115,7 @@ public class ATMScreen extends JPanel{
 		rightThree.setVisible(false);
 	}
 
-	public void inputPIN(){
+	private void inputPIN(){
 		inputString = "";
 		currentScreen = PIN_INPUT;
 		acceptInput = true;
@@ -146,7 +143,7 @@ public class ATMScreen extends JPanel{
 	}
 
 
-	public void mainMenu(){
+	private void mainMenu(){
 		resetValues();
 		currentScreen = MAIN_MENU;
 		acceptInput = false;
@@ -154,10 +151,10 @@ public class ATMScreen extends JPanel{
 		instruction.setText("Select Option");
 		leftOne.setText("Withdraw Money");
 		leftTwo.setText("Check Balance");
-		leftThree.setText("Transfer funds");
+		leftThree.setText("Transfer Funds/Pay Debt");
 		rightOne.setText("Deposit Money");
 		rightTwo.setText("Change Pin");
-		rightThree.setText("Pay Debt");
+		rightThree.setText("Change Display Language");
 
 		leftTwoFunc = CHECK_BALANCE;
 		
@@ -171,7 +168,7 @@ public class ATMScreen extends JPanel{
 		rightThree.setVisible(true);
 	}
 
-	public void checkBalance(){
+	private void checkBalance(){
 		resetValues();
 		currentScreen = CHECK_BALANCE;
 		acceptInput = false;
@@ -185,7 +182,7 @@ public class ATMScreen extends JPanel{
 		rightTwo.setVisible(true);
 	}
 
-	public void checkBalanceSavings(){
+	private void checkBalanceSavings(){
 		resetValues();
 		currentScreen = CHECK_BALANCE_SAVINGS;
 		title.setText("Balance of Savings Account");
@@ -201,7 +198,7 @@ public class ATMScreen extends JPanel{
 		leftThreeFunc = MAIN_MENU;
 	}
 
-	public void checkBalanceChequing(){
+	private void checkBalanceChequing(){
 		resetValues();
 		currentScreen = CHECK_BALANCE_CHEQUING;
 		title.setText("Balance of Chequing Account");
@@ -217,7 +214,7 @@ public class ATMScreen extends JPanel{
 		leftThreeFunc = MAIN_MENU;
 	}
 
-	public void changePIN(){
+	private void changePIN(){
 		resetValues();
 		currentScreen = CHANGE_PIN;
 		title.setText("Change Pin");
@@ -232,8 +229,12 @@ public class ATMScreen extends JPanel{
 		leftOne.setVisible(true);
 		leftThreeFunc = MAIN_MENU;
 	}
+	
+	private void changeDisplayLanguage(){
+		
+	}
 
-	public void resetValues(){
+	private void resetValues(){
 		leftOneFunc = leftTwoFunc = leftThreeFunc = -1;
 		rightOneFunc = rightTwoFunc = rightThreeFunc = -1;
 		input.setText("");
