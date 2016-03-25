@@ -2,12 +2,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.NumberFormat;
 
 public class ATMScreen extends JPanel{
 	private JLabel title, instruction, input;
 	protected JLabel leftOne, leftTwo, leftThree;
 	protected JLabel rightOne, rightTwo, rightThree;
 	private String inputString = "";
+	NumberFormat nf = NumberFormat.getCurrencyInstance();
 
 	protected static int leftOneFunc, leftTwoFunc, leftThreeFunc;
 	protected static int rightOneFunc, rightTwoFunc, rightThreeFunc;
@@ -207,7 +209,7 @@ public class ATMScreen extends JPanel{
 		currentScreen = CHECK_BALANCE_SAVINGS;
 		title.setText("Balance of Savings Account");
 		instruction.setText("Account Number: " + ATM_GUI.accountDatabase.getAccountNumber());
-		input.setText("$ " + ATM_GUI.accountDatabase.getSavingsBalance());
+		input.setText(nf.format(ATM_GUI.accountDatabase.getSavingsBalance()));
 		leftOne.setText("Return to Main Menu");
 		rightOne.setText("Print Reciept");
 		title.setVisible(true);
@@ -223,7 +225,7 @@ public class ATMScreen extends JPanel{
 		currentScreen = CHECK_BALANCE_CHEQUING;
 		title.setText("Balance of Chequing Account");
 		instruction.setText("Account Number: " + ATM_GUI.accountDatabase.getAccountNumber());
-		input.setText("$ " + ATM_GUI.accountDatabase.getChequingBalance());
+		input.setText(nf.format(ATM_GUI.accountDatabase.getChequingBalance()));
 		leftOne.setText("Return to Main Menu");
 		rightOne.setText("Print Reciept");
 		title.setVisible(true);
@@ -350,14 +352,13 @@ public class ATMScreen extends JPanel{
 
 	public void cancel(){
 		input.setText("");
-		if (currentScreen == PIN_INPUT || currentScreen == WELCOME)
-			setCurrentScreen(WELCOME);
+		if (currentScreen == PIN_INPUT)
+			exitSystem();
+		else if (currentScreen == MAIN_MENU){
+			exitSystem();
+		}
 		else if (currentScreen != PIN_INPUT && currentScreen != WELCOME)
 			setCurrentScreen(MAIN_MENU);
-		else if (currentScreen == MAIN_MENU){
-			setCurrentScreen(WELCOME);
-			ATMFields.debitCard.setX(ATMFields.debitCard.getX()-1000);
-		}
 	}
 
 	public void enter(){
@@ -379,10 +380,10 @@ public class ATMScreen extends JPanel{
 				}
 			}
 		}
-			/*
-			 *  Michael D'Anna
-			 * 	Use Case 10: User changes PIN
-			 */
+		/*
+		 *  Michael D'Anna
+		 * 	Use Case 10: User changes PIN
+		 */
 		if(currentScreen == CHANGE_PIN){
 			if(inputString.length() != 4){
 				instruction.setText("PIN must be 4 characters long");
