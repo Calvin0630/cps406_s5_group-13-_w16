@@ -324,6 +324,8 @@ public class ATMScreen extends JPanel{
 			/*
 			 *  Daniel Jack
 			 * 	Use Case 5: User enters PIN
+			 *  Michael D'Anna
+			 *	Use Case 10: User changes PIN
 			 */
 			if (currentScreen == PIN_INPUT || currentScreen == CHANGE_PIN){
 				if (inputString.length() < 4){
@@ -388,7 +390,6 @@ public class ATMScreen extends JPanel{
 			else{
 				ATM_GUI.accountDatabase.setPIN(Integer.parseInt(inputString));
 				setCurrentScreen(WELCOME);
-				ATMFields.debitCard.setX(ATMFields.debitCard.getX()-1000);
 			}
 		}
 		/*
