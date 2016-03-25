@@ -12,6 +12,7 @@ public class ATMScreen extends JPanel{
 
 	private boolean acceptInput;
 	protected int currentScreen;
+	int PINattempts = 0;
 
 	protected static final int WELCOME = 0;
 	protected static final int PIN_INPUT = 1;
@@ -35,7 +36,7 @@ public class ATMScreen extends JPanel{
 		input = new JLabel("Sample input", JLabel.CENTER);
 		input.setBackground(getBackground());
 		ATMinstructions.add(input);
-		ATMinstructions.setSize(wth, hth / 10);
+		ATMinstructions.setSize(wth, hth / 11);
 		add(ATMinstructions);
 
 		JPanel OptionText = new JPanel(new GridLayout(3, 2, wth / 3, hth / 6));
@@ -103,7 +104,7 @@ public class ATMScreen extends JPanel{
 		acceptInput = true;
 		title.setText("PIN INPUT");
 		instruction.setText("Enter PIN via number pad or tap phone on NFC");
-		input.setText("");
+		input.setText(" ");
 		input.setFont(new Font("Calibri",Font.PLAIN,ATM_GUI.FRAME_HEIGHT/10));
 
 		title.setVisible(true);
@@ -141,6 +142,10 @@ public class ATMScreen extends JPanel{
 
 	public void storeInput(String inp){
 		if(acceptInput) {
+			/*
+			 *  Daniel Jack
+			 * 	Use Case 5: User enters PIN
+			 */
 			if (currentScreen == PIN_INPUT){
 				if (inputString.length() < 4){
 					input.setText(input.getText() + "*");
@@ -164,8 +169,43 @@ public class ATMScreen extends JPanel{
 
 	public void cancel(){
 		input.setText("");
+		if (currentScreen == PIN_INPUT || currentScreen == WELCOME)
+			setCurrentScreen(WELCOME);
 		if (currentScreen != PIN_INPUT && currentScreen != WELCOME)
 			setCurrentScreen(MAIN_MENU);
+		if (currentScreen == MAIN_MENU){
+			setCurrentScreen(WELCOME);
+			ATMFields.debitCard.setX(ATMFields.debitCard.getX()-1000);
+		}
 	}
 
+	public void enter(){
+		if(currentScreen == PIN_INPUT){
+			if (Integer.parseInt(inputString) == ATM_GUI.accountDatabase.getPIN())
+				setCurrentScreen(MAIN_MENU);
+			else {
+				/*
+				 * Daniel Jack
+				 * Use Case 6: Incorrect PIN
+				 */
+				PINattempts++;
+				instruction.setText("Incorrect PIN, " + (5-PINattempts) + " attempts remaining.");
+				if (PINattempts == 5){
+					wait(1000);
+					setCurrentScreen(WELCOME);
+					PINattempts=0;
+					ATMFields.debitCard.setX(ATMFields.debitCard.getX()-1000);
+				}
+			}
+		}
+	}
+
+	public void wait(int delay){
+		try {
+			Thread.sleep(delay);
+		} catch(InterruptedException ex) {
+			Thread.currentThread().interrupt();
+		}
+
+	}
 }
