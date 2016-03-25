@@ -5,8 +5,8 @@ import java.awt.event.ActionListener;
 
 public class ATMScreen extends JPanel{
 	private JLabel title, instruction, input;
-	private JLabel leftOne, leftTwo, leftThree;
-	private JLabel rightOne, rightTwo, rightThree;
+	protected JLabel leftOne, leftTwo, leftThree;
+	protected JLabel rightOne, rightTwo, rightThree;
 	private String inputString = "";
 
 	protected static int leftOneFunc, leftTwoFunc, leftThreeFunc;
@@ -19,6 +19,10 @@ public class ATMScreen extends JPanel{
 	protected static final int WELCOME = 0;
 	protected static final int PIN_INPUT = 1;
 	protected static final int MAIN_MENU = 2;
+	protected static final int CHECK_BALANCE = 3;
+	protected static final int CHECK_BALANCE_SAVINGS = 4;
+	protected static final int CHECK_BALANCE_CHEQUING = 5;
+	protected static final int CHANGE_PIN = 6;
 	Timer timer;
 
 	public ATMScreen(int xPos, int yPos, int wth, int hth){
@@ -78,6 +82,15 @@ public class ATMScreen extends JPanel{
 		else if (screen == MAIN_MENU){
 			mainMenu();
 		}
+		else if(screen == CHECK_BALANCE){
+			checkBalance();
+		}
+		else if(screen == CHECK_BALANCE_SAVINGS){
+			checkBalanceSavings();
+		}
+		else if(screen == CHECK_BALANCE_CHEQUING){
+			checkBalanceChequing();
+		}
 	}
 
 	public void leftOneButton(){
@@ -135,6 +148,14 @@ public class ATMScreen extends JPanel{
 		acceptInput = false;
 		title.setText("Main Menu");
 		instruction.setText("Select Option");
+		leftOne.setText("Withdraw Money");
+		leftTwo.setText("Check Balance");
+		leftThree.setText("Transfer funds");
+		rightOne.setText("Deposit Money");
+		rightTwo.setText("Change Pin");
+		rightThree.setText("Pay Debt");
+
+		leftTwoFunc = CHECK_BALANCE;
 
 		leftOne.setVisible(true);
 		leftTwo.setVisible(true);
@@ -144,10 +165,67 @@ public class ATMScreen extends JPanel{
 		rightThree.setVisible(true);
 	}
 
+	public void checkBalance(){
+		resetValues();
+		currentScreen = CHECK_BALANCE;
+		acceptInput = false;
+		title.setText("Check Balance");
+		instruction.setText("Select account");
+		leftOne.setText("Savings");
+		rightOne.setText("Chequing");
+		leftOneFunc = CHECK_BALANCE_SAVINGS;
+		rightOneFunc = CHECK_BALANCE_CHEQUING;
+		leftOne.setVisible(true);
+		rightOne.setVisible(true);
+	}
+
+	public void checkBalanceSavings(){
+		resetValues();
+		currentScreen = CHECK_BALANCE_SAVINGS;
+		title.setText("Balance of Savings Account");
+		instruction.setText("Account Number: " + ATM_GUI.accountDatabase.getAccountNumber());
+		input.setText("$ " + ATM_GUI.accountDatabase.getSavingsBalance());
+		leftOne.setText("Return to Main Menu");
+		rightOne.setText("Print Reciept");
+		title.setVisible(true);
+		instruction.setVisible(true);
+		input.setVisible(true);
+		leftOne.setVisible(true);
+		rightOne.setVisible(true);
+		leftThreeFunc = MAIN_MENU;
+	}
+
+	public void checkBalanceChequing(){
+		resetValues();
+		currentScreen = CHECK_BALANCE_CHEQUING;
+		title.setText("Balance of Chequing Account");
+		instruction.setText("Account Number: " + ATM_GUI.accountDatabase.getAccountNumber());
+		input.setText("$ " + ATM_GUI.accountDatabase.getChequingBalance());
+		leftOne.setText("Return to Main Menu");
+		rightOne.setText("Print Reciept");
+		title.setVisible(true);
+		instruction.setVisible(true);
+		input.setVisible(true);
+		leftOne.setVisible(true);
+		rightOne.setVisible(true);
+		leftThreeFunc = MAIN_MENU;
+	}
+
+	public void changePIN(){
+		resetValues();
+		currentScreen = CHANGE_PIN;
+		title.setText("Change Pin");
+		instruction.setText("Enter new pin via num pad");
+		title.setVisible(true);
+		instruction.setVisible(true);
+		input.setVisible(true);
+	}
+
 	public void resetValues(){
-		leftOneFunc = leftTwoFunc = leftThreeFunc = 0;
-		rightOneFunc = rightTwoFunc = rightThreeFunc = 0;
+		leftOneFunc = leftTwoFunc = leftThreeFunc = -1;
+		rightOneFunc = rightTwoFunc = rightThreeFunc = -1;
 		input.setText("");
+		acceptInput = false;
 		leftOne.setVisible(false);
 		leftTwo.setVisible(false);
 		leftThree.setVisible(false);
