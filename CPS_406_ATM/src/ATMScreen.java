@@ -304,6 +304,10 @@ public class ATMScreen extends JPanel{
 				}
 			}
 		}
+			/*
+			 *  Michael D'Anna
+			 * 	Use Case 10: User changes PIN
+			 */
 		if(currentScreen == CHANGE_PIN){
 			if(inputString.length() != 4){
 				instruction.setText("PIN must be 4 characters long");
