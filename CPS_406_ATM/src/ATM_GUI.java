@@ -135,33 +135,33 @@ public class ATM_GUI extends JFrame {
 				screen.enter();
 			}
 			if(event.getSource().equals(screenLeftButtons.leftOne)){
-				if(screen.leftOneFunc != -1){
-					screen.setCurrentScreen(screen.leftOneFunc);
+				if(ATMScreen.leftOneFunc != -1){
+					screen.setCurrentScreen(ATMScreen.leftOneFunc);
 				}
 			}
 			if(event.getSource().equals(screenLeftButtons.leftTwo)){
-				if(screen.leftTwoFunc != -1){
-					screen.setCurrentScreen(screen.leftTwoFunc);
+				if(ATMScreen.leftTwoFunc != -1){
+					screen.setCurrentScreen(ATMScreen.leftTwoFunc);
 				}
 			}
 			if(event.getSource().equals(screenLeftButtons.leftThree)){
-				if(screen.leftThreeFunc != -1){
-					screen.setCurrentScreen(screen.leftThreeFunc);
+				if(ATMScreen.leftThreeFunc != -1){
+					screen.setCurrentScreen(ATMScreen.leftThreeFunc);
 				}
 			}
 			if(event.getSource().equals(screenRightButtons.rightOne)){
-				if(screen.rightOneFunc != -1){
-					screen.setCurrentScreen(screen.rightOneFunc);
+				if(ATMScreen.rightOneFunc != -1){
+					screen.setCurrentScreen(ATMScreen.rightOneFunc);
 				}
 			}
 			if(event.getSource().equals(screenRightButtons.rightTwo)){
-				if(screen.rightTwoFunc != -1){
-					screen.setCurrentScreen(screen.rightTwoFunc);
+				if(ATMScreen.rightTwoFunc != -1){
+					screen.setCurrentScreen(ATMScreen.rightTwoFunc);
 				}
 			}
 			if(event.getSource().equals(screenRightButtons.rightThree)){
-				if(screen.rightThreeFunc != -1){
-					screen.setCurrentScreen(screen.rightThreeFunc);
+				if(ATMScreen.rightThreeFunc != -1){
+					screen.setCurrentScreen(ATMScreen.rightThreeFunc);
 				}
 			}
 			repaint();
