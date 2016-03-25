@@ -162,13 +162,15 @@ public class ATM_GUI extends JFrame {
 			/*
 			 * Use Case #1 User accessing with phone.
 			 */
-			if (screen.getCurrentScreen() == ATMScreen.PIN_INPUT && selected.equals("NFCPhone")){
-				if (ATMFields.NFCPhone.getBounds().intersects(ATMFields.NFC.getBounds())){
-					if (ATMFields.NFCPhone.getPIN() == accountDatabase.getPIN()){
-						screen.setCurrentScreen(ATMScreen.MAIN_MENU);
+			try{
+				if (screen.getCurrentScreen() == ATMScreen.PIN_INPUT && selected.equals("NFCPhone")){
+					if (ATMFields.NFCPhone.getBounds().intersects(ATMFields.NFC.getBounds())){
+						if (ATMFields.NFCPhone.getPIN() == accountDatabase.getPIN()){
+							screen.setCurrentScreen(ATMScreen.MAIN_MENU);
+						}
 					}
 				}
-			}
+			}catch(Exception phone){}
 
 			repaint();
 		}
