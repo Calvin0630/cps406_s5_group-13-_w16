@@ -257,12 +257,12 @@ public class ATMScreen extends JPanel{
 		currentScreen = SELECT_ACCOUNT;
 		title.setText("Select Account");
 		instruction.setText("Select either Chequing or Savings account");
-		leftOne.setText("Chequing");
-		rightOne.setText("Savings");
-		leftOneFunc = SELECT_ACCOUNT_CHEQUING;
-		rightOneFunc = SELECT_ACCOUNT_SAVINGS;
-		leftOne.setVisible(true);
-		rightOne.setVisible(true);
+		rightTwo.setText("Chequing");
+		leftTwo.setText("Savings");
+		rightTwoFunc = SELECT_ACCOUNT_CHEQUING;
+		leftTwoFunc = SELECT_ACCOUNT_SAVINGS;
+		leftTwo.setVisible(true);
+		rightTwo.setVisible(true);
 	}
 
 	/*
