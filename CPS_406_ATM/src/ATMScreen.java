@@ -177,12 +177,12 @@ public class ATMScreen extends JPanel{
 		acceptInput = false;
 		title.setText("Check Balance");
 		instruction.setText("Select account");
-		leftOne.setText("Savings");
-		rightOne.setText("Chequing");
-		leftOneFunc = CHECK_BALANCE_SAVINGS;
-		rightOneFunc = CHECK_BALANCE_CHEQUING;
-		leftOne.setVisible(true);
-		rightOne.setVisible(true);
+		leftTwo.setText("Savings");
+		rightTwo.setText("Chequing");
+		leftTwoFunc = CHECK_BALANCE_SAVINGS;
+		rightTwoFunc = CHECK_BALANCE_CHEQUING;
+		leftTwo.setVisible(true);
+		rightTwo.setVisible(true);
 	}
 
 	public void checkBalanceSavings(){
