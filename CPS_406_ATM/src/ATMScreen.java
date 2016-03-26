@@ -248,14 +248,14 @@ public class ATMScreen extends JLayeredPane{
 		resetValues();
 		currentScreen = CHANGE_PIN;
 		title.setText("Change Pin");
-		instruction.setText("Enter new pin via num pad");
+		instruction.setText("Enter new pin via num pad.");
 		inputString = "";
 		input.setText(" ");
 		title.setVisible(true);
 		instruction.setVisible(true);
 		input.setVisible(true);
-		leftOne.setText("Cancel");
-		leftOne.setVisible(true);
+		leftThree.setText("Cancel");
+		leftThree.setVisible(true);
 		leftThreeFunc = MAIN_MENU;
 	}
 
@@ -263,7 +263,7 @@ public class ATMScreen extends JLayeredPane{
 		resetValues();
 		currentScreen = SELECT_ACCOUNT;
 		title.setText("Select Account");
-		instruction.setText("Select either Chequing or Savings account");
+		instruction.setText("Select either Chequing or Savings account.");
 		rightTwo.setText("Chequing");
 		leftTwo.setText("Savings");
 		rightTwoFunc = SELECT_ACCOUNT_CHEQUING;
