@@ -11,7 +11,7 @@ public class ATMOptionPanel extends JPanel {
     public ATMOptionPanel(ATM_GUI.ATMListener listener){
         super(new GridLayout(4, 1, 0, 10));
         setBackground(ATM_GUI.background);
-
+        setOpaque(false);
         int width = ATM_GUI.NUM_PAD_DIMENSION;
         int height = (ATM_GUI.NUM_PAD_DIMENSION - 30) / 4;
         enter = new JButton("ENTER");
