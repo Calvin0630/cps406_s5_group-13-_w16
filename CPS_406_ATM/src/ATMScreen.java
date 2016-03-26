@@ -55,20 +55,21 @@ public class ATMScreen extends JPanel{
 		add(ATMinstructions);
 
 		JPanel OptionText = new JPanel(new GridLayout(3, 2, wth / 3, hth / 6));
+
 		leftOne = new JLabel("LEFT ONE");
 		OptionText.add(leftOne);
-		rightOne = new JLabel("RIGHT ONE", JLabel.RIGHT);
-		OptionText.add(rightOne);
-
 		leftTwo = new JLabel("LEFT TWO");
 		OptionText.add(leftTwo);
-		rightTwo = new JLabel("RIGHT TWO", JLabel.RIGHT);
-		OptionText.add(rightTwo);
-
 		leftThree = new JLabel("LEFT THREE");
 		OptionText.add(leftThree);
+
+		rightOne = new JLabel("RIGHT ONE", JLabel.RIGHT);
+		OptionText.add(rightOne);
+		rightTwo = new JLabel("RIGHT TWO", JLabel.RIGHT);
+		OptionText.add(rightTwo);
 		rightThree = new JLabel("RIGHT THREE", JLabel.RIGHT);
 		OptionText.add(rightThree);
+
 		add(OptionText);
 		acceptInput = true;
 
