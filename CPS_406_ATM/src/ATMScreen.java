@@ -279,12 +279,12 @@ public class ATMScreen extends JPanel{
 
 	public void error(String msg){
 		resetValues();
-		title.setText("Error");
+		title.setText("Insufficient Funds");
 		instruction.setText(msg);
 
-		leftOne.setText("Return to Main Menu");
-		leftOneFunc = MAIN_MENU;
-		leftOne.setVisible(true);
+		rightThree.setText("Return to Main Menu");
+		rightThreeFunc = MAIN_MENU;
+		rightThree.setVisible(true);
 	}
 	/*
 	 * Daniel Jack
@@ -408,7 +408,7 @@ public class ATMScreen extends JPanel{
 					checkBalanceChequing();
 				}
 				else{
-					error(nf.format(Double.parseDouble(input.getText()) + "greater than current Chequing balance"));
+					error(nf.format(Double.parseDouble(input.getText())) + " is greater than current Chequing balance.");
 				}
 			}
 			if(currentAccount == SELECT_ACCOUNT_SAVINGS ){
@@ -419,7 +419,7 @@ public class ATMScreen extends JPanel{
 					checkBalanceSavings();
 				}
 				else{
-					error(nf.format(Double.parseDouble(input.getText())) + "greater than current Savings balance");
+					error(nf.format(Double.parseDouble(input.getText())) + " is greater than current Savings balance.");
 				}
 			}
 		}
