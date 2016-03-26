@@ -321,7 +321,7 @@ public class ATMScreen extends JLayeredPane{
 			input.setVisible(false);
 		leftOneFunc = leftTwoFunc = leftThreeFunc = -1;
 		rightOneFunc = rightTwoFunc = rightThreeFunc = -1;
-		input.setText("");
+		input.setText(" ");
 		inputString = "";
 		acceptInput = false;
 		leftOne.setVisible(false);
@@ -348,6 +348,7 @@ public class ATMScreen extends JLayeredPane{
 			}
 			else
 				input.setText(input.getText() + inp);
+			System.out.println(inputString);
 		}
 	}
 
@@ -363,11 +364,8 @@ public class ATMScreen extends JLayeredPane{
 
 	public void cancel(){
 		input.setText("");
-		if (currentScreen == PIN_INPUT)
+		if (currentScreen == PIN_INPUT || currentScreen == MAIN_MENU)
 			exitSystem();
-		else if (currentScreen == MAIN_MENU){
-			exitSystem();
-		}
 		else if (currentScreen != PIN_INPUT && currentScreen != WELCOME)
 			setCurrentScreen(MAIN_MENU);
 	}
@@ -376,6 +374,7 @@ public class ATMScreen extends JLayeredPane{
 		if(currentScreen == PIN_INPUT){
 			if (Integer.parseInt(inputString) == ATM_GUI.accountDatabase.getPIN()){
 				setCurrentScreen(MAIN_MENU);
+				inputString = "";
 				timer.stop();
 			}
 			else {
@@ -399,7 +398,7 @@ public class ATMScreen extends JLayeredPane{
 		 */
 		if(currentScreen == CHANGE_PIN){
 			if(inputString.length() != 4){
-				instruction.setText("PIN must be 4 characters long");
+				instruction.setText("PIN must be 4 characters long.");
 			}
 			else{
 				ATM_GUI.accountDatabase.setPIN(Integer.parseInt(inputString));
