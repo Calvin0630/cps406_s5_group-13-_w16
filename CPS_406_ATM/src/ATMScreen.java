@@ -32,13 +32,12 @@ public class ATMScreen extends JLayeredPane{
 	protected static final int WITHDRAW = 8;
 	protected static final int CHANGE_DISPLAY_LANGUAGE = 9;
 	Timer timer;
-/*	Set two different panels, use box layout to fill area above. */
+	
 	public ATMScreen(int xPos, int yPos, int wth, int hth){
 		super();
 		leftOneFunc = leftTwoFunc = leftThreeFunc = 0;
 		rightOneFunc = rightTwoFunc = rightThreeFunc = 0;
 		
-		//setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		setSize(wth, hth);
 		setLocation(xPos, yPos);
 		setBackground(Color.white);
@@ -76,7 +75,6 @@ public class ATMScreen extends JLayeredPane{
 		OptionText.add(rightThree);
 		add(OptionText, Integer.valueOf(1));
 		acceptInput = true;
-
 	}
 
 	public int getCurrentScreen(){
