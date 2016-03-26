@@ -408,7 +408,7 @@ public class ATMScreen extends JPanel{
 					checkBalanceChequing();
 				}
 				else{
-					error(Double.parseDouble(input.getText()) + "greater than current Chequing balance");
+					error(nf.format(Double.parseDouble(input.getText()) + "greater than current Chequing balance"));
 				}
 			}
 			if(currentAccount == SELECT_ACCOUNT_SAVINGS ){
@@ -419,7 +419,7 @@ public class ATMScreen extends JPanel{
 					checkBalanceSavings();
 				}
 				else{
-					error(Double.parseDouble(input.getText()) + "greater than current Savings balance");
+					error(nf.format(Double.parseDouble(input.getText())) + "greater than current Savings balance");
 				}
 			}
 		}
