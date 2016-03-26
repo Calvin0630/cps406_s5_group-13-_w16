@@ -169,18 +169,20 @@ public class ATMScreen extends JPanel{
 		acceptInput = false;
 		title.setText("Main Menu");
 		instruction.setText("Select Option");
-		leftOne.setText("Withdraw Money");
-		leftTwo.setText("Check Balance");
-		leftThree.setText("Transfer Funds / Pay Debt");
-		rightOne.setText("Deposit Money");
-		rightTwo.setText("Change Pin");
-		rightThree.setText("Change Display Language");
+		leftOne.setText("Deposit Money");
+		leftTwo.setText("Change Pin");
+		leftThree.setText("Change Language");
+		rightOne.setText("Withdraw Money");
+		rightTwo.setText("Check Balance");
+		rightThree.setText("Transfer Funds / Pay Debt");
 
-		leftOneFunc = SELECT_ACCOUNT;
-		leftTwoFunc = CHECK_BALANCE;
+		leftOneFunc = -1;
+		leftTwoFunc = CHANGE_PIN;
+		leftThreeFunc = CHANGE_DISPLAY_LANGUAGE;
 
-		rightTwoFunc = CHANGE_PIN;
-		rightThreeFunc = CHANGE_DISPLAY_LANGUAGE;
+		rightOneFunc = SELECT_ACCOUNT;
+		rightTwoFunc = CHECK_BALANCE;
+		rightThreeFunc = -1;
 
 		leftOne.setVisible(true);
 		leftTwo.setVisible(true);
