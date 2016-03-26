@@ -164,9 +164,9 @@ public class ATMScreen extends JPanel{
 
 
 	public void mainMenu(){
+		acceptInput = false;
 		resetValues();
 		currentScreen = MAIN_MENU;
-		acceptInput = false;
 		title.setText("Main Menu");
 		instruction.setText("Select Option");
 		leftOne.setText("Deposit Money");
@@ -193,9 +193,9 @@ public class ATMScreen extends JPanel{
 	}
 
 	public void checkBalance(){
+		acceptInput = false;
 		resetValues();
 		currentScreen = CHECK_BALANCE;
-		acceptInput = false;
 		title.setText("Check Balance");
 		instruction.setText("Select account");
 		leftTwo.setText("Savings");
@@ -239,13 +239,13 @@ public class ATMScreen extends JPanel{
 	}
 
 	public void changePIN(){
+		acceptInput = true;
 		resetValues();
 		currentScreen = CHANGE_PIN;
 		title.setText("Change Pin");
 		instruction.setText("Enter new pin via num pad");
 		inputString = "";
 		input.setText(" ");
-		acceptInput = true;
 		title.setVisible(true);
 		instruction.setVisible(true);
 		input.setVisible(true);
@@ -310,6 +310,10 @@ public class ATMScreen extends JPanel{
 	}
 
 	public void resetValues(){
+		if (acceptInput)
+			input.setVisible(true);
+		else
+			input.setVisible(false);
 		leftOneFunc = leftTwoFunc = leftThreeFunc = -1;
 		rightOneFunc = rightTwoFunc = rightThreeFunc = -1;
 		input.setText("");
@@ -402,27 +406,32 @@ public class ATMScreen extends JPanel{
 			Use Case 7: User withdraws money
 		 */
 		if(currentScreen == WITHDRAW){
-			if(currentAccount == SELECT_ACCOUNT_CHEQUING ){
-				if(ATM_GUI.accountDatabase.getChequingBalance() > Double.parseDouble(input.getText())
-						&& input.getText().length() > 0){
-					ATM_GUI.accountDatabase.setChequingBalance(ATM_GUI.accountDatabase.getChequingBalance() -
-							Double.parseDouble(input.getText()));
-					checkBalanceChequing();
+			if (Double.parseDouble(input.getText()) % 20 == 0 && Double.parseDouble(input.getText()) >= 20.00){
+				if(currentAccount == SELECT_ACCOUNT_CHEQUING ){
+					if(ATM_GUI.accountDatabase.getChequingBalance() > Double.parseDouble(input.getText())
+							&& input.getText().length() > 0){
+						ATM_GUI.accountDatabase.setChequingBalance(ATM_GUI.accountDatabase.getChequingBalance() -
+								Double.parseDouble(input.getText()));
+						checkBalanceChequing();
+					}
+					else{
+						error(nf.format(Double.parseDouble(input.getText())) + " is greater than current Chequing balance.");
+					}
 				}
-				else{
-					error(nf.format(Double.parseDouble(input.getText())) + " is greater than current Chequing balance.");
+				if(currentAccount == SELECT_ACCOUNT_SAVINGS ){
+					if(ATM_GUI.accountDatabase.getSavingsBalance() > Double.parseDouble(input.getText())
+							&& input.getText().length() > 0){
+						ATM_GUI.accountDatabase.setSavingsBalance(ATM_GUI.accountDatabase.getSavingsBalance() -
+								Double.parseDouble(input.getText()));
+						checkBalanceSavings();
+					}
+					else{
+						error(nf.format(Double.parseDouble(input.getText())) + " is greater than current Savings balance.");
+					}
 				}
 			}
-			if(currentAccount == SELECT_ACCOUNT_SAVINGS ){
-				if(ATM_GUI.accountDatabase.getSavingsBalance() > Double.parseDouble(input.getText())
-						&& input.getText().length() > 0){
-					ATM_GUI.accountDatabase.setSavingsBalance(ATM_GUI.accountDatabase.getSavingsBalance() -
-							Double.parseDouble(input.getText()));
-					checkBalanceSavings();
-				}
-				else{
-					error(nf.format(Double.parseDouble(input.getText())) + " is greater than current Savings balance.");
-				}
+			else {
+				instruction.setText("Amount must be in multiple of $20.");
 			}
 		}
 
