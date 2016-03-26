@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.NumberFormat;
 
-public class ATMScreen extends JPanel{
+public class ATMScreen extends JLayeredPane{
 	private JLabel title, instruction, input;
 	protected JLabel leftOne, leftTwo, leftThree;
 	protected JLabel rightOne, rightTwo, rightThree;
@@ -32,15 +32,17 @@ public class ATMScreen extends JPanel{
 	protected static final int WITHDRAW = 8;
 	protected static final int CHANGE_DISPLAY_LANGUAGE = 9;
 	Timer timer;
-
+/*	Set two different panels, use box layout to fill area above. */
 	public ATMScreen(int xPos, int yPos, int wth, int hth){
 		super();
 		leftOneFunc = leftTwoFunc = leftThreeFunc = 0;
 		rightOneFunc = rightTwoFunc = rightThreeFunc = 0;
-		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+		
+		//setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		setSize(wth, hth);
 		setLocation(xPos, yPos);
 		setBackground(Color.white);
+		setOpaque(true);
 		JPanel ATMinstructions = new JPanel(new GridLayout(3,1));
 		title = new JLabel("TEST", JLabel.CENTER);
 		title.setFont(new Font("Times New Roman", Font.PLAIN,ATM_GUI.FRAME_HEIGHT/25));
@@ -51,11 +53,13 @@ public class ATMScreen extends JPanel{
 		input = new JLabel("Sample input", JLabel.CENTER);
 		input.setBackground(getBackground());
 		ATMinstructions.add(input);
-		ATMinstructions.setSize(wth, hth / 11);
-		add(ATMinstructions);
+		ATMinstructions.setSize(wth, hth);
+		ATMinstructions.setOpaque(false);
+		add(ATMinstructions, Integer.valueOf(2));
 
-		JPanel OptionText = new JPanel(new GridLayout(3, 2, wth / 3, hth / 6));
-		
+		JPanel OptionText = new JPanel(new GridLayout(3, 2, wth / 3, hth / 5));
+		OptionText.setBounds(0, getHeight()/3,wth, hth*3/5 );
+		OptionText.setOpaque(false);
 		leftOne = new JLabel("LEFT ONE");
 		OptionText.add(leftOne);
 		rightOne = new JLabel("RIGHT ONE", JLabel.RIGHT);
@@ -70,7 +74,7 @@ public class ATMScreen extends JPanel{
 		OptionText.add(leftThree);
 		rightThree = new JLabel("RIGHT THREE", JLabel.RIGHT);
 		OptionText.add(rightThree);
-		add(OptionText);
+		add(OptionText, Integer.valueOf(1));
 		acceptInput = true;
 
 	}
