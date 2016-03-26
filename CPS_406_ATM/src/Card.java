@@ -65,8 +65,10 @@ public class Card extends JComponent implements ATMMovableFields{
 
 	@Override
 	public void moveField(MouseEvent event) {
-		setX((int)event.getPoint().getX()-width/2);
-		setY((int)event.getPoint().getY()-height/2);
+		if ((event.getPoint().getX() - width/2) > (ATM_GUI.FRAME_WIDTH/2)) {
+			setX((int)event.getPoint().getX()-width/2);
+			setY((int)event.getPoint().getY()-height/2);
+		}
 	}
 
 	@Override
