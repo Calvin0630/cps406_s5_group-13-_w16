@@ -171,7 +171,7 @@ public class ATMScreen extends JPanel{
 		instruction.setText("Select Option");
 		leftOne.setText("Withdraw Money");
 		leftTwo.setText("Check Balance");
-		leftThree.setText("Transfer funds / Pay Debt");
+		leftThree.setText("Transfer Funds / Pay Debt");
 		rightOne.setText("Deposit Money");
 		rightTwo.setText("Change Pin");
 		rightThree.setText("Change Display Language");
