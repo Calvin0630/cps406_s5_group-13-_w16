@@ -32,13 +32,12 @@ public class ATMScreen extends JLayeredPane{
 	protected static final int WITHDRAW = 8;
 	protected static final int CHANGE_DISPLAY_LANGUAGE = 9;
 	Timer timer;
-/*	Set two different panels, use box layout to fill area above. */
+
 	public ATMScreen(int xPos, int yPos, int wth, int hth){
 		super();
 		leftOneFunc = leftTwoFunc = leftThreeFunc = 0;
 		rightOneFunc = rightTwoFunc = rightThreeFunc = 0;
-		
-		//setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+
 		setSize(wth, hth);
 		setLocation(xPos, yPos);
 		setBackground(Color.white);
@@ -76,7 +75,6 @@ public class ATMScreen extends JLayeredPane{
 		OptionText.add(rightThree);
 		add(OptionText, Integer.valueOf(1));
 		acceptInput = true;
-
 	}
 
 	public int getCurrentScreen(){
@@ -175,7 +173,7 @@ public class ATMScreen extends JLayeredPane{
 		title.setText("Main Menu");
 		instruction.setText("Select Option");
 		leftOne.setText("Deposit Money");
-		leftTwo.setText("Change Pin");
+		leftTwo.setText("Change PIN");
 		leftThree.setText("Change Language");
 		rightOne.setText("Withdraw Money");
 		rightTwo.setText("Check Balance");
@@ -247,8 +245,8 @@ public class ATMScreen extends JLayeredPane{
 		acceptInput = true;
 		resetValues();
 		currentScreen = CHANGE_PIN;
-		title.setText("Change Pin");
-		instruction.setText("Enter new pin via num pad.");
+		title.setText("Change PIN");
+		instruction.setText("Enter new PIN via num pad.");
 		inputString = "";
 		input.setText(" ");
 		title.setVisible(true);
@@ -323,7 +321,6 @@ public class ATMScreen extends JLayeredPane{
 		rightOneFunc = rightTwoFunc = rightThreeFunc = -1;
 		input.setText(" ");
 		inputString = "";
-		acceptInput = false;
 		leftOne.setVisible(false);
 		leftTwo.setVisible(false);
 		leftThree.setVisible(false);
@@ -348,7 +345,7 @@ public class ATMScreen extends JLayeredPane{
 			}
 			else
 				input.setText(input.getText() + inp);
-			System.out.println(inputString);
+			System.out.println(currentScreen);
 		}
 	}
 
@@ -454,6 +451,5 @@ public class ATMScreen extends JLayeredPane{
 		} catch(InterruptedException ex) {
 			Thread.currentThread().interrupt();
 		}
-
 	}
 }
