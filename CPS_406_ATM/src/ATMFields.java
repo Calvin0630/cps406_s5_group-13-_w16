@@ -74,17 +74,17 @@ class ATMFields extends JComponent {
 		g2.drawString("Tap NFC Phone", (int)(NFC.getX()+NFC.getWidth()/4), (int)NFC.getCenterY());
 	}
 
-	public static void displayWithdraw(String valueString){
-		int value = Integer.parseInt(valueString);
+	public static void displayWithdraw(int amount){
 		int xP = (int)cashDispensor.getX();
 		int yP = (int)cashDispensor.getY();
-		bills = new Cash [value/20];
+		bills = new Cash [amount/20];
 		for (int i = 0 ; i < bills.length ; i++){
 			xP += 10;
 			yP += 10;
 			bills[i] = new Cash (20,xP,yP);
 		}
 	}
+
 
 	protected void paintComponent(Graphics g){
 		super.paintComponent(g);
