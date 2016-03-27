@@ -260,8 +260,8 @@ public class ATMScreen extends JLayeredPane{
 		resetValues();
 		currentScreen = CHECK_BALANCE_SAVINGS;
 		title.setText("Balance of Savings Account");
-		instruction.setText("Account Number: " + String.format("%011d",ATM_GUI.accountDatabase.getAccountNumber()));
-		input.setText(nf.format(ATM_GUI.accountDatabase.getSavingsBalance()));
+		instruction.setText("Account Number: " + String.format("%011d",ATM_GUI.accountDatabase.activeAccount.getAccountNumber()));
+		input.setText(nf.format(ATM_GUI.accountDatabase.activeAccount.getSavingsBalance()));
 		leftThree.setText("Main Menu");
 		rightOne.setText("Print Reciept");
 		rightThree.setText("<html>Exit<br>Output Bills</html>");
@@ -283,8 +283,8 @@ public class ATMScreen extends JLayeredPane{
 		resetValues();
 		currentScreen = CHECK_BALANCE_CHEQUING;
 		title.setText("Balance of Chequing Account");
-		instruction.setText("Account Number: " + String.format("%011d",ATM_GUI.accountDatabase.getAccountNumber()));
-		input.setText(nf.format(ATM_GUI.accountDatabase.getChequingBalance()));
+		instruction.setText("Account Number: " + String.format("%011d",ATM_GUI.accountDatabase.activeAccount.getAccountNumber()));
+		input.setText(nf.format(ATM_GUI.accountDatabase.activeAccount.getChequingBalance()));
 		leftThree.setText("Main Menu");
 		rightOne.setText("Print Reciept");
 		rightThree.setText("<html>Exit<br>Output Bills</html>");
@@ -420,7 +420,7 @@ public class ATMScreen extends JLayeredPane{
 		internalWithdrawal = true;
 		title.setText("Pay Bills");
 		instruction.setText("Credit balance:");
-		input.setText(nf.format(ATM_GUI.accountDatabase.getCreditDebt()));
+		input.setText(nf.format(ATM_GUI.accountDatabase.activeAccount.getCreditDebt()));
 		input.setVisible(true);
 		leftTwo.setText("Pay from Savings Account");
 		rightTwo.setText("Pay from Chequing Account");
@@ -482,16 +482,16 @@ public class ATMScreen extends JLayeredPane{
 	private void depositToAccount(int accountType){
 		if (accountType == DEPOSIT_SAVINGS){
 			if (cash)
-				ATM_GUI.accountDatabase.setSavingsBalance(ATM_GUI.accountDatabase.getSavingsBalance() + ATMFields.twentyBill.getValue());
+				ATM_GUI.accountDatabase.activeAccount.setSavingsBalance(ATM_GUI.accountDatabase.activeAccount.getSavingsBalance() + ATMFields.twentyBill.getValue());
 			else if (cheque)
-				ATM_GUI.accountDatabase.setSavingsBalance(ATM_GUI.accountDatabase.getSavingsBalance() + ATMFields.cheque.getValue());
+				ATM_GUI.accountDatabase.activeAccount.setSavingsBalance(ATM_GUI.accountDatabase.activeAccount.getSavingsBalance() + ATMFields.cheque.getValue());
 			checkBalanceSavings();
 		}
 		if (accountType == DEPOSIT_CHEQUING){
 			if (cash)
-				ATM_GUI.accountDatabase.setChequingBalance(ATM_GUI.accountDatabase.getChequingBalance() + ATMFields.twentyBill.getValue());
+				ATM_GUI.accountDatabase.activeAccount.setChequingBalance(ATM_GUI.accountDatabase.activeAccount.getChequingBalance() + ATMFields.twentyBill.getValue());
 			else if (cheque)
-				ATM_GUI.accountDatabase.setChequingBalance(ATM_GUI.accountDatabase.getChequingBalance() + ATMFields.cheque.getValue());
+				ATM_GUI.accountDatabase.activeAccount.setChequingBalance(ATM_GUI.accountDatabase.activeAccount.getChequingBalance() + ATMFields.cheque.getValue());
 			checkBalanceChequing();
 		}
 	}
@@ -543,7 +543,7 @@ public class ATMScreen extends JLayeredPane{
 
 	public void enter(){
 		if(currentScreen == PIN_INPUT){
-			if (Integer.parseInt(inputString) == ATM_GUI.accountDatabase.getPIN()){
+			if (Integer.parseInt(inputString) == ATM_GUI.accountDatabase.activeAccount.getPIN()){
 				setCurrentScreen(MAIN_MENU);
 				inputString = "";
 				timer.stop();
@@ -572,7 +572,7 @@ public class ATMScreen extends JLayeredPane{
 				instruction.setText("PIN must be 4 characters long.");
 			}
 			else{
-				ATM_GUI.accountDatabase.setPIN(Integer.parseInt(inputString));
+				ATM_GUI.accountDatabase.activeAccount.setPIN(Integer.parseInt(inputString));
 				setCurrentScreen(MAIN_MENU);
 			}
 		}
@@ -608,12 +608,12 @@ public class ATMScreen extends JLayeredPane{
 	 * Use Case 8: Invalid amount
 	 */
 	private void validChequingWithdraw(String value){
-		if(ATM_GUI.accountDatabase.getChequingBalance() > Double.parseDouble(input.getText())
+		if(ATM_GUI.accountDatabase.activeAccount.getChequingBalance() > Double.parseDouble(input.getText())
 				&& input.getText().length() > 0){
-			ATM_GUI.accountDatabase.setChequingBalance(ATM_GUI.accountDatabase.getChequingBalance() -
+			ATM_GUI.accountDatabase.activeAccount.setChequingBalance(ATM_GUI.accountDatabase.activeAccount.getChequingBalance() -
 					Double.parseDouble(input.getText()));
 			if (internalWithdrawal)
-				ATM_GUI.accountDatabase.setCreditDebt(ATM_GUI.accountDatabase.getCreditDebt()-Double.parseDouble(input.getText()));
+				ATM_GUI.accountDatabase.activeAccount.setCreditDebt(ATM_GUI.accountDatabase.activeAccount.getCreditDebt()-Double.parseDouble(input.getText()));
 			addWithdrawTotal(input.getText());
 			checkBalanceChequing();
 		}
@@ -625,12 +625,12 @@ public class ATMScreen extends JLayeredPane{
 	 * Use Case 8: Invalid amount
 	 */
 	private void validSavingsWithdraw(String value){
-		if(ATM_GUI.accountDatabase.getSavingsBalance() > Double.parseDouble(value)
+		if(ATM_GUI.accountDatabase.activeAccount.getSavingsBalance() > Double.parseDouble(value)
 				&& value.length() > 0){
-			ATM_GUI.accountDatabase.setSavingsBalance(ATM_GUI.accountDatabase.getSavingsBalance() -
+			ATM_GUI.accountDatabase.activeAccount.setSavingsBalance(ATM_GUI.accountDatabase.activeAccount.getSavingsBalance() -
 					Double.parseDouble(value));
 			if (internalWithdrawal)
-				ATM_GUI.accountDatabase.setCreditDebt(ATM_GUI.accountDatabase.getCreditDebt()-Double.parseDouble(input.getText()));
+				ATM_GUI.accountDatabase.activeAccount.setCreditDebt(ATM_GUI.accountDatabase.activeAccount.getCreditDebt()-Double.parseDouble(input.getText()));
 			addWithdrawTotal(value);
 			checkBalanceSavings();
 		}

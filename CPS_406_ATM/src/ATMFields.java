@@ -30,8 +30,8 @@ class ATMFields extends JComponent {
 		nonNFCPhone = new Phone (false,ATM_GUI.FRAME_WIDTH-ATM_GUI.NUM_PAD_DIMENSION*3/2,
 				10,0,0);
 		NFCPhone = new Phone (true,ATM_GUI.FRAME_WIDTH-ATM_GUI.NUM_PAD_DIMENSION*3/4,
-				10,ATM_GUI.accountDatabase.getPIN(),ATM_GUI.accountDatabase.getAccountNumber());
-		debitCard = new Card (ATM_GUI.accountDatabase.getAccountNumber(),
+				10,ATM_GUI.accountDatabase.activeAccount.getPIN(),ATM_GUI.accountDatabase.activeAccount.getAccountNumber());
+		debitCard = new Card (ATM_GUI.accountDatabase.activeAccount.getAccountNumber(),
 				ATM_GUI.FRAME_WIDTH-ATM_GUI.NUM_PAD_DIMENSION*4/3,
 				ATM_GUI.FRAME_HEIGHT/3);
 		twentyBill = new Cash (20,ATM_GUI.FRAME_WIDTH-ATM_GUI.NUM_PAD_DIMENSION*5/3,

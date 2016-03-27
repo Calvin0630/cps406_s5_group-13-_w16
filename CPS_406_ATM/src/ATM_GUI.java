@@ -77,12 +77,15 @@ public class ATM_GUI extends JFrame {
 				int result = JOptionPane.showConfirmDialog(null, panel, "Welcome!",
 						JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 				if (result == JOptionPane.OK_OPTION) {
-
-					accountDatabase.setPIN(Integer.parseInt(pinField.getText()));
-					accountDatabase.setSavingsBalance((Double.parseDouble(saveField.getText())));
-					accountDatabase.setChequingBalance((Double.parseDouble(chequeField.getText())));
-					accountDatabase.setCreditDebt(Double.parseDouble(creditField.getText()));
-					accountDatabase.setAccountNumber(0001);
+					Account account = new Account();
+					account.setSavingsBalance((Double.parseDouble(saveField.getText())));
+					account.setPIN(Integer.parseInt(pinField.getText()));
+					account.setChequingBalance((Double.parseDouble(chequeField.getText())));
+					account.setCreditDebt(Double.parseDouble(creditField.getText()));
+					account.setAccountNumber(0001);
+					accountDatabase = new AccountDatabase();
+					accountDatabase.addAcount(account);
+					accountDatabase.activeAccount = account;
 					error = false;
 				} else {
 					System.exit(1);
@@ -215,7 +218,7 @@ public class ATM_GUI extends JFrame {
 			try{
 				if (screen.getCurrentScreen() == ATMScreen.PIN_INPUT && selected.equals("NFCPhone")){
 					if (ATMFields.NFCPhone.getBounds().intersects(ATMFields.NFC.getBounds())){
-						if (ATMFields.NFCPhone.getPIN() == accountDatabase.getPIN()){
+						if (ATMFields.NFCPhone.getPIN() == accountDatabase.activeAccount.getPIN()){
 							screen.setCurrentScreen(ATMScreen.MAIN_MENU);
 						}
 					}

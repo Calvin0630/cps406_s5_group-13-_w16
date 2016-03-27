@@ -1,57 +1,20 @@
+import java.util.ArrayList;
+
 public class AccountDatabase {
-	private double savingsBalance;
-	private double chequingBalance;
-	private double creditDebt;
-	private int accountNumber;
-	private int PIN;
-
-	public AccountDatabase (int newAccountNumber, int newPIN){
-		savingsBalance = chequingBalance = 0;
-		this.accountNumber = newAccountNumber;
-		this.PIN = newPIN;
-	}
-
-	public AccountDatabase (){
-		return;
-	}
-
-	public int getPIN (){
-		return PIN;
-	}
-
-	public void setPIN(int newPIN){
-		PIN = newPIN;
-	}
-
-	public int getAccountNumber (){
-		return accountNumber;
+	//a list of all accounts
+	public ArrayList<Account> accounts;
+	//the account that the ATM is "using"
+	public static Account activeAccount;
+	
+	public AccountDatabase() {
+		accounts = new ArrayList<Account>();
 	}
 	
-	public void setAccountNumber (int accntNmbr){
-		accountNumber = accntNmbr;
-	}
-
-	public double getSavingsBalance(){
-		return savingsBalance;
-	}
-
-	public void setSavingsBalance(double newBalance){
-		savingsBalance = newBalance;
-	}
-
-	public double getChequingBalance(){
-		return chequingBalance;
-	}
-
-	public void setChequingBalance(double newBalance){
-		chequingBalance = newBalance;
+	public void addAcount(Account a) {
+		accounts.add(a);
 	}
 	
-	public double getCreditDebt(){
-		return creditDebt;
-	}
-
-	public void setCreditDebt(double debt){
-		creditDebt = debt;
+	public static void setActiveAccount(Account a) {
+		activeAccount = a;
 	}
 }

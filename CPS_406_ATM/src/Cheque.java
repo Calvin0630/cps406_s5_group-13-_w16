@@ -92,7 +92,7 @@ public class Cheque extends JComponent implements ATMMovableFields{
 		g2.drawString(form.format(getValue()), xPos+width*3/4, (int)body.getCenterY());
 		g2.drawLine(xPos+width/10, (int)body.getCenterY(), xPos+width*2/3, (int)body.getCenterY());
 		g2.drawString(df.format(dateobj), xPos+width*3/4, yPos + height/4);
-		g2.drawString(String.format("%011d", ATM_GUI.accountDatabase.getAccountNumber()) + ":"
+		g2.drawString(String.format("%011d", ATM_GUI.accountDatabase.activeAccount.getAccountNumber()) + ":"
 				+ String.format("%03d", chequeNum), 
 				xPos+width/20, yPos+height-width/20);
 		g2.drawLine(xPos+width/10, yPos+height*3/4, xPos+width*4/10, yPos+height*3/4);

@@ -7,10 +7,10 @@ import java.awt.*;
  */
 public class ATMRightScreenButtons extends JPanel{
 
-    protected BasicArrowButton rightOne, rightTwo, rightThree;
+    protected BasicArrowButton rightOne, rightTwo, rightThree, rightFour;
 
     public ATMRightScreenButtons(ATMScreen screen, ATM_GUI.ATMListener listener){
-        super(new GridLayout(3, 1, 0, screen.getHeight() / 10));
+        super(new GridLayout(4, 1, 0, screen.getHeight() / 10));
         setBackground(ATM_GUI.background);
 
         rightOne = new BasicArrowButton(BasicArrowButton.WEST);
@@ -27,6 +27,11 @@ public class ATMRightScreenButtons extends JPanel{
         rightThree.setBackground(ATM_GUI.buttonsBackColor);
         rightThree.addActionListener(listener);
         add(rightThree);
+        
+        rightFour = new BasicArrowButton(BasicArrowButton.WEST);
+        rightFour.setBackground(ATM_GUI.buttonsBackColor);
+        rightFour.addActionListener(listener);
+        add(rightFour);
 
         setSize(screen.getX() / 2, screen.getY() + screen.getHeight() * 3 / 7);
         setLocation(screen.getX() + screen.getWidth() + 10 , screen.getY()+screen.getHeight() * 3/10);
