@@ -10,6 +10,7 @@ class ATMFields extends JComponent {
 	public static Card debitCard;
 	public static Cash twentyBill;
 	public static Cheque cheque;
+	public static Graphics2D g2;
 
 	public ATMFields (){
 		cashDispensor = new Rectangle((int) (ATM_GUI.FRAME_WIDTH/2),
@@ -39,7 +40,7 @@ class ATMFields extends JComponent {
 		setOpaque(false);
 	}
 
-	public void drawPrinter(Graphics2D g2){
+	private void drawPrinter(Graphics2D g2){
 		g2.draw(printer);
 		g2.fillRect((int)(printer.getX()+printer.getWidth()/4), 
 				(int)(printer.getY()+printer.getHeight()*2/3),
@@ -47,7 +48,7 @@ class ATMFields extends JComponent {
 		g2.drawString("Printer", (int)(printer.getX()+printer.getWidth()/4), 
 				(int)(printer.getY()+printer.getHeight()*2/3) - 10);
 	}
-	public void drawCashDispensor(Graphics2D g2){
+	private void drawCashDispensor(Graphics2D g2){
 		g2.draw(cashDispensor);
 		g2.fillRect((int)(cashDispensor.getX()+cashDispensor.getWidth()/8), 
 				(int)(cashDispensor.getY()+cashDispensor.getHeight()*2/3),
@@ -55,7 +56,7 @@ class ATMFields extends JComponent {
 		g2.drawString("Cash Dispensor", (int)(cashDispensor.getX()+cashDispensor.getWidth()/4), 
 				(int)(cashDispensor.getY()+cashDispensor.getHeight()*2/3) - 10);
 	}
-	public void drawCardSlot(Graphics2D g2){
+	private void drawCardSlot(Graphics2D g2){
 		g2.draw(cardSlot);
 		g2.fillRect((int)(cardSlot.getX()+cardSlot.getWidth()/4), 
 				(int)(cardSlot.getY()+cardSlot.getHeight()*2/3),
@@ -63,7 +64,7 @@ class ATMFields extends JComponent {
 		g2.drawString("Insert Card", (int)(cardSlot.getX()+cardSlot.getWidth()/4), 
 				(int)(cardSlot.getY()+cardSlot.getHeight()*2/3) - 10);
 	}
-	public void drawNFC(Graphics2D g2){
+	private void drawNFC(Graphics2D g2){
 		double r = cardSlot.getWidth()*2/3;
 		NFC = new Ellipse2D.Double(cardSlot.getX() + cardSlot.getWidth()/6,
 				cardSlot.getMaxY()+r/10,
@@ -72,9 +73,11 @@ class ATMFields extends JComponent {
 		g2.drawString("Tap NFC Phone", (int)(NFC.getX()+NFC.getWidth()/4), (int)NFC.getCenterY());
 	}
 
+
+	
 	protected void paintComponent(Graphics g){
 		super.paintComponent(g);
-		Graphics2D g2 = (Graphics2D) g;
+		g2 = (Graphics2D) g;
 		g2.setColor(ATM_GUI.background);
 		g2.fillRect(0,0,(int)ATM_GUI.screenSize.getWidth(),(int)ATM_GUI.screenSize.getHeight());
 		g2.setColor(Color.black);
