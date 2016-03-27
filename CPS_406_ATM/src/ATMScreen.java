@@ -16,8 +16,9 @@ public class ATMScreen extends JLayeredPane{
 
 	private boolean acceptInput;
 	protected int currentScreen;
-	int PINattempts = 0;
-	int currentAccount = 0;
+	private int PINattempts = 0;
+	private int currentAccount = 0;
+	private int withdrawTotal = 0;
 
 	protected static final int WELCOME = 0;
 	protected static final int PIN_INPUT = 1;
@@ -31,6 +32,7 @@ public class ATMScreen extends JLayeredPane{
 	protected static final int SELECT_ACCOUNT_SAVINGS = 72;
 	protected static final int WITHDRAW = 8;
 	protected static final int CHANGE_DISPLAY_LANGUAGE = 9;
+	protected static final int EXIT_SYSTEM = 99;
 	Timer timer;
 
 	public ATMScreen(int xPos, int yPos, int wth, int hth){
@@ -117,6 +119,9 @@ public class ATMScreen extends JLayeredPane{
 		else if (screen == CHANGE_DISPLAY_LANGUAGE){
 			changeDisplayLanguage();
 		}
+		else if (screen == EXIT_SYSTEM){
+			exitSystem();
+		}
 	}
 
 
@@ -171,7 +176,7 @@ public class ATMScreen extends JLayeredPane{
 		resetValues();
 		currentScreen = MAIN_MENU;
 		title.setText("Main Menu");
-		instruction.setText("Select Option");
+		instruction.setText("<html>Select Option<br>(Cancel to exit.)</html>");
 		leftOne.setText("Deposit Money");
 		leftTwo.setText("Change PIN");
 		leftThree.setText("Change Language");
@@ -217,12 +222,16 @@ public class ATMScreen extends JLayeredPane{
 		input.setText(nf.format(ATM_GUI.accountDatabase.getSavingsBalance()));
 		leftOne.setText("Return to Main Menu");
 		rightOne.setText("Print Reciept");
+		rightThree.setText("Exit");
 		title.setVisible(true);
 		instruction.setVisible(true);
 		input.setVisible(true);
 		leftOne.setVisible(true);
 		rightOne.setVisible(true);
+		rightThree.setVisible(true);
 		leftOneFunc = MAIN_MENU;
+		rightOneFunc = EXIT_SYSTEM;
+		rightOneFunc = -1;
 	}
 
 	private void checkBalanceChequing(){
@@ -233,12 +242,16 @@ public class ATMScreen extends JLayeredPane{
 		input.setText(nf.format(ATM_GUI.accountDatabase.getChequingBalance()));
 		leftOne.setText("Return to Main Menu");
 		rightOne.setText("Print Reciept");
+		rightThree.setText("Exit");
 		title.setVisible(true);
 		instruction.setVisible(true);
 		input.setVisible(true);
 		leftOne.setVisible(true);
 		rightOne.setVisible(true);
+		rightThree.setVisible(true);
+		rightThreeFunc = EXIT_SYSTEM;
 		leftOneFunc = MAIN_MENU;
+		rightOneFunc = -1;
 	}
 
 	private void changePIN(){
@@ -275,7 +288,7 @@ public class ATMScreen extends JLayeredPane{
 		currentAccount = accountType;
 		title.setText("Withdraw");
 		acceptInput = true;
-		instruction.setText("Enter withdrawal amount via num pad.");
+		instruction.setText("<html>Enter withdrawal amount via num pad.<br>Will output on exit.</html>");
 		input.setVisible(true);
 	}
 
@@ -409,7 +422,7 @@ public class ATMScreen extends JLayeredPane{
 							&& input.getText().length() > 0){
 						ATM_GUI.accountDatabase.setChequingBalance(ATM_GUI.accountDatabase.getChequingBalance() -
 								Double.parseDouble(input.getText()));
-						ATMFields.displayWithdraw(input.getText());
+						addWithdrawTotal(input.getText());
 						checkBalanceChequing();
 					}
 					else{
@@ -421,7 +434,7 @@ public class ATMScreen extends JLayeredPane{
 							&& input.getText().length() > 0){
 						ATM_GUI.accountDatabase.setSavingsBalance(ATM_GUI.accountDatabase.getSavingsBalance() -
 								Double.parseDouble(input.getText()));
-						ATMFields.displayWithdraw(input.getText());
+						addWithdrawTotal(input.getText());
 						checkBalanceSavings();
 					}
 					else{
@@ -435,11 +448,19 @@ public class ATMScreen extends JLayeredPane{
 		}
 	}
 
-		private void exitSystem()
+	private void addWithdrawTotal (String valueString)
+	{
+		withdrawTotal += Integer.parseInt(valueString);
+	}
+
+
+	private void exitSystem()
 	{
 		resetValues();
 		setCurrentScreen(WELCOME);
 		ATMFields.debitCard.setX(ATMFields.debitCard.getX()-1000);
+		if (withdrawTotal > 0)
+			ATMFields.displayWithdraw(withdrawTotal);
 		ATM_GUI.fields.repaint();
 	}
 }
