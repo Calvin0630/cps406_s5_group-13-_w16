@@ -214,6 +214,9 @@ public class ATMScreen extends JLayeredPane{
 		rightTwo.setVisible(true);
 	}
 
+	/*
+	 * Use Case 11: Check Balance
+	 */
 	private void checkBalanceSavings(){
 		resetValues();
 		currentScreen = CHECK_BALANCE_SAVINGS;
@@ -234,6 +237,9 @@ public class ATMScreen extends JLayeredPane{
 		rightOneFunc = -1;
 	}
 
+	/*
+	 * Use Case 11: Check Balance
+	 */
 	private void checkBalanceChequing(){
 		resetValues();
 		currentScreen = CHECK_BALANCE_CHEQUING;
@@ -345,7 +351,7 @@ public class ATMScreen extends JLayeredPane{
 			 *  Daniel Jack
 			 * 	Use Case 5: User enters PIN
 			 *  Michael D'Anna
-			 *	Use Case 10: User changes PIN
+			 *	Use Case 16: User changes PIN
 			 */
 			if (currentScreen == PIN_INPUT || currentScreen == CHANGE_PIN){
 				if (inputString.length() < 4){
@@ -418,6 +424,9 @@ public class ATMScreen extends JLayeredPane{
 		if(currentScreen == WITHDRAW){
 			if (Double.parseDouble(input.getText()) % 20 == 0 && Double.parseDouble(input.getText()) >= 20.00){
 				if(currentAccount == SELECT_ACCOUNT_CHEQUING ){
+					/*
+					 * Use Case 8: Invalid amount
+					 */
 					if(ATM_GUI.accountDatabase.getChequingBalance() > Double.parseDouble(input.getText())
 							&& input.getText().length() > 0){
 						ATM_GUI.accountDatabase.setChequingBalance(ATM_GUI.accountDatabase.getChequingBalance() -
@@ -430,6 +439,9 @@ public class ATMScreen extends JLayeredPane{
 					}
 				}
 				if(currentAccount == SELECT_ACCOUNT_SAVINGS ){
+					/*
+					 * Use Case 8: Invalid amount
+					 */
 					if(ATM_GUI.accountDatabase.getSavingsBalance() > Double.parseDouble(input.getText())
 							&& input.getText().length() > 0){
 						ATM_GUI.accountDatabase.setSavingsBalance(ATM_GUI.accountDatabase.getSavingsBalance() -
