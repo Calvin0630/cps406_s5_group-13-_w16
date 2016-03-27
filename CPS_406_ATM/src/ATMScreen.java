@@ -222,7 +222,7 @@ public class ATMScreen extends JLayeredPane{
 		input.setText(nf.format(ATM_GUI.accountDatabase.getSavingsBalance()));
 		leftOne.setText("Return to Main Menu");
 		rightOne.setText("Print Reciept");
-		rightThree.setText("Exit");
+		rightThree.setText("<html>Exit<br>Output Bills</html>");
 		title.setVisible(true);
 		instruction.setVisible(true);
 		input.setVisible(true);
@@ -242,7 +242,7 @@ public class ATMScreen extends JLayeredPane{
 		input.setText(nf.format(ATM_GUI.accountDatabase.getChequingBalance()));
 		leftOne.setText("Return to Main Menu");
 		rightOne.setText("Print Reciept");
-		rightThree.setText("Exit");
+		rightThree.setText("<html>Exit<br>Output Bills</html>");
 		title.setVisible(true);
 		instruction.setVisible(true);
 		input.setVisible(true);
