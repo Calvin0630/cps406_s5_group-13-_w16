@@ -245,6 +245,26 @@ public class ATM_GUI extends JFrame {
 						JOptionPane.showMessageDialog(null, "Card insert error!");
 					}
 				}
+				if (screen.getCurrentScreen() == ATMScreen.DEPOSIT && selected.equals("twentyBill"))
+				{
+					
+					if (ATMFields.twentyBill.getBounds().intersects(ATMFields.cashDispensor.getBounds())){
+						ATMFields.twentyBill.setVisible(false);
+						screen.item = ATMFields.twentyBill;
+						screen.setCurrentScreen(ATMScreen.DEPOSIT_CASH);
+						ATMFields.twentyBill.setX(ATMFields.twentyBill.getX()+1000);
+					}
+				}
+				if (screen.getCurrentScreen() == ATMScreen.DEPOSIT && selected.equals("cheque"))
+				{
+					
+					if (ATMFields.cheque.getBounds().intersects(ATMFields.cashDispensor.getBounds())){
+						ATMFields.cheque.setVisible(false);
+						screen.item = ATMFields.cheque;
+						screen.setCurrentScreen(ATMScreen.DEPOSIT_CHEQUE);
+						ATMFields.cheque.setX(ATMFields.cheque.getX()+1000);
+					}
+				}
 				selected = null;
 			}
 			repaint();
