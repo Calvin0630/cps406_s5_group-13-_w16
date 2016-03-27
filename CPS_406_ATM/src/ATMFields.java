@@ -11,6 +11,7 @@ class ATMFields extends JComponent {
 	public static Cash twentyBill;
 	public static Cheque cheque;
 	public static Graphics2D g2;
+	public static Cash [] bills;
 
 	public ATMFields (){
 		cashDispensor = new Rectangle((int) (ATM_GUI.FRAME_WIDTH/2),
@@ -73,8 +74,18 @@ class ATMFields extends JComponent {
 		g2.drawString("Tap NFC Phone", (int)(NFC.getX()+NFC.getWidth()/4), (int)NFC.getCenterY());
 	}
 
+	public static void displayWithdraw(String valueString){
+		int value = Integer.parseInt(valueString);
+		int xP = (int)cashDispensor.getX();
+		int yP = (int)cashDispensor.getY();
+		bills = new Cash [value/20];
+		for (int i = 0 ; i < bills.length ; i++){
+			xP += 10;
+			yP += 10;
+			bills[i] = new Cash (20,xP,yP);
+		}
+	}
 
-	
 	protected void paintComponent(Graphics g){
 		super.paintComponent(g);
 		g2 = (Graphics2D) g;
@@ -90,6 +101,9 @@ class ATMFields extends JComponent {
 		debitCard.paint(g2);
 		twentyBill.paint(g2);
 		cheque.paint(g2);
+		if (bills != null)
+			for (int i = 0 ; i < bills.length ; i++)
+				bills[i].paint(g2);
 	}
 }
 
