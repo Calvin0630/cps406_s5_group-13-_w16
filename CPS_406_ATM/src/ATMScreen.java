@@ -56,8 +56,8 @@ public class ATMScreen extends JLayeredPane{
 		ATMinstructions.setOpaque(false);
 		add(ATMinstructions, Integer.valueOf(2));
 
-		JPanel OptionText = new JPanel(new GridLayout(3, 2, wth / 3, hth / 5));
-		OptionText.setBounds(0, getHeight()/3,wth, hth*3/5 );
+		JPanel OptionText = new JPanel(new GridLayout(3, 2, wth / 10, hth / 5));
+		OptionText.setBounds(wth/75, getHeight()/3, wth-wth/50, hth*3/5);
 		OptionText.setOpaque(false);
 		leftOne = new JLabel("LEFT ONE");
 		OptionText.add(leftOne);
@@ -77,11 +77,11 @@ public class ATMScreen extends JLayeredPane{
 		acceptInput = true;
 	}
 
-	public int getCurrentScreen(){
+	protected int getCurrentScreen(){
 		return currentScreen;
 	}
 
-	public void setCurrentScreen(int screen){
+	protected void setCurrentScreen(int screen){
 		resetValues();
 
 		if(screen== WELCOME){
@@ -120,7 +120,7 @@ public class ATMScreen extends JLayeredPane{
 	}
 
 
-	public void welcome(){
+	protected void welcome(){
 		currentScreen = WELCOME;
 		acceptInput = false;
 		title.setText("Welcome to the ATM");
@@ -138,7 +138,7 @@ public class ATMScreen extends JLayeredPane{
 		rightThree.setVisible(false);
 	}
 
-	public void inputPIN(){
+	private void inputPIN(){
 		inputString = "";
 		currentScreen = PIN_INPUT;
 		acceptInput = true;
@@ -166,7 +166,7 @@ public class ATMScreen extends JLayeredPane{
 	}
 
 
-	public void mainMenu(){
+	private void mainMenu(){
 		acceptInput = false;
 		resetValues();
 		currentScreen = MAIN_MENU;
@@ -195,7 +195,7 @@ public class ATMScreen extends JLayeredPane{
 		rightThree.setVisible(true);
 	}
 
-	public void checkBalance(){
+	private void checkBalance(){
 		acceptInput = false;
 		resetValues();
 		currentScreen = CHECK_BALANCE;
@@ -209,7 +209,7 @@ public class ATMScreen extends JLayeredPane{
 		rightTwo.setVisible(true);
 	}
 
-	public void checkBalanceSavings(){
+	private void checkBalanceSavings(){
 		resetValues();
 		currentScreen = CHECK_BALANCE_SAVINGS;
 		title.setText("Balance of Savings Account");
@@ -225,7 +225,7 @@ public class ATMScreen extends JLayeredPane{
 		leftOneFunc = MAIN_MENU;
 	}
 
-	public void checkBalanceChequing(){
+	private void checkBalanceChequing(){
 		resetValues();
 		currentScreen = CHECK_BALANCE_CHEQUING;
 		title.setText("Balance of Chequing Account");
@@ -241,7 +241,7 @@ public class ATMScreen extends JLayeredPane{
 		leftOneFunc = MAIN_MENU;
 	}
 
-	public void changePIN(){
+	private void changePIN(){
 		acceptInput = true;
 		resetValues();
 		currentScreen = CHANGE_PIN;
@@ -257,7 +257,7 @@ public class ATMScreen extends JLayeredPane{
 		leftThreeFunc = MAIN_MENU;
 	}
 
-	public void  selectAccount(){
+	private void  selectAccount(){
 		resetValues();
 		currentScreen = SELECT_ACCOUNT;
 		title.setText("Select Account");
@@ -270,19 +270,16 @@ public class ATMScreen extends JLayeredPane{
 		rightTwo.setVisible(true);
 	}
 
-	/*
-
-	 */
-	public void withdraw(int accountType){
+	private void withdraw(int accountType){
 		currentScreen = WITHDRAW;
 		currentAccount = accountType;
 		title.setText("Withdraw");
 		acceptInput = true;
-		instruction.setText("Enter withdrawal amount via num pad");
+		instruction.setText("Enter withdrawal amount via num pad.");
 		input.setVisible(true);
 	}
 
-	public void error(String msg){
+	private void error(String msg){
 		resetValues();
 		title.setText("Insufficient Funds");
 		instruction.setText(msg);
@@ -312,14 +309,14 @@ public class ATMScreen extends JLayeredPane{
 		rightThreeFunc = MAIN_MENU;
 	}
 
-	public void resetValues(){
+	private void resetValues(){
 		if (acceptInput)
 			input.setVisible(true);
 		else
 			input.setVisible(false);
 		leftOneFunc = leftTwoFunc = leftThreeFunc = -1;
 		rightOneFunc = rightTwoFunc = rightThreeFunc = -1;
-		input.setText(" ");
+		input.setText("");
 		inputString = "";
 		leftOne.setVisible(false);
 		leftTwo.setVisible(false);
@@ -329,7 +326,7 @@ public class ATMScreen extends JLayeredPane{
 		rightThree.setVisible(false);
 	}
 
-	public void storeInput(String inp){
+	protected void storeInput(String inp){
 		if(acceptInput) {
 			/*
 			 *  Daniel Jack
@@ -345,11 +342,10 @@ public class ATMScreen extends JLayeredPane{
 			}
 			else
 				input.setText(input.getText() + inp);
-			System.out.println(currentScreen);
 		}
 	}
 
-	public void correction(){
+	protected void correction(){
 		if (input.getText().length() > 0){
 			input.setText(input.getText().substring(0,
 					input.getText().length() - 1));
@@ -359,7 +355,7 @@ public class ATMScreen extends JLayeredPane{
 		}
 	}
 
-	public void cancel(){
+	protected void cancel(){
 		input.setText("");
 		if (currentScreen == PIN_INPUT || currentScreen == MAIN_MENU)
 			exitSystem();
@@ -380,7 +376,7 @@ public class ATMScreen extends JLayeredPane{
 				 * Use Case 6: Incorrect PIN
 				 */
 				inputString="";
-				input.setText(" ");
+				input.setText("");
 				PINattempts++;
 				instruction.setText("Incorrect PIN, " + (5-PINattempts) + " attempts remaining.");
 				if (PINattempts == 5){
@@ -413,6 +409,7 @@ public class ATMScreen extends JLayeredPane{
 							&& input.getText().length() > 0){
 						ATM_GUI.accountDatabase.setChequingBalance(ATM_GUI.accountDatabase.getChequingBalance() -
 								Double.parseDouble(input.getText()));
+						ATMFields.displayWithdraw(input.getText());
 						checkBalanceChequing();
 					}
 					else{
@@ -424,6 +421,7 @@ public class ATMScreen extends JLayeredPane{
 							&& input.getText().length() > 0){
 						ATM_GUI.accountDatabase.setSavingsBalance(ATM_GUI.accountDatabase.getSavingsBalance() -
 								Double.parseDouble(input.getText()));
+						ATMFields.displayWithdraw(input.getText());
 						checkBalanceSavings();
 					}
 					else{
@@ -435,21 +433,13 @@ public class ATMScreen extends JLayeredPane{
 				instruction.setText("Amount must be in multiple of $20.");
 			}
 		}
-
 	}
 
-	public void exitSystem()
+		private void exitSystem()
 	{
 		resetValues();
 		setCurrentScreen(WELCOME);
 		ATMFields.debitCard.setX(ATMFields.debitCard.getX()-1000);
 		ATM_GUI.fields.repaint();
-	}
-	public void wait(int delay){
-		try {
-			Thread.sleep(delay);
-		} catch(InterruptedException ex) {
-			Thread.currentThread().interrupt();
-		}
 	}
 }
