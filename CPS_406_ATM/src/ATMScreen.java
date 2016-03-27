@@ -19,6 +19,7 @@ public class ATMScreen extends JLayeredPane{
 	private int PINattempts = 0;
 	private int currentAccount = 0;
 	private int withdrawTotal = 0;
+	private boolean internalWithdrawal = false;
 
 	protected static final int WELCOME = 0;
 	protected static final int PIN_INPUT = 1;
@@ -32,7 +33,10 @@ public class ATMScreen extends JLayeredPane{
 	protected static final int SELECT_ACCOUNT_SAVINGS = 72;
 	protected static final int WITHDRAW = 8;
 	protected static final int CHANGE_DISPLAY_LANGUAGE = 9;
-	protected static final int EXIT_SYSTEM = 99;
+	protected static final int TRANSFERS = 10;
+	protected static final int ACCOUNT_TRANSFERS = 101; 
+	protected static final int PAY_BILL = 102;
+	protected static final int EXIT_SYSTEM = 999;
 	Timer timer;
 
 	public ATMScreen(int xPos, int yPos, int wth, int hth){
@@ -58,8 +62,8 @@ public class ATMScreen extends JLayeredPane{
 		ATMinstructions.setOpaque(false);
 		add(ATMinstructions, Integer.valueOf(2));
 
-		JPanel OptionText = new JPanel(new GridLayout(3, 2, wth / 10, hth / 5));
-		OptionText.setBounds(wth/75, getHeight()/3, wth-wth/50, hth*3/5);
+		JPanel OptionText = new JPanel(new GridLayout(3, 2));
+		OptionText.setBounds(wth/75, getHeight()/4, wth-wth/50, hth*4/5);
 		OptionText.setOpaque(false);
 		leftOne = new JLabel("LEFT ONE");
 		OptionText.add(leftOne);
@@ -118,6 +122,15 @@ public class ATMScreen extends JLayeredPane{
 		}
 		else if (screen == CHANGE_DISPLAY_LANGUAGE){
 			changeDisplayLanguage();
+		}
+		else if (screen == TRANSFERS){
+			transfers();
+		}
+		else if (screen == ACCOUNT_TRANSFERS){
+			accountTransfers();
+		}
+		else if (screen == PAY_BILL){
+			payBill();
 		}
 		else if (screen == EXIT_SYSTEM){
 			exitSystem();
@@ -190,7 +203,7 @@ public class ATMScreen extends JLayeredPane{
 
 		rightOneFunc = SELECT_ACCOUNT;
 		rightTwoFunc = CHECK_BALANCE;
-		rightThreeFunc = -1;
+		rightThreeFunc = TRANSFERS;
 
 		leftOne.setVisible(true);
 		leftTwo.setVisible(true);
@@ -208,10 +221,13 @@ public class ATMScreen extends JLayeredPane{
 		instruction.setText("Select account");
 		leftTwo.setText("Savings");
 		rightTwo.setText("Chequing");
+		leftThree.setText("Main Menu");
 		leftTwoFunc = CHECK_BALANCE_SAVINGS;
 		rightTwoFunc = CHECK_BALANCE_CHEQUING;
+		leftThreeFunc = MAIN_MENU;
 		leftTwo.setVisible(true);
 		rightTwo.setVisible(true);
+		leftThree.setVisible(true);	
 	}
 
 	/*
@@ -223,17 +239,17 @@ public class ATMScreen extends JLayeredPane{
 		title.setText("Balance of Savings Account");
 		instruction.setText("Account Number: " + String.format("%011d",ATM_GUI.accountDatabase.getAccountNumber()));
 		input.setText(nf.format(ATM_GUI.accountDatabase.getSavingsBalance()));
-		leftOne.setText("Return to Main Menu");
+		leftThree.setText("Main Menu");
 		rightOne.setText("Print Reciept");
 		rightThree.setText("<html>Exit<br>Output Bills</html>");
 		title.setVisible(true);
 		instruction.setVisible(true);
 		input.setVisible(true);
-		leftOne.setVisible(true);
+		leftThree.setVisible(true);
 		rightOne.setVisible(true);
 		rightThree.setVisible(true);
-		leftOneFunc = MAIN_MENU;
-		rightOneFunc = EXIT_SYSTEM;
+		leftThreeFunc = MAIN_MENU;
+		rightThreeFunc = EXIT_SYSTEM;
 		rightOneFunc = -1;
 	}
 
@@ -246,17 +262,17 @@ public class ATMScreen extends JLayeredPane{
 		title.setText("Balance of Chequing Account");
 		instruction.setText("Account Number: " + String.format("%011d",ATM_GUI.accountDatabase.getAccountNumber()));
 		input.setText(nf.format(ATM_GUI.accountDatabase.getChequingBalance()));
-		leftOne.setText("Return to Main Menu");
+		leftThree.setText("Main Menu");
 		rightOne.setText("Print Reciept");
 		rightThree.setText("<html>Exit<br>Output Bills</html>");
 		title.setVisible(true);
 		instruction.setVisible(true);
 		input.setVisible(true);
-		leftOne.setVisible(true);
+		leftThree.setVisible(true);
 		rightOne.setVisible(true);
 		rightThree.setVisible(true);
+		leftThreeFunc = MAIN_MENU;
 		rightThreeFunc = EXIT_SYSTEM;
-		leftOneFunc = MAIN_MENU;
 		rightOneFunc = -1;
 	}
 
@@ -276,17 +292,21 @@ public class ATMScreen extends JLayeredPane{
 		leftThreeFunc = MAIN_MENU;
 	}
 
-	private void  selectAccount(){
+	private void selectAccount(){
 		resetValues();
+		internalWithdrawal = false;	
 		currentScreen = SELECT_ACCOUNT;
 		title.setText("Select Account");
 		instruction.setText("Select either Chequing or Savings account.");
 		rightTwo.setText("Chequing");
 		leftTwo.setText("Savings");
+		leftThree.setText("Cancel");
 		rightTwoFunc = SELECT_ACCOUNT_CHEQUING;
 		leftTwoFunc = SELECT_ACCOUNT_SAVINGS;
+		leftThreeFunc = MAIN_MENU;
 		leftTwo.setVisible(true);
 		rightTwo.setVisible(true);
+		leftThree.setVisible(true);
 	}
 
 	private void withdraw(int accountType){
@@ -296,6 +316,9 @@ public class ATMScreen extends JLayeredPane{
 		acceptInput = true;
 		instruction.setText("<html>Enter withdrawal amount via num pad.<br>Will output on exit.</html>");
 		input.setVisible(true);
+		leftThree.setText("Cancel");
+		leftThree.setVisible(true);
+		leftThreeFunc = MAIN_MENU;
 	}
 
 	private void error(String msg){
@@ -320,12 +343,15 @@ public class ATMScreen extends JLayeredPane{
 		rightOne.setText("English (UK)");
 		rightTwo.setText("English (Canada)");
 		rightThree.setText("English (US)");
+		leftOne.setText("Cancel");
 		rightOne.setVisible(true);
 		rightTwo.setVisible(true);
 		rightThree.setVisible(true);
+		leftOne.setVisible(true);
 		rightOneFunc = MAIN_MENU;
 		rightTwoFunc = MAIN_MENU;
 		rightThreeFunc = MAIN_MENU;
+		leftOneFunc = MAIN_MENU;
 	}
 
 	private void resetValues(){
@@ -344,6 +370,44 @@ public class ATMScreen extends JLayeredPane{
 		rightTwo.setVisible(false);
 		rightThree.setVisible(false);
 	}
+
+	private void transfers(){
+		acceptInput = false;
+		resetValues();
+		leftTwo.setText("Account Transfers");
+		rightTwo.setText("Pay Bills");
+		leftThree.setText("Cancel");
+		leftTwo.setVisible(true);
+		rightTwo.setVisible(true);
+		leftThree.setVisible(true);
+		leftTwoFunc = ACCOUNT_TRANSFERS;
+		rightTwoFunc = PAY_BILL;
+		leftThreeFunc = MAIN_MENU;
+	}
+	private void accountTransfers (){
+		resetValues();
+	}
+	/*
+	 * Use Case 17: Bill Payment
+	 */
+	private void payBill (){
+		resetValues();
+		internalWithdrawal = true;
+		title.setText("Pay Bills");
+		instruction.setText("Credit balance:");
+		input.setText(nf.format(ATM_GUI.accountDatabase.getCreditDebt()));
+		input.setVisible(true);
+		leftTwo.setText("Pay from Savings Account");
+		rightTwo.setText("Pay from Chequing Account");
+		leftThree.setText("Main Menu");
+		leftTwo.setVisible(true);
+		rightTwo.setVisible(true);
+		leftThree.setVisible(true);
+		leftThreeFunc = MAIN_MENU;
+		leftTwoFunc = SELECT_ACCOUNT_SAVINGS;
+		rightTwoFunc = SELECT_ACCOUNT_CHEQUING;
+	}
+
 
 	protected void storeInput(String inp){
 		if(acceptInput) {
@@ -422,41 +486,61 @@ public class ATMScreen extends JLayeredPane{
 			Use Case 7: User withdraws money
 		 */
 		if(currentScreen == WITHDRAW){
-			if (Double.parseDouble(input.getText()) % 20 == 0 && Double.parseDouble(input.getText()) >= 20.00){
+			if (internalWithdrawal){
 				if(currentAccount == SELECT_ACCOUNT_CHEQUING ){
-					/*
-					 * Use Case 8: Invalid amount
-					 */
-					if(ATM_GUI.accountDatabase.getChequingBalance() > Double.parseDouble(input.getText())
-							&& input.getText().length() > 0){
-						ATM_GUI.accountDatabase.setChequingBalance(ATM_GUI.accountDatabase.getChequingBalance() -
-								Double.parseDouble(input.getText()));
-						addWithdrawTotal(input.getText());
-						checkBalanceChequing();
-					}
-					else{
-						error(nf.format(Double.parseDouble(input.getText())) + " is greater than current Chequing balance.");
-					}
+					validChequingWithdraw(input.getText());
 				}
 				if(currentAccount == SELECT_ACCOUNT_SAVINGS ){
-					/*
-					 * Use Case 8: Invalid amount
-					 */
-					if(ATM_GUI.accountDatabase.getSavingsBalance() > Double.parseDouble(input.getText())
-							&& input.getText().length() > 0){
-						ATM_GUI.accountDatabase.setSavingsBalance(ATM_GUI.accountDatabase.getSavingsBalance() -
-								Double.parseDouble(input.getText()));
-						addWithdrawTotal(input.getText());
-						checkBalanceSavings();
-					}
-					else{
-						error(nf.format(Double.parseDouble(input.getText())) + " is greater than current Savings balance.");
-					}
+					validSavingsWithdraw(input.getText());
 				}
 			}
-			else {
-				instruction.setText("Amount must be in multiple of $20.");
+			else{
+				if (Double.parseDouble(input.getText()) % 20 == 0 && Double.parseDouble(input.getText()) >= 20.00){
+					if(currentAccount == SELECT_ACCOUNT_CHEQUING ){
+						validChequingWithdraw(input.getText());
+					}
+					if(currentAccount == SELECT_ACCOUNT_SAVINGS ){
+						validSavingsWithdraw(input.getText());
+					}
+				}
+				else {
+					instruction.setText("Amount must be in multiple of $20.");
+				}
 			}
+		}
+	}
+	/*
+	 * Use Case 8: Invalid amount
+	 */
+	private void validChequingWithdraw(String value){
+		if(ATM_GUI.accountDatabase.getChequingBalance() > Double.parseDouble(input.getText())
+				&& input.getText().length() > 0){
+			ATM_GUI.accountDatabase.setChequingBalance(ATM_GUI.accountDatabase.getChequingBalance() -
+					Double.parseDouble(input.getText()));
+			if (internalWithdrawal)
+				ATM_GUI.accountDatabase.setCreditDebt(ATM_GUI.accountDatabase.getCreditDebt()-Double.parseDouble(input.getText()));
+			addWithdrawTotal(input.getText());
+			checkBalanceChequing();
+		}
+		else{
+			error(nf.format(Double.parseDouble(input.getText())) + " is greater than current Chequing balance.");
+		}
+	}
+	/*
+	 * Use Case 8: Invalid amount
+	 */
+	private void validSavingsWithdraw(String value){
+		if(ATM_GUI.accountDatabase.getSavingsBalance() > Double.parseDouble(value)
+				&& value.length() > 0){
+			ATM_GUI.accountDatabase.setSavingsBalance(ATM_GUI.accountDatabase.getSavingsBalance() -
+					Double.parseDouble(value));
+			if (internalWithdrawal)
+				ATM_GUI.accountDatabase.setCreditDebt(ATM_GUI.accountDatabase.getCreditDebt()-Double.parseDouble(input.getText()));
+			addWithdrawTotal(value);
+			checkBalanceSavings();
+		}
+		else{
+			error(nf.format(Double.parseDouble(value)) + " is greater than current Savings balance.");
 		}
 	}
 
