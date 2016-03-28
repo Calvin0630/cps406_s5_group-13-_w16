@@ -38,6 +38,8 @@ public class ATMScreen extends JLayeredPane{
 	protected static final int CHANGE_DISPLAY_LANGUAGE = 9;
 	protected static final int TRANSFERS = 10;
 	protected static final int ACCOUNT_TRANSFERS = 101; 
+	protected static final int TRANSFER_SOURCE_SAVINGS = 1011;
+	protected static final int TRANSFER_SOURCE_CHEQUING = 1012;
 	protected static final int PAY_BILL = 102;
 	protected static final int DEPOSIT = 11;
 	protected static final int DEPOSIT_CASH = 111;
@@ -135,7 +137,13 @@ public class ATMScreen extends JLayeredPane{
 			transfers();
 		}
 		else if (screen == ACCOUNT_TRANSFERS){
-			accountTransfers();
+			accountBalanceTransfers();
+		}
+		else if (screen == TRANSFER_SOURCE_SAVINGS){
+			balanceTransfer(TRANSFER_SOURCE_SAVINGS);
+		}
+		else if (screen == TRANSFER_SOURCE_CHEQUING){
+			balanceTransfer(TRANSFER_SOURCE_CHEQUING);
 		}
 		else if (screen == PAY_BILL){
 			payBill();
@@ -408,8 +416,38 @@ public class ATMScreen extends JLayeredPane{
 		rightTwoFunc = PAY_BILL;
 		leftThreeFunc = MAIN_MENU;
 	}
-	private void accountTransfers (){
+	/*
+	 * Use Case 15. Transfer Money between accounts
+	 */
+	private void accountBalanceTransfers (){
 		resetValues();
+		currentScreen = ACCOUNT_TRANSFERS;
+		title.setText("Account Balance Transfer");
+		instruction.setText("Select transfer direction.");
+		leftTwo.setText("Savings to Chequing");
+		rightTwo.setText("Chequing to Savings");
+		leftThree.setText("Cancel");
+		leftTwo.setVisible(true);
+		leftThree.setVisible(true);
+		rightTwo.setVisible(true);
+		leftTwoFunc = TRANSFER_SOURCE_SAVINGS;
+		rightTwoFunc = TRANSFER_SOURCE_CHEQUING;
+		leftThreeFunc = MAIN_MENU;
+	}
+	private void balanceTransfer(int accountSource){
+		acceptInput = true;
+		currentAccount = accountSource;
+		resetValues();
+		instruction.setText("Enter transfer amount.");
+		leftThree.setText("Cancel");
+		leftThree.setVisible(true);
+		leftThreeFunc = MAIN_MENU;
+		if (accountSource == TRANSFER_SOURCE_SAVINGS){
+
+		}
+		if (accountSource == TRANSFER_SOURCE_CHEQUING){
+
+		}
 	}
 	/*
 	 * Use Case 17: Bill Payment
@@ -603,19 +641,34 @@ public class ATMScreen extends JLayeredPane{
 				}
 			}
 		}
+		if (currentScreen == ACCOUNT_TRANSFERS){
+			if(currentAccount == TRANSFER_SOURCE_CHEQUING ){
+				validChequingWithdraw(input.getText());
+			}
+			if(currentAccount == TRANSFER_SOURCE_SAVINGS ){
+				validSavingsWithdraw(input.getText());
+			}
+		}
 	}
 	/*
 	 * Use Case 8: Invalid amount
 	 */
 	private void validChequingWithdraw(String value){
-		if(ATM_GUI.accountDatabase.getChequingBalance() > Double.parseDouble(input.getText())
-				&& input.getText().length() > 0){
+		if(ATM_GUI.accountDatabase.getChequingBalance() > Double.parseDouble(value)
+				&& value.length() > 0){
 			ATM_GUI.accountDatabase.setChequingBalance(ATM_GUI.accountDatabase.getChequingBalance() -
-					Double.parseDouble(input.getText()));
-			if (internalWithdrawal)
-				ATM_GUI.accountDatabase.setCreditDebt(ATM_GUI.accountDatabase.getCreditDebt()-Double.parseDouble(input.getText()));
-			addWithdrawTotal(input.getText());
-			checkBalanceChequing();
+					Double.parseDouble(value));
+			if (currentScreen == ACCOUNT_TRANSFERS){
+				ATM_GUI.accountDatabase.setSavingsBalance(ATM_GUI.accountDatabase.getSavingsBalance() + Double.parseDouble(value));
+			}
+			else {
+				if (internalWithdrawal)
+					ATM_GUI.accountDatabase.setCreditDebt(ATM_GUI.accountDatabase.getCreditDebt()-Double.parseDouble(value));
+				else
+					addWithdrawTotal(value);
+			}
+			internalWithdrawal = false;
+						checkBalanceChequing();
 		}
 		else{
 			error(nf.format(Double.parseDouble(input.getText())) + " is greater than current Chequing balance.");
@@ -629,9 +682,16 @@ public class ATMScreen extends JLayeredPane{
 				&& value.length() > 0){
 			ATM_GUI.accountDatabase.setSavingsBalance(ATM_GUI.accountDatabase.getSavingsBalance() -
 					Double.parseDouble(value));
-			if (internalWithdrawal)
-				ATM_GUI.accountDatabase.setCreditDebt(ATM_GUI.accountDatabase.getCreditDebt()-Double.parseDouble(input.getText()));
-			addWithdrawTotal(value);
+			if (currentScreen == ACCOUNT_TRANSFERS){
+				ATM_GUI.accountDatabase.setChequingBalance(ATM_GUI.accountDatabase.getChequingBalance() + Double.parseDouble(value));
+			}
+			else {
+				if (internalWithdrawal)
+					ATM_GUI.accountDatabase.setCreditDebt(ATM_GUI.accountDatabase.getCreditDebt()-Double.parseDouble(value));
+				else
+					addWithdrawTotal(value);
+			}
+			internalWithdrawal = false;
 			checkBalanceSavings();
 		}
 		else{
@@ -643,7 +703,6 @@ public class ATMScreen extends JLayeredPane{
 	{
 		withdrawTotal += Integer.parseInt(valueString);
 	}
-
 
 	private void exitSystem()
 	{
