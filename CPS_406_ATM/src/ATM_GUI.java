@@ -24,6 +24,7 @@ public class ATM_GUI extends JFrame {
 	protected static ATMOptionPanel optionPanel;
 	protected static ATMLeftScreenButtons screenLeftButtons;
 	protected static ATMRightScreenButtons screenRightButtons;
+	public static Receipt receipt;
 	public static AccountDatabase accountDatabase;
 	public ATMFieldsMouseListener fieldsListener;
 	public static ATMFields fields;
@@ -51,10 +52,11 @@ public class ATM_GUI extends JFrame {
 		fieldsListener = new ATMFieldsMouseListener();
 		addMouseListener(fieldsListener);
 		addMouseMotionListener(fieldsListener);
-
 		setResizable(true);
 		setVisible(true);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+		receipt = new Receipt();
 	}
 
 	public void getAccountInfo(){
