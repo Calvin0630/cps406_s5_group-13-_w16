@@ -46,6 +46,7 @@ public class ATMScreen extends JLayeredPane{
 	protected static final int DEPOSIT_CHEQUE = 112;
 	protected static final int DEPOSIT_SAVINGS = 113;
 	protected static final int DEPOSIT_CHEQUING = 114;
+	protected static final int PRINT_RECEIPT = 12;
 	protected static final int EXIT_SYSTEM = 999;
 	Timer timer;
 
@@ -162,6 +163,9 @@ public class ATMScreen extends JLayeredPane{
 		}
 		else if (screen == DEPOSIT_CHEQUING){
 			depositToAccount(DEPOSIT_CHEQUING);
+		}
+		else if (screen == PRINT_RECEIPT){
+			printReceipt();
 		}
 		else if (screen == EXIT_SYSTEM){
 			exitSystem();
@@ -281,7 +285,7 @@ public class ATMScreen extends JLayeredPane{
 		rightThree.setVisible(true);
 		leftThreeFunc = MAIN_MENU;
 		rightThreeFunc = EXIT_SYSTEM;
-		rightOneFunc = -1;
+		rightOneFunc = PRINT_RECEIPT;
 	}
 
 	/*
@@ -304,7 +308,7 @@ public class ATMScreen extends JLayeredPane{
 		rightThree.setVisible(true);
 		leftThreeFunc = MAIN_MENU;
 		rightThreeFunc = EXIT_SYSTEM;
-		rightOneFunc = -1;
+		rightOneFunc = PRINT_RECEIPT;
 	}
 
 	private void changePIN(){
@@ -442,12 +446,6 @@ public class ATMScreen extends JLayeredPane{
 		leftThree.setText("Cancel");
 		leftThree.setVisible(true);
 		leftThreeFunc = MAIN_MENU;
-		if (accountSource == TRANSFER_SOURCE_SAVINGS){
-
-		}
-		if (accountSource == TRANSFER_SOURCE_CHEQUING){
-
-		}
 	}
 	/*
 	 * Use Case 17: Bill Payment
@@ -519,17 +517,26 @@ public class ATMScreen extends JLayeredPane{
 	}
 	private void depositToAccount(int accountType){
 		if (accountType == DEPOSIT_SAVINGS){
-			if (cash)
+			if (cash){
 				ATM_GUI.accountDatabase.setSavingsBalance(ATM_GUI.accountDatabase.getSavingsBalance() + ATMFields.twentyBill.getValue());
-			else if (cheque)
+				ATM_GUI.receipt.addItem(Receipt.DEPOSIT, (double) ATMFields.twentyBill.getValue(), Receipt.SAVINGS);
+							}
+			else if (cheque){
 				ATM_GUI.accountDatabase.setSavingsBalance(ATM_GUI.accountDatabase.getSavingsBalance() + ATMFields.cheque.getValue());
+				ATM_GUI.receipt.addItem(Receipt.DEPOSIT, (double) ATMFields.cheque.getValue(), Receipt.SAVINGS);
+			}
 			checkBalanceSavings();
 		}
 		if (accountType == DEPOSIT_CHEQUING){
-			if (cash)
+			if (cash){
 				ATM_GUI.accountDatabase.setChequingBalance(ATM_GUI.accountDatabase.getChequingBalance() + ATMFields.twentyBill.getValue());
-			else if (cheque)
+				ATM_GUI.receipt.addItem(Receipt.DEPOSIT, (double) ATMFields.twentyBill.getValue(), Receipt.CHEQUING);
+
+			}
+			else if (cheque){
 				ATM_GUI.accountDatabase.setChequingBalance(ATM_GUI.accountDatabase.getChequingBalance() + ATMFields.cheque.getValue());
+				ATM_GUI.receipt.addItem(Receipt.DEPOSIT, (double) ATMFields.cheque.getValue(), Receipt.CHEQUING);
+			}
 			checkBalanceChequing();
 		}
 	}
@@ -668,7 +675,8 @@ public class ATMScreen extends JLayeredPane{
 					addWithdrawTotal(value);
 			}
 			internalWithdrawal = false;
-						checkBalanceChequing();
+			ATM_GUI.receipt.addItem(Receipt.WITHDRAW, Double.parseDouble(value), Receipt.CHEQUING);
+			checkBalanceChequing();
 		}
 		else{
 			error(nf.format(Double.parseDouble(input.getText())) + " is greater than current Chequing balance.");
@@ -692,6 +700,7 @@ public class ATMScreen extends JLayeredPane{
 					addWithdrawTotal(value);
 			}
 			internalWithdrawal = false;
+			ATM_GUI.receipt.addItem(Receipt.WITHDRAW, Double.parseDouble(value), Receipt.SAVINGS);
 			checkBalanceSavings();
 		}
 		else{
@@ -702,6 +711,15 @@ public class ATMScreen extends JLayeredPane{
 	private void addWithdrawTotal (String valueString)
 	{
 		withdrawTotal += Integer.parseInt(valueString);
+	}
+
+	/*
+	 * Use Case 14. Print Receipt
+	 */
+	private void printReceipt (){
+		ATM_GUI.receipt.setVisibility(true);
+		currentScreen = MAIN_MENU;
+		setCurrentScreen(MAIN_MENU);
 	}
 
 	private void exitSystem()
