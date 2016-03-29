@@ -19,7 +19,6 @@ public class Receipt extends JFrame {
 
 	public static final int WITHDRAW = 1;
 	public static final int DEPOSIT  = 2;
-	public static final int TRANSFER = 3;
 	public static final int SAVINGS  = 4;
 	public static final int CHEQUING = 5;
 
@@ -84,11 +83,9 @@ public class Receipt extends JFrame {
 		JLabel item = new JLabel();
 		String print = "<html>" + ds.format(dateobj) + "<br>";
 		if (action == WITHDRAW)
-			print = print.concat("Withdraw:\t" + form.format(amount) + "<br>");
+			print = print.concat("Withdraw: " + form.format(amount) + "<br>");
 		if (action == DEPOSIT)
-			print = print.concat("Deposit:\t" + form.format(amount) + "<br>");
-		if (action == TRANSFER)
-			print = print.concat("Transfer:\t" + form.format(amount) + "<br>");
+			print = print.concat("Deposit:  "+ form.format(amount) + "<br>");
 		if (account == SAVINGS)
 			print = print.concat("Savings Balance:\t" + 
 					form.format(ATM_GUI.accountDatabase.getSavingsBalance()));
