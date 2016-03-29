@@ -378,15 +378,15 @@ public class ATMScreen extends JLayeredPane{
 		rightOne.setText("English (UK)");
 		rightTwo.setText("English (Canada)");
 		rightThree.setText("English (US)");
-		leftOne.setText("Cancel");
+		leftThree.setText("Cancel");
 		rightOne.setVisible(true);
 		rightTwo.setVisible(true);
 		rightThree.setVisible(true);
-		leftOne.setVisible(true);
+		leftThree.setVisible(true);
 		rightOneFunc = MAIN_MENU;
 		rightTwoFunc = MAIN_MENU;
 		rightThreeFunc = MAIN_MENU;
-		leftOneFunc = MAIN_MENU;
+		leftThreeFunc = MAIN_MENU;
 	}
 
 	private void resetValues(){
