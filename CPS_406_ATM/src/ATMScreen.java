@@ -229,16 +229,16 @@ public class ATMScreen extends JLayeredPane{
 		leftTwo.setText("Change PIN");
 		leftThree.setText("Change Language");
 		rightOne.setText("Withdraw Money");
-		rightTwo.setText("Check Balance");
-		rightThree.setText("Transfer Funds / Pay Debt");
+		rightTwo.setText("Transfer Funds / Pay Debt");
+		rightThree.setText("Check Balance");
 
 		leftOneFunc = DEPOSIT;
 		leftTwoFunc = CHANGE_PIN;
 		leftThreeFunc = CHANGE_DISPLAY_LANGUAGE;
 
 		rightOneFunc = SELECT_ACCOUNT;
-		rightTwoFunc = CHECK_BALANCE;
-		rightThreeFunc = TRANSFERS;
+		rightTwoFunc = TRANSFERS;
+		rightThreeFunc = CHECK_BALANCE;
 
 		leftOne.setVisible(true);
 		leftTwo.setVisible(true);
