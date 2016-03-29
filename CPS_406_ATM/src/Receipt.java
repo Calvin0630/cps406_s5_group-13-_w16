@@ -82,6 +82,7 @@ public class Receipt extends JFrame {
 	public void addItem(int action, double amount, int account){
 		JPanel newBalance = new JPanel (new GridLayout(4,2));
 		newBalance.setSize(width,width);
+		dateobj = new Date();
 		JLabel time = new JLabel (ds.format(dateobj));
 		newBalance.add(time);
 		JLabel blank = new JLabel ("");
