@@ -71,7 +71,7 @@ public class Receipt extends JFrame {
 		setDefaultCloseOperation(HIDE_ON_CLOSE);
 		pack(); 
 	}
-	
+
 	public void setVisibility (boolean state){
 		visible = state;
 		setVisible(visible);
@@ -80,24 +80,40 @@ public class Receipt extends JFrame {
 	}
 
 	public void addItem(int action, double amount, int account){
-		JLabel item = new JLabel();
-		String print = "<html>" + ds.format(dateobj) + "<br>";
-		if (action == WITHDRAW)
-			print = print.concat("Withdraw: " + form.format(amount) + "<br>");
-		if (action == DEPOSIT)
-			print = print.concat("Deposit:  "+ form.format(amount) + "<br>");
-		if (account == SAVINGS)
-			print = print.concat("Savings Balance:\t" + 
-					form.format(ATM_GUI.accountDatabase.getSavingsBalance()));
-		if (account == CHEQUING)
-			print = print.concat("Chequing Balance:\t" + 
-					form.format(ATM_GUI.accountDatabase.getChequingBalance()));
-		print = print.concat("</html>");
-		item.setText(print);
-		messagePane.add(item);
-		item.setAlignmentX(Component.CENTER_ALIGNMENT);
+		JPanel newBalance = new JPanel (new GridLayout(4,2));
+		newBalance.setSize(width,width);
+		JLabel time = new JLabel (ds.format(dateobj));
+		newBalance.add(time);
+		JLabel blank = new JLabel ("");
+		newBalance.add(blank);
+		JLabel withdrawLabel, depositLabel, value;
+		if (action == WITHDRAW){
+			withdrawLabel = new JLabel ("Withdraw:");
+			newBalance.add(withdrawLabel);
+		}
+		if (action == DEPOSIT){
+			depositLabel = new JLabel ("Deposit:");
+			newBalance.add(depositLabel);
+		}
+		value = new JLabel (form.format(amount));
+		newBalance.add(value);
+		JLabel saveLabel, cheqLabel, balanceLabel;
+		if (account == SAVINGS){
+			saveLabel = new JLabel ("Savings Balance:");
+			newBalance.add(saveLabel);
+			balanceLabel = new JLabel (form.format(ATM_GUI.accountDatabase.getSavingsBalance()));
+			newBalance.add(balanceLabel);
+		}
+		if (account == CHEQUING){
+			cheqLabel = new JLabel ("Chequing Balance:");
+			newBalance.add(cheqLabel);
+			balanceLabel = new JLabel (form.format(ATM_GUI.accountDatabase.getChequingBalance()));
+			newBalance.add(balanceLabel);
+		}
+		newBalance.setOpaque(false);
+		messagePane.add(newBalance);
 		messagePane.add(Box.createRigidArea(new Dimension(width,10)));
 		pack();
 		repaint();
-	}//		
+	}
 }
