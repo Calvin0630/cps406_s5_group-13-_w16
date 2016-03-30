@@ -1,4 +1,4 @@
-import javax.swing.JComponent;
+import javax.swing.*;
 import java.awt.* ;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Ellipse2D;
@@ -8,6 +8,7 @@ public class Cash extends JComponent implements ATMMovableFields{
 	int width = ATM_GUI.NUM_PAD_DIMENSION*3/2, height = width/2;
 	int xPos, yPos;
 	int value;
+	protected static int numBills = 1;
 
 
 	public Cash (int val, int x, int y){
@@ -62,6 +63,7 @@ public class Cash extends JComponent implements ATMMovableFields{
 		g2.setColor(Color.black);
 		g2.drawString("$"+getValue(), xPos, yPos+height/4);
 		g2.drawString("$"+getValue(), xPos+width*3/4, yPos+height);
+		g2.drawString("x" + Integer.toString(numBills), xPos, yPos +  height);
 		int radius = height*2/3;
 		g2.setColor(Color.white);
 		Ellipse2D.Double circle = new Ellipse2D.Double(getBounds().getCenterX()-radius/2,

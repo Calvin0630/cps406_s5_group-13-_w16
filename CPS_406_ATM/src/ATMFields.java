@@ -13,6 +13,7 @@ class ATMFields extends JComponent {
 	public static Graphics2D g2;
 	public static Cash [] bills;
 
+
 	public ATMFields (){
 		cashDispensor = new Rectangle((int) (ATM_GUI.FRAME_WIDTH/2),
 				ATM_GUI.numPad.getY() + ATM_GUI.NUM_PAD_DIMENSION/4 + 10,
@@ -35,7 +36,7 @@ class ATMFields extends JComponent {
 				ATM_GUI.FRAME_WIDTH-ATM_GUI.NUM_PAD_DIMENSION*4/3,
 				ATM_GUI.FRAME_HEIGHT/3);
 		twentyBill = new Cash (20,ATM_GUI.FRAME_WIDTH-ATM_GUI.NUM_PAD_DIMENSION*5/3,
-				ATM_GUI.FRAME_HEIGHT*2/4+ATM_GUI.NUM_PAD_DIMENSION*1/10);
+				ATM_GUI.FRAME_HEIGHT * 2/4 + ATM_GUI.NUM_PAD_DIMENSION/10);
 		cheque = new Cheque(1906.55,ATM_GUI.FRAME_WIDTH-ATM_GUI.NUM_PAD_DIMENSION*5/3,
 				ATM_GUI.FRAME_HEIGHT*3/4);
 		setOpaque(false);
@@ -75,14 +76,15 @@ class ATMFields extends JComponent {
 	}
 
 	public static void displayWithdraw(int amount){
-		int xP = (int)cashDispensor.getX();
-		int yP = (int)cashDispensor.getY();
-		bills = new Cash [amount/20];
-		for (int i = 0 ; i < bills.length ; i++){
-			xP += 10;
-			yP += 10;
-			bills[i] = new Cash (20,xP,yP);
+		if(Cash.numBills == 0){
+			drawNewCash();
 		}
+		Cash.numBills = Cash.numBills + (amount / 20);
+	}
+
+	public static void drawNewCash(){
+		twentyBill = new Cash(20, (int) (cashDispensor.getX() + cashDispensor.width / 3),
+				(int) cashDispensor.getY());
 	}
 
 
@@ -101,9 +103,6 @@ class ATMFields extends JComponent {
 		debitCard.paint(g2);
 		twentyBill.paint(g2);
 		cheque.paint(g2);
-		if (bills != null)
-			for (int i = 0 ; i < bills.length ; i++)
-				bills[i].paint(g2);
 	}
 }
 

@@ -488,7 +488,7 @@ public class ATMScreen extends JLayeredPane{
 		cheque = false;
 		cash = true;
 		instruction.setText("Select account for deposit.");
-		input.setText(nf.format(ATMFields.twentyBill.getValue()));
+		input.setText(nf.format(ATMFields.twentyBill.getValue() * Cash.numBills));
 		input.setVisible(true);
 		leftTwo.setText("Savings Account");
 		leftTwo.setVisible(true);
@@ -518,8 +518,9 @@ public class ATMScreen extends JLayeredPane{
 	private void depositToAccount(int accountType){
 		if (accountType == DEPOSIT_SAVINGS){
 			if (cash){
-				ATM_GUI.accountDatabase.setSavingsBalance(ATM_GUI.accountDatabase.getSavingsBalance() + ATMFields.twentyBill.getValue());
-				ATM_GUI.receipt.addItem(Receipt.DEPOSIT, (double) ATMFields.twentyBill.getValue(), Receipt.SAVINGS);
+				ATM_GUI.accountDatabase.setSavingsBalance(ATM_GUI.accountDatabase.getSavingsBalance() + ATMFields.twentyBill.getValue() * Cash.numBills);
+				ATM_GUI.receipt.addItem(Receipt.DEPOSIT, (double) ATMFields.twentyBill.getValue() * Cash.numBills, Receipt.SAVINGS);
+				Cash.numBills = 0;
 							}
 			else if (cheque){
 				ATM_GUI.accountDatabase.setSavingsBalance(ATM_GUI.accountDatabase.getSavingsBalance() + ATMFields.cheque.getValue());
@@ -529,8 +530,9 @@ public class ATMScreen extends JLayeredPane{
 		}
 		if (accountType == DEPOSIT_CHEQUING){
 			if (cash){
-				ATM_GUI.accountDatabase.setChequingBalance(ATM_GUI.accountDatabase.getChequingBalance() + ATMFields.twentyBill.getValue());
-				ATM_GUI.receipt.addItem(Receipt.DEPOSIT, (double) ATMFields.twentyBill.getValue(), Receipt.CHEQUING);
+				ATM_GUI.accountDatabase.setChequingBalance(ATM_GUI.accountDatabase.getChequingBalance() + ATMFields.twentyBill.getValue() * Cash.numBills);
+				ATM_GUI.receipt.addItem(Receipt.DEPOSIT, (double) ATMFields.twentyBill.getValue() * Cash.numBills, Receipt.CHEQUING);
+				Cash.numBills = 0;
 
 			}
 			else if (cheque){
@@ -729,6 +731,9 @@ public class ATMScreen extends JLayeredPane{
 		ATMFields.debitCard.setX(ATMFields.debitCard.getX()-1000);
 		if (withdrawTotal > 0)
 			ATMFields.displayWithdraw(withdrawTotal);
+		withdrawTotal = 0;
+		System.out.println("Num bills " + Cash.numBills);
+		System.out.println("Withdraw total " + withdrawTotal);
 		ATM_GUI.fields.repaint();
 	}
 }
