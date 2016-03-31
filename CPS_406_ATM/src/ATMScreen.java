@@ -647,6 +647,7 @@ public class ATMScreen extends JLayeredPane{
 				}
 				else {
 					instruction.setText("Amount must be in multiple of $20.");
+					input.setText("");
 				}
 			}
 		}
