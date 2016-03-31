@@ -47,6 +47,8 @@ public class ATMScreen extends JLayeredPane{
 	protected static final int DEPOSIT_SAVINGS = 113;
 	protected static final int DEPOSIT_CHEQUING = 114;
 	protected static final int PRINT_RECEIPT = 12;
+	protected static final int EXIT_SCREEN = 13;
+	protected static final int EXIT_RECEIPT = 131;
 	protected static final int EXIT_SYSTEM = 999;
 	Timer timer;
 
@@ -167,6 +169,13 @@ public class ATMScreen extends JLayeredPane{
 		else if (screen == PRINT_RECEIPT){
 			printReceipt();
 		}
+		else if (screen == EXIT_SCREEN){
+			exitScreen();
+		}
+		else if (screen == EXIT_RECEIPT){
+			printReceipt();
+			exitSystem();
+		}
 		else if (screen == EXIT_SYSTEM){
 			exitSystem();
 		}
@@ -275,17 +284,14 @@ public class ATMScreen extends JLayeredPane{
 		instruction.setText("Account Number: " + String.format("%011d",ATM_GUI.accountDatabase.getAccountNumber()));
 		input.setText(nf.format(ATM_GUI.accountDatabase.getSavingsBalance()));
 		leftThree.setText("Main Menu");
-		rightOne.setText("Print Reciept");
 		rightThree.setText("<html>Exit<br>Output Bills</html>");
 		title.setVisible(true);
 		instruction.setVisible(true);
 		input.setVisible(true);
 		leftThree.setVisible(true);
-		rightOne.setVisible(true);
 		rightThree.setVisible(true);
 		leftThreeFunc = MAIN_MENU;
-		rightThreeFunc = EXIT_SYSTEM;
-		rightOneFunc = PRINT_RECEIPT;
+		rightThreeFunc = EXIT_SCREEN;
 	}
 
 	/*
@@ -298,17 +304,14 @@ public class ATMScreen extends JLayeredPane{
 		instruction.setText("Account Number: " + String.format("%011d",ATM_GUI.accountDatabase.getAccountNumber()));
 		input.setText(nf.format(ATM_GUI.accountDatabase.getChequingBalance()));
 		leftThree.setText("Main Menu");
-		rightOne.setText("Print Reciept");
 		rightThree.setText("<html>Exit<br>Output Bills</html>");
 		title.setVisible(true);
 		instruction.setVisible(true);
 		input.setVisible(true);
 		leftThree.setVisible(true);
-		rightOne.setVisible(true);
 		rightThree.setVisible(true);
 		leftThreeFunc = MAIN_MENU;
-		rightThreeFunc = EXIT_SYSTEM;
-		rightOneFunc = PRINT_RECEIPT;
+		rightThreeFunc = EXIT_SCREEN;
 	}
 
 	private void changePIN(){
@@ -521,7 +524,7 @@ public class ATMScreen extends JLayeredPane{
 				ATM_GUI.accountDatabase.setSavingsBalance(ATM_GUI.accountDatabase.getSavingsBalance() + ATMFields.twentyBill.getValue() * Cash.numBills);
 				ATM_GUI.receipt.addItem(Receipt.DEPOSIT, (double) ATMFields.twentyBill.getValue() * Cash.numBills, Receipt.SAVINGS);
 				Cash.numBills = 0;
-							}
+			}
 			else if (cheque){
 				ATM_GUI.accountDatabase.setSavingsBalance(ATM_GUI.accountDatabase.getSavingsBalance() + ATMFields.cheque.getValue());
 				ATM_GUI.receipt.addItem(Receipt.DEPOSIT, (double) ATMFields.cheque.getValue(), Receipt.SAVINGS);
@@ -575,7 +578,7 @@ public class ATMScreen extends JLayeredPane{
 	protected void cancel(){
 		input.setText("");
 		if (currentScreen == PIN_INPUT || currentScreen == MAIN_MENU)
-			exitSystem();
+			setCurrentScreen(EXIT_SCREEN);
 		if (currentScreen == DEPOSIT_CASH){
 			ATMFields.twentyBill.setX(ATMFields.twentyBill.getX()-1000);
 			setCurrentScreen(MAIN_MENU);
@@ -720,22 +723,32 @@ public class ATMScreen extends JLayeredPane{
 	 * Use Case 14. Print Receipt
 	 */
 	private void printReceipt (){
-		Receipt newReceipt = (Receipt) ATM_GUI.receipt;
-		newReceipt.setVisibility(true);
+		ATM_GUI.receipt.setVisibility(true);
 		currentScreen = MAIN_MENU;
 		setCurrentScreen(MAIN_MENU);
+	}
+	private void exitScreen(){
+		acceptInput = false;
+		resetValues();
+		title.setText("Exit");
+		instruction.setText("Select an option.");
+		currentScreen = EXIT_SCREEN;
+		leftTwo.setText("<html>Print Receipt &<br>Return Card</html>");
+		rightTwo.setText("Return Card");
+		leftTwo.setVisible(true);
+		rightTwo.setVisible(true);
+		leftTwoFunc = EXIT_RECEIPT;
+		rightTwoFunc = EXIT_SYSTEM;
 	}
 
 	private void exitSystem()
 	{
 		resetValues();
-		setCurrentScreen(WELCOME);
 		ATMFields.debitCard.setX(ATMFields.debitCard.getX()-1000);
 		if (withdrawTotal > 0)
 			ATMFields.displayWithdraw(withdrawTotal);
-		withdrawTotal = 0;
-		System.out.println("Num bills " + Cash.numBills);
-		System.out.println("Withdraw total " + withdrawTotal);
+		withdrawTotal = 0; 
 		ATM_GUI.fields.repaint();
+		setCurrentScreen(MAIN_MENU);
 	}
 }
