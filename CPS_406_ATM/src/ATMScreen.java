@@ -686,7 +686,7 @@ public class ATMScreen extends JLayeredPane{
 			checkBalanceChequing();
 		}
 		else{
-			error("<html>Insufficient Funds<br>"+nf.format(Double.parseDouble(input.getText())) + " is greater than current Chequing balance.</html>");
+			error("<html>Insufficient Funds<br>"+nf.format(Double.parseDouble(input.getText())) + " exceeds current Chequing balance.</html>");
 		}
 	}
 	/*
@@ -712,7 +712,7 @@ public class ATMScreen extends JLayeredPane{
 			checkBalanceSavings();
 		}
 		else{
-			error("<html>Insufficient Funds<br>"+nf.format(Double.parseDouble(value)) + " is greater than current Savings balance.</html>");
+			error("<html>Insufficient Funds<br>"+nf.format(Double.parseDouble(value)) + " exceeds current Savings balance.</html>");
 		}
 	}
 
