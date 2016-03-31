@@ -32,6 +32,7 @@ public class Receipt extends JFrame {
 		setLocation(xPos,yPos);
 		setVisible(visible);
 		setResizable(false);
+		setAlwaysOnTop(true);
 
 		Date dateobj = new Date();
 		date = new JLabel (df.format(dateobj));
