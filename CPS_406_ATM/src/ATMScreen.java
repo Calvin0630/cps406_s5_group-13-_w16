@@ -229,16 +229,16 @@ public class ATMScreen extends JLayeredPane{
 		leftTwo.setText("Change PIN");
 		leftThree.setText("Change Language");
 		rightOne.setText("Withdraw Money");
-		rightTwo.setText("Transfer Funds / Pay Debt");
-		rightThree.setText("Check Balance");
+		rightTwo.setText("Check Balance");
+		rightThree.setText("Transfer Funds / Pay Debt");
 
 		leftOneFunc = DEPOSIT;
 		leftTwoFunc = CHANGE_PIN;
 		leftThreeFunc = CHANGE_DISPLAY_LANGUAGE;
 
 		rightOneFunc = SELECT_ACCOUNT;
-		rightTwoFunc = TRANSFERS;
-		rightThreeFunc = CHECK_BALANCE;
+		rightTwoFunc = CHECK_BALANCE;
+		rightThreeFunc = TRANSFERS;
 
 		leftOne.setVisible(true);
 		leftTwo.setVisible(true);
@@ -720,7 +720,8 @@ public class ATMScreen extends JLayeredPane{
 	 * Use Case 14. Print Receipt
 	 */
 	private void printReceipt (){
-		ATM_GUI.receipt.setVisibility(true);
+		Receipt newReceipt = (Receipt) ATM_GUI.receipt;
+		newReceipt.setVisibility(true);
 		currentScreen = MAIN_MENU;
 		setCurrentScreen(MAIN_MENU);
 	}
