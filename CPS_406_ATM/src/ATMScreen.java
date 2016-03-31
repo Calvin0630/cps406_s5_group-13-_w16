@@ -361,7 +361,7 @@ public class ATMScreen extends JLayeredPane{
 
 	private void error(String msg){
 		resetValues();
-		title.setText("Insufficient Funds");
+		title.setText("Withdrawal Error");
 		instruction.setText(msg);
 
 		rightThree.setText("Return to Main Menu");
@@ -667,7 +667,8 @@ public class ATMScreen extends JLayeredPane{
 	 * Use Case 8: Invalid amount
 	 */
 	private void validChequingWithdraw(String value){
-		if(ATM_GUI.accountDatabase.getChequingBalance() > Double.parseDouble(value)
+		if (Double.parseDouble(value) > 500.00) error("ATM is unable to dispense funds exceeding $500.");
+		else if(ATM_GUI.accountDatabase.getChequingBalance() > Double.parseDouble(value)
 				&& value.length() > 0){
 			ATM_GUI.accountDatabase.setChequingBalance(ATM_GUI.accountDatabase.getChequingBalance() -
 					Double.parseDouble(value));
@@ -685,14 +686,15 @@ public class ATMScreen extends JLayeredPane{
 			checkBalanceChequing();
 		}
 		else{
-			error(nf.format(Double.parseDouble(input.getText())) + " is greater than current Chequing balance.");
+			error("<html>Insufficient Funds<br>"+nf.format(Double.parseDouble(input.getText())) + " is greater than current Chequing balance.</html>");
 		}
 	}
 	/*
 	 * Use Case 8: Invalid amount
 	 */
 	private void validSavingsWithdraw(String value){
-		if(ATM_GUI.accountDatabase.getSavingsBalance() > Double.parseDouble(value)
+		if (Double.parseDouble(value) > 500.00) error("ATM is unable to dispense funds exceeding $500.");
+		else if(ATM_GUI.accountDatabase.getSavingsBalance() > Double.parseDouble(value)
 				&& value.length() > 0){
 			ATM_GUI.accountDatabase.setSavingsBalance(ATM_GUI.accountDatabase.getSavingsBalance() -
 					Double.parseDouble(value));
@@ -710,7 +712,7 @@ public class ATMScreen extends JLayeredPane{
 			checkBalanceSavings();
 		}
 		else{
-			error(nf.format(Double.parseDouble(value)) + " is greater than current Savings balance.");
+			error("<html>Insufficient Funds<br>"+nf.format(Double.parseDouble(value)) + " is greater than current Savings balance.</html>");
 		}
 	}
 
