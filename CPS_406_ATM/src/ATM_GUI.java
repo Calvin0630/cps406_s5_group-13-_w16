@@ -55,8 +55,6 @@ public class ATM_GUI extends JFrame {
 		setResizable(true);
 		setVisible(true);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
-		receipt = new Receipt();
 	}
 
 	public void getAccountInfo(){
@@ -244,6 +242,7 @@ public class ATM_GUI extends JFrame {
 							ATMFields.debitCard.setVisible(false);
 							screen.setCurrentScreen(ATMScreen.PIN_INPUT);
 							ATMFields.debitCard.setX(ATMFields.debitCard.getX()+1000);
+							receipt = new Receipt();
 						}
 					}catch(Exception cardError){
 						JOptionPane.showMessageDialog(null, "Card insert error!");
