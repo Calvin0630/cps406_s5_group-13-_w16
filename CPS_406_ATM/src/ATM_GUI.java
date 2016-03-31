@@ -77,6 +77,10 @@ public class ATM_GUI extends JFrame {
 				int result = JOptionPane.showConfirmDialog(null, panel, "Welcome!",
 						JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 				if (result == JOptionPane.OK_OPTION) {
+					if(creditField.getText().length() > 9 || chequeField.getText().length() > 9 ||
+							saveField.getText().length() > 9 ){
+						throw new Exception("Too large a value for a certain field");
+					}
 					if(Double.parseDouble(creditField.getText()) < 0){
 						throw new Exception("Invalid credit amount");
 					}
