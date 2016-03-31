@@ -80,6 +80,14 @@ public class ATM_GUI extends JFrame {
 					if(Double.parseDouble(creditField.getText()) < 0){
 						throw new Exception("Invalid credit amount");
 					}
+					if(Double.parseDouble(saveField.getText()) < 0 ||
+							Double.parseDouble(chequeField.getText()) < 0){
+						throw new Exception("Invalid account amount");
+					}
+					if(Integer.parseInt(pinField.getText()) < 0 ||
+							pinField.getText().length() == 0){
+						throw new Exception("Invalid Pin");
+					}
 					accountDatabase.setPIN(Integer.parseInt(pinField.getText()));
 					accountDatabase.setSavingsBalance((Double.parseDouble(saveField.getText())));
 					accountDatabase.setChequingBalance((Double.parseDouble(chequeField.getText())));
@@ -90,7 +98,7 @@ public class ATM_GUI extends JFrame {
 					System.exit(1);
 				}
 			}catch(Exception e){
-				JOptionPane.showMessageDialog(null, "Invalid input fields.","Error!",JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, e.getMessage(),"Error!",JOptionPane.ERROR_MESSAGE);
 				error = true;
 			}
 		}while (error) ;  
