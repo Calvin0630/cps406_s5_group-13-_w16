@@ -11,7 +11,7 @@ public class Receipt extends JFrame {
 	DateFormat df = new SimpleDateFormat("dd/MM/yy     hh:mm a");
 	DateFormat ds = new SimpleDateFormat("hh:mm a");
 	NumberFormat form= NumberFormat.getCurrencyInstance();
-	Date dateobj;
+	
 
 	JLabel welcome = new JLabel ("Bank ATM System"),
 			slogan = new JLabel ("Do Banking Things"),
@@ -34,7 +34,7 @@ public class Receipt extends JFrame {
 		setResizable(false);
 		setAlwaysOnTop(true);
 
-		dateobj = new Date();
+		Date dateobj = new Date();
 		date = new JLabel (df.format(dateobj));
 
 		messagePane = new JPanel();
@@ -82,7 +82,8 @@ public class Receipt extends JFrame {
 	public void addItem(int action, double amount, int account){
 		JPanel newBalance = new JPanel (new GridLayout(4,2));
 		newBalance.setSize(width,width);
-		JLabel time = new JLabel (ds.format(dateobj));
+		Date dateobj2 = new Date();
+		JLabel time = new JLabel (ds.format(dateobj2));
 		newBalance.add(time);
 		JLabel blank = new JLabel ("");
 		newBalance.add(blank);
