@@ -79,7 +79,9 @@ public class ATM_GUI extends JFrame {
 				int result = JOptionPane.showConfirmDialog(null, panel, "Welcome!",
 						JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 				if (result == JOptionPane.OK_OPTION) {
-
+					if(Double.parseDouble(creditField.getText()) < 0){
+						throw new Exception("Invalid credit amount");
+					}
 					accountDatabase.setPIN(Integer.parseInt(pinField.getText()));
 					accountDatabase.setSavingsBalance((Double.parseDouble(saveField.getText())));
 					accountDatabase.setChequingBalance((Double.parseDouble(chequeField.getText())));
