@@ -736,6 +736,7 @@ public class ATMScreen extends JLayeredPane{
 		withdrawTotal = 0;
 		System.out.println("Num bills " + Cash.numBills);
 		System.out.println("Withdraw total " + withdrawTotal);
+		ATM_GUI.receipt = new Receipt();
 		ATM_GUI.fields.repaint();
 	}
 }
