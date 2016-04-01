@@ -3,12 +3,18 @@ import javax.swing.plaf.basic.BasicArrowButton;
 import java.awt.*;
 
 /**
- * Created by Lionel on 2016-03-21.
+ * @author Group 13
+ * JPanel of buttons on right side of the screen.
  */
 public class ATMRightScreenButtons extends JPanel{
 
     protected BasicArrowButton rightOne, rightTwo, rightThree;
 
+    /**
+     * Constructor to initialize, detail, and set listeners for right side buttons.
+     * @param screen ATMScreen of the system.
+     * @param listener contained in ATM_GUI.ATMListener
+     */
     public ATMRightScreenButtons(ATMScreen screen, ATM_GUI.ATMListener listener){
         super(new GridLayout(3, 1, 0, screen.getHeight() / 10));
         setBackground(ATM_GUI.background);
