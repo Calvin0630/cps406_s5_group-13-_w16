@@ -2,13 +2,20 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * Created by Lionel on 2016-03-21.
+ * 
+ * @author Group 13
+ * Class contains the number-pad buttons and their properties.
+ *
  */
 public class ATMNumPad extends JPanel{
 
     protected JButton zero, one, two, three, four, five, six;
     protected JButton seven, eight, nine;
 
+    /**
+     * Constructor to initialize and set button properties.
+     * @param listener is a listener to determine if a button was clicked.
+     */
     public ATMNumPad(ATM_GUI.ATMListener listener){
         super(new GridLayout(4, 3, 10, 10));
         setBackground(ATM_GUI.background);
