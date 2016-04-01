@@ -2,7 +2,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 
+/**
+ * 
+ * @author Group 13
+ * Class contains the dimensions of the peripheral components and draws them.
+ *
+ */
 class ATMFields extends JComponent {
+	
 	public static Rectangle printer,cardSlot,cashDispensor;
 	public static Ellipse2D  NFC;
 	public static Phone nonNFCPhone;
@@ -13,7 +20,9 @@ class ATMFields extends JComponent {
 	public static Graphics2D g2;
 	public static Cash [] bills;
 
-
+	/**
+	 * Constructor to initialize and define sizes of peripheral components.
+	 */
 	public ATMFields (){
 		cashDispensor = new Rectangle((int) (ATM_GUI.FRAME_WIDTH/2),
 				ATM_GUI.numPad.getY() + ATM_GUI.NUM_PAD_DIMENSION/4 + 10,
@@ -42,6 +51,10 @@ class ATMFields extends JComponent {
 		setOpaque(false);
 	}
 
+	/**
+	 * Drawing information for printer component.
+	 * @param g2 Graphics2D parsed Graphics object.
+	 */
 	private void drawPrinter(Graphics2D g2){
 		g2.draw(printer);
 		g2.fillRect((int)(printer.getX()+printer.getWidth()/4), 
@@ -50,6 +63,10 @@ class ATMFields extends JComponent {
 		g2.drawString("Printer", (int)(printer.getX()+printer.getWidth()/4), 
 				(int)(printer.getY()+printer.getHeight()*2/3) - 10);
 	}
+	/**
+	 * Drawing information for cash slot component.
+	 * @param g2 Graphics2D parsed Graphics object.
+	 */
 	private void drawCashDispensor(Graphics2D g2){
 		g2.draw(cashDispensor);
 		g2.fillRect((int)(cashDispensor.getX()+cashDispensor.getWidth()/8), 
@@ -58,6 +75,10 @@ class ATMFields extends JComponent {
 		g2.drawString("Cash Dispensor", (int)(cashDispensor.getX()+cashDispensor.getWidth()/4), 
 				(int)(cashDispensor.getY()+cashDispensor.getHeight()*2/3) - 10);
 	}
+	/**
+	 * Drawing information for card slot component.
+	 * @param g2 Graphics2D parsed Graphics object.
+	 */
 	private void drawCardSlot(Graphics2D g2){
 		g2.draw(cardSlot);
 		g2.fillRect((int)(cardSlot.getX()+cardSlot.getWidth()/4), 
@@ -66,6 +87,10 @@ class ATMFields extends JComponent {
 		g2.drawString("Insert Card", (int)(cardSlot.getX()+cardSlot.getWidth()/4), 
 				(int)(cardSlot.getY()+cardSlot.getHeight()*2/3) - 10);
 	}
+	/**
+	 * Drawing information for NFC component.
+	 * @param g2 Graphics2D parsed Graphics object.
+	 */
 	private void drawNFC(Graphics2D g2){
 		double r = cardSlot.getWidth()*2/3;
 		NFC = new Ellipse2D.Double(cardSlot.getX() + cardSlot.getWidth()/6,
@@ -75,6 +100,10 @@ class ATMFields extends JComponent {
 		g2.drawString("Tap NFC Phone", (int)(NFC.getX()+NFC.getWidth()/4), (int)NFC.getCenterY());
 	}
 
+	/**
+	 * Modifies the existing cash object's multiplier or creates new bills.
+	 * @param amount is the amount to total value.
+	 */
 	public static void displayWithdraw(int amount){
 		if(Cash.numBills == 0){
 			drawNewCash();
@@ -82,12 +111,19 @@ class ATMFields extends JComponent {
 		Cash.numBills = Cash.numBills + (amount / 20);
 	}
 
+	/**
+	 * Draws new cash object.
+	 */
 	public static void drawNewCash(){
 		twentyBill = new Cash(20, (int) (cashDispensor.getX() + cashDispensor.width / 3),
 				(int) cashDispensor.getY());
 	}
 
-
+	/*
+	 * Paints components.
+	 * (non-Javadoc)
+	 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
+	 */
 	protected void paintComponent(Graphics g){
 		super.paintComponent(g);
 		g2 = (Graphics2D) g;
