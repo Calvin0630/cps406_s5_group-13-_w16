@@ -9,7 +9,7 @@ import java.util.Date;
 
 /**
  * @author Group 13
- * Cheque class provides visual components as well as values held by the phone component.
+ * Cheque class provides visual components as well as values held by the cheque component.
  */
 public class Cheque extends JComponent implements ATMMovableFields{
 
