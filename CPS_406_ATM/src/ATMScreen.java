@@ -3,13 +3,14 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.NumberFormat;
+import java.util.Locale;
 
 public class ATMScreen extends JLayeredPane{
 	private JLabel title, instruction, input;
 	protected JLabel leftOne, leftTwo, leftThree;
 	protected JLabel rightOne, rightTwo, rightThree;
 	private String inputString = "";
-	NumberFormat nf = NumberFormat.getCurrencyInstance();
+	NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.CANADA);
 
 	protected static int leftOneFunc, leftTwoFunc, leftThreeFunc;
 	protected static int rightOneFunc, rightTwoFunc, rightThreeFunc;
@@ -726,9 +727,8 @@ public class ATMScreen extends JLayeredPane{
 	 */
 	private void printReceipt (){
 		ATM_GUI.receipt.setVisibility(true);
-		currentScreen = MAIN_MENU;
-		setCurrentScreen(MAIN_MENU);
 	}
+	
 	private void exitScreen(){
 		acceptInput = false;
 		resetValues();
