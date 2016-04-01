@@ -5,6 +5,13 @@ import java.awt.event.ActionListener;
 import java.text.NumberFormat;
 import java.util.Locale;
 
+/**
+ * 
+ * @author Group 13
+ * ATMScreen class contains the logic and back-end programming of the ATM System
+ * All peripheral components and button input will affect the current screen.
+ *
+ */
 public class ATMScreen extends JLayeredPane{
 	private JLabel title, instruction, input;
 	protected JLabel leftOne, leftTwo, leftThree;
@@ -53,6 +60,13 @@ public class ATMScreen extends JLayeredPane{
 	protected static final int EXIT_SYSTEM = 999;
 	Timer timer;
 
+	/**
+	 * Constructor to initialize the screen, and its components.
+	 * @param xPos is the x position of the screen.
+	 * @param yPos is the y position of the screen.
+	 * @param wth is the width of the screen.
+	 * @param hth is the height of the screen.
+	 */
 	public ATMScreen(int xPos, int yPos, int wth, int hth){
 		super();
 		leftOneFunc = leftTwoFunc = leftThreeFunc = 0;
@@ -97,10 +111,18 @@ public class ATMScreen extends JLayeredPane{
 		acceptInput = true;
 	}
 
+	/**
+	 * Returns the int assigned to the current displayed screen.
+	 * @return currentScreen one of several predefined integers.
+	 */
 	protected int getCurrentScreen(){
 		return currentScreen;
 	}
 
+	/**
+	 * Through parameter input, sets the screen to display and other functions to call.
+	 * @param screen int one of several predefined integers.
+	 */
 	protected void setCurrentScreen(int screen){
 		resetValues();
 
@@ -182,7 +204,9 @@ public class ATMScreen extends JLayeredPane{
 		}
 	}
 
-
+	/**
+	 * The initial screen waiting for debit card access.
+	 */
 	protected void welcome(){
 		currentScreen = WELCOME;
 		acceptInput = false;
@@ -201,6 +225,9 @@ public class ATMScreen extends JLayeredPane{
 		rightThree.setVisible(false);
 	}
 
+	/**
+	 * Screen designated for waiting for user to input PIN through keypad or NFC phone.
+	 */
 	private void inputPIN(){
 		inputString = "";
 		currentScreen = PIN_INPUT;
@@ -217,6 +244,7 @@ public class ATMScreen extends JLayeredPane{
 		/*
 		 * Daniel Jack
 		 * Use Case 2: Inactivity timeout for NFC/PIN
+		 * If in 30 seconds, no PIN interaction has been made, the system exits.
 		 */
 		ActionListener taskPerformer = new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
@@ -228,7 +256,10 @@ public class ATMScreen extends JLayeredPane{
 		timer.start();
 	}
 
-
+	/**
+	 * The main menu of the system after user has verified PIN,
+	 * in which place they can access other screens and options.
+	 */
 	private void mainMenu(){
 		acceptInput = false;
 		resetValues();
@@ -258,6 +289,9 @@ public class ATMScreen extends JLayeredPane{
 		rightThree.setVisible(true);
 	}
 
+	/**
+	 * The check balance screen, displaying options to check either account's balance.
+	 */
 	private void checkBalance(){
 		acceptInput = false;
 		resetValues();
@@ -277,6 +311,9 @@ public class ATMScreen extends JLayeredPane{
 
 	/*
 	 * Use Case 11: Check Balance
+	 */
+	/**
+	 * Screen to display the balance of the savings account.
 	 */
 	private void checkBalanceSavings(){
 		resetValues();
@@ -298,6 +335,9 @@ public class ATMScreen extends JLayeredPane{
 	/*
 	 * Use Case 11: Check Balance
 	 */
+	/**
+	 * Screen to display the balance of the chequing account.
+	 */
 	private void checkBalanceChequing(){
 		resetValues();
 		currentScreen = CHECK_BALANCE_CHEQUING;
@@ -315,6 +355,9 @@ public class ATMScreen extends JLayeredPane{
 		rightThreeFunc = EXIT_SCREEN;
 	}
 
+	/**
+	 * Screen prompting user for a new PIN to modify the existing PIN of the account.
+	 */
 	private void changePIN(){
 		acceptInput = true;
 		resetValues();
@@ -331,6 +374,10 @@ public class ATMScreen extends JLayeredPane{
 		leftThreeFunc = MAIN_MENU;
 	}
 
+	/**
+	 * When doing a transaction, the user must select an account to modify,
+	 * as chosen on this screen.
+	 */
 	private void selectAccount(){
 		resetValues();
 		internalWithdrawal = false;	
@@ -348,6 +395,10 @@ public class ATMScreen extends JLayeredPane{
 		leftThree.setVisible(true);
 	}
 
+	/**
+	 * The screen dedicated to withdrawals after account has been selected.
+	 * @param accountType is an predefined integer representing which account to interact with.
+	 */
 	private void withdraw(int accountType){
 		currentScreen = WITHDRAW;
 		currentAccount = accountType;
@@ -360,6 +411,10 @@ public class ATMScreen extends JLayeredPane{
 		leftThreeFunc = MAIN_MENU;
 	}
 
+	/**
+	 * An error display screen to display a parameter string.
+	 * @param msg string to be displayed.
+	 */
 	private void error(String msg){
 		resetValues();
 		title.setText("Withdrawal Error");
@@ -372,6 +427,9 @@ public class ATMScreen extends JLayeredPane{
 	/*
 	 * Daniel Jack
 	 * Use Case 16. Change Display Language
+	 */
+	/**
+	 * Screen to offer the user choice of English language.
 	 */
 	private void changeDisplayLanguage(){
 		resetValues();
@@ -393,6 +451,9 @@ public class ATMScreen extends JLayeredPane{
 		leftThreeFunc = MAIN_MENU;
 	}
 
+	/**
+	 * Resets labels to non-visible and buttons to no function, as well as the input's visibility.
+	 */
 	private void resetValues(){
 		if (acceptInput)
 			input.setVisible(true);
@@ -410,6 +471,9 @@ public class ATMScreen extends JLayeredPane{
 		rightThree.setVisible(false);
 	}
 
+	/**
+	 * Screen to offer user further options in regards to transferring funds.
+	 */
 	private void transfers(){
 		currentScreen = TRANSFERS;
 		acceptInput = false;
@@ -427,6 +491,10 @@ public class ATMScreen extends JLayeredPane{
 	/*
 	 * Use Case 15. Transfer Money between accounts
 	 */
+	/**
+	 * Screen to offer transferring of funds between accounts, 
+	 * where the user must select direction of transfer.
+	 */
 	private void accountBalanceTransfers (){
 		resetValues();
 		currentScreen = ACCOUNT_TRANSFERS;
@@ -442,6 +510,10 @@ public class ATMScreen extends JLayeredPane{
 		rightTwoFunc = TRANSFER_SOURCE_CHEQUING;
 		leftThreeFunc = MAIN_MENU;
 	}
+	/**
+	 * Screen for the user to enter amount to transfer.
+	 * @param accountSource predefined int representing which account to withdraw from.
+	 */
 	private void balanceTransfer(int accountSource){
 		acceptInput = true;
 		currentAccount = accountSource;
@@ -453,6 +525,9 @@ public class ATMScreen extends JLayeredPane{
 	}
 	/*
 	 * Use Case 17: Bill Payment
+	 */
+	/**
+	 * Screen to offer options to pay the creditDebt variable of accountDatabase.
 	 */
 	private void payBill (){
 		currentScreen = PAY_BILL;
@@ -473,6 +548,9 @@ public class ATMScreen extends JLayeredPane{
 		rightTwoFunc = SELECT_ACCOUNT_CHEQUING;
 	}
 
+	/**
+	 * Screen to instruct user on deposits.
+	 */
 	private void deposit(){
 		currentScreen = DEPOSIT;
 		acceptInput = false;
@@ -486,6 +564,9 @@ public class ATMScreen extends JLayeredPane{
 	/*
 	 * Daniel Jack
 	 * Use Case 9. User Deposits Cash
+	 */
+	/**
+	 * Screen to display after user has deposited a cash bill.
 	 */
 	private void depositCash (){
 		currentScreen = DEPOSIT_CASH;
@@ -505,6 +586,9 @@ public class ATMScreen extends JLayeredPane{
 	 * Daniel Jack
 	 * Use Case 10. User Deposits Cheque
 	 */
+	/**
+	 * Screen to display after user has deposited a cheque.
+	 */
 	private void depositCheque(){
 		currentScreen = DEPOSIT_CHEQUE;
 		cheque = true;
@@ -519,6 +603,10 @@ public class ATMScreen extends JLayeredPane{
 		rightTwo.setVisible(true);
 		rightTwoFunc = DEPOSIT_CHEQUING;
 	}
+	/**
+	 * Processes value of deposit and which account to deposit to.
+	 * @param accountType predefined int representing which class to deposit into.
+	 */
 	private void depositToAccount(int accountType){
 		if (accountType == DEPOSIT_SAVINGS){
 			if (cash){
@@ -547,6 +635,10 @@ public class ATMScreen extends JLayeredPane{
 		}
 	}
 
+	/**
+	 * Method receives number-pad inputs and determines if they are valid inputs or not.
+	 * @param inp is the string of the button. Ex. Button 3 contains string "3".
+	 */
 	protected void storeInput(String inp){
 		if(acceptInput) {
 			/*
@@ -566,6 +658,10 @@ public class ATMScreen extends JLayeredPane{
 		}
 	}
 
+	/**
+	 * When the correction button is clicked, this method is invoked to
+	 * determine what course of action to take.
+	 */
 	protected void correction(){
 		if (input.getText().length() > 0){
 			input.setText(input.getText().substring(0,
@@ -576,6 +672,10 @@ public class ATMScreen extends JLayeredPane{
 		}
 	}
 
+	/**
+	 * When the cancel button is clicked, this method is invoked
+	 * to determine where the cancel button should lead to.
+	 */
 	protected void cancel(){
 		input.setText("");
 		if (currentScreen == WELCOME){}
@@ -598,6 +698,10 @@ public class ATMScreen extends JLayeredPane{
 		}
 	}
 
+	/**
+	 * When the enter button is clicked, this method is invoked
+	 * to determine what course of action to take.
+	 */
 	public void enter(){
 		if(currentScreen == PIN_INPUT){
 			if (Integer.parseInt(inputString) == ATM_GUI.accountDatabase.getPIN()){
@@ -673,6 +777,10 @@ public class ATMScreen extends JLayeredPane{
 	/*
 	 * Use Case 8: Invalid amount
 	 */
+	/**
+	 * When withdrawing from the chequing account, this method determines if the transaction is valid.
+	 * @param value string of the amount being withdrew.
+	 */
 	private void validChequingWithdraw(String value){
 		if (Double.parseDouble(value) > 500.00) error("ATM is unable to dispense funds exceeding $500.");
 		else if(ATM_GUI.accountDatabase.getChequingBalance() > Double.parseDouble(value)
@@ -699,6 +807,10 @@ public class ATMScreen extends JLayeredPane{
 	/*
 	 * Use Case 8: Invalid amount
 	 */
+	/**
+	 * When withdrwaing from the savings account, this method determines if the transaction is valid.
+	 * @param value string of the amount being withdrew.
+	 */
 	private void validSavingsWithdraw(String value){
 		if (Double.parseDouble(value) > 500.00) error("ATM is unable to dispense funds exceeding $500.");
 		else if(ATM_GUI.accountDatabase.getSavingsBalance() > Double.parseDouble(value)
@@ -723,6 +835,11 @@ public class ATMScreen extends JLayeredPane{
 		}
 	}
 
+	/**
+	 * When withdrawing externally (not a bill payment or account transfer)
+	 * the total amount is stored as to modify the bill peripheral.
+	 * @param valueString is the value of the withdrawal.
+	 */
 	private void addWithdrawTotal (String valueString)
 	{
 		withdrawTotal += Integer.parseInt(valueString);
@@ -731,10 +848,16 @@ public class ATMScreen extends JLayeredPane{
 	/*
 	 * Use Case 14. Print Receipt
 	 */
+	/**
+	 * Displays the ATM_GUI class' Receipt object receipt.
+	 */
 	private void printReceipt (){
 		ATM_GUI.receipt.setVisibility(true);
 	}
 
+	/**
+	 * Screen to provide user options when exiting the system.
+	 */
 	private void exitScreen(){
 		acceptInput = false;
 		resetValues();
@@ -749,6 +872,9 @@ public class ATMScreen extends JLayeredPane{
 		rightTwoFunc = EXIT_SYSTEM;
 	}
 
+	/**
+	 * Course of action for the system to take when exiting the system.
+	 */
 	private void exitSystem()
 	{
 		resetValues();
