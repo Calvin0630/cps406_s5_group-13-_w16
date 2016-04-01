@@ -4,52 +4,97 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.RectangularShape;
 
+/**
+ * @author Group 13
+ * Cash class provides visual components as well as values held by the cash component.
+ */
 public class Cash extends JComponent implements ATMMovableFields{
+
 	int width = ATM_GUI.NUM_PAD_DIMENSION*3/2, height = width/2;
 	int xPos, yPos;
 	int value;
 	protected static int numBills = 1;
 
-
+	/**
+	 * Cash constructor to initialize variables.
+	 * @param val int indicating amount of the bill.
+	 * @param x int indicating x position.
+	 * @param y int indicating y position
+	 */
 	public Cash (int val, int x, int y){
 		value = val;
 		xPos = x;
 		yPos = y;
 	}
 
+	/**
+	 *  Returns x position.
+	 *  @return xPos int of x position.
+	 */
 	public int getX(){
 		return xPos;
 	}
 
+	/**
+	 * Sets x position.
+	 * @param x int to set xPos
+	 */
 	public void setX(int x){
 		xPos = x;
 	}
 
+	/**
+	 * Returns y position.
+	 * @return yPos int of y position.
+	 */
 	public int getY(){
 		return yPos;
 	}
 
+	/**
+	 * Sets y position.
+	 * @param y int to set yPos.
+	 */
 	public void setY(int y){
 		yPos = y;
 	}
 
+	/**
+	 * Returns value of the bill.
+	 * @return value int of the amount indicated on the bill.
+	 */
 	public int getValue (){
 		return value;
 	}
 
+	/**
+	 * Returns a rectangle representing bounds of the bill.
+	 * @return a rectangle object.
+	 */
 	public Rectangle getBounds (){
 		return new Rectangle (xPos, yPos, width, height);
 	}
 
-
+	/**
+	 * Returns width of the bill.
+	 * @return width int of bill.
+	 */
 	public int getWidth(){
 		return width;
 	}
 
+	/**
+	 * Returns height of the bill.
+	 * @return height int of bill.
+	 */
 	public int getHeight (){
 		return height;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
+	 */
 	protected void paintComponent(Graphics g){
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
@@ -73,6 +118,10 @@ public class Cash extends JComponent implements ATMMovableFields{
 	}
 
 	@Override
+	/**
+	 * Using MouseEvent's positon, adjusts position of the bill.
+	 * @param event is a MouseEvent containing point of mouse.
+	 */
 	public void moveField(MouseEvent event) {
 		if ((event.getPoint().getX() - width/2) > (ATM_GUI.FRAME_WIDTH/2)) {
 			setX((int)event.getPoint().getX()-width/2);
@@ -81,11 +130,20 @@ public class Cash extends JComponent implements ATMMovableFields{
 	}
 
 	@Override
+	/**
+	 * Given the Rectangular shape of an item, determines if the bounds overlap.
+	 * @param item is a RectangularShape object.
+	 */
 	public boolean collides(RectangularShape item) {
 		return item.contains(getBounds());
 	}
 
 	@Override
+	/**
+	 * Determines if object is equal to another object, which is never true.
+	 * @param other another ATMMoveableFields object.
+	 * @return false
+	 */
 	public boolean equals(ATMMovableFields other) {
 		return false;
 	}
