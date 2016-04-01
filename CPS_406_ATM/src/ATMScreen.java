@@ -578,18 +578,24 @@ public class ATMScreen extends JLayeredPane{
 
 	protected void cancel(){
 		input.setText("");
-		if (currentScreen == PIN_INPUT || currentScreen == MAIN_MENU)
+		if (currentScreen == WELCOME){}
+		else if (currentScreen == PIN_INPUT){
+			setCurrentScreen(EXIT_SYSTEM);
+		}
+		else if (currentScreen == MAIN_MENU){
 			setCurrentScreen(EXIT_SCREEN);
-		if (currentScreen == DEPOSIT_CASH){
+		}
+		else if (currentScreen == DEPOSIT_CASH){
 			ATMFields.twentyBill.setX(ATMFields.twentyBill.getX()-1000);
 			setCurrentScreen(MAIN_MENU);
 		}
-		if (currentScreen == DEPOSIT_CHEQUE){
+		else if (currentScreen == DEPOSIT_CHEQUE){
 			ATMFields.cheque.setX(ATMFields.cheque.getX()-1000);
 			setCurrentScreen(MAIN_MENU);
 		}
-		else if (currentScreen != PIN_INPUT && currentScreen != WELCOME)
+		else {
 			setCurrentScreen(MAIN_MENU);
+		}
 	}
 
 	public void enter(){
@@ -728,7 +734,7 @@ public class ATMScreen extends JLayeredPane{
 	private void printReceipt (){
 		ATM_GUI.receipt.setVisibility(true);
 	}
-	
+
 	private void exitScreen(){
 		acceptInput = false;
 		resetValues();
