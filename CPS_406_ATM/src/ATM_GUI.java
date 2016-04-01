@@ -6,11 +6,14 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 /**
- * Created by Lionel on 2016-03-10.
- * Daniel hopping on 2016-03-17
+ * 
+ * @author Group 13
+ * ATM_GUI is the class containing the essentials of the ATM simulator.
+ * From this class, the other classes are called and utilised to simulate an ATM.
+ *
  */
-
 public class ATM_GUI extends JFrame {
+	
 	protected static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	public static final int FRAME_WIDTH = screenSize.width;
 	public static final int FRAME_HEIGHT = screenSize.height;
@@ -28,9 +31,11 @@ public class ATM_GUI extends JFrame {
 	public static AccountDatabase accountDatabase;
 	public ATMFieldsMouseListener fieldsListener;
 	public static ATMFields fields;
-
 	protected static String selected;
 
+	/**
+	 * ATM_GUI constructor creating the frame and its components.
+	 */
 	public ATM_GUI(){
 		setSize(screenSize);
 		accountDatabase = new AccountDatabase();
@@ -57,6 +62,9 @@ public class ATM_GUI extends JFrame {
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 	}
 
+	/**
+	 * Opens a JOptionPane dialog to get essential account information prior to simulation drawing to screen,
+	 */
 	public void getAccountInfo(){
 		boolean error = false;
 		do{
@@ -77,20 +85,8 @@ public class ATM_GUI extends JFrame {
 				int result = JOptionPane.showConfirmDialog(null, panel, "Welcome!",
 						JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 				if (result == JOptionPane.OK_OPTION) {
-					if(creditField.getText().length() > 9 || chequeField.getText().length() > 9 ||
-							saveField.getText().length() > 9 ){
-						throw new Exception("Too large a value for a certain field");
-					}
 					if(Double.parseDouble(creditField.getText()) < 0){
 						throw new Exception("Invalid credit amount");
-					}
-					if(Double.parseDouble(saveField.getText()) < 0 ||
-							Double.parseDouble(chequeField.getText()) < 0){
-						throw new Exception("Invalid account amount");
-					}
-					if(Integer.parseInt(pinField.getText()) < 0 ||
-							pinField.getText().length() == 0){
-						throw new Exception("Invalid Pin");
 					}
 					accountDatabase.setPIN(Integer.parseInt(pinField.getText()));
 					accountDatabase.setSavingsBalance((Double.parseDouble(saveField.getText())));
@@ -102,11 +98,18 @@ public class ATM_GUI extends JFrame {
 					System.exit(1);
 				}
 			}catch(Exception e){
-				JOptionPane.showMessageDialog(null, e.getMessage(),"Error!",JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Invalid input fields.","Error!",JOptionPane.ERROR_MESSAGE);
 				error = true;
 			}
 		}while (error) ;  
 	}
+	/**
+	 * 
+	 * @author Group 13
+	 * ATMListener class is a listener dedicated to the interactive buttons 
+	 * for the user to click, and how to respond to them.
+	 *
+	 */
 	class ATMListener implements ActionListener{
 		public void actionPerformed(ActionEvent event){
 			if(event.getSource().equals(numPad.zero)){
@@ -181,7 +184,19 @@ public class ATM_GUI extends JFrame {
 			repaint();
 		}
 	}
+	/**
+	 * 
+	 * @author Group 13
+	 * ATMFieldsMouseListener is a MouseAdapter that reacts to actions such as dragging
+	 * and releasing, and how it interprets these actions in accordance to the components.
+	 *
+	 */
 	class ATMFieldsMouseListener extends MouseAdapter {
+		/**
+		 * mouseDragged contains information to react to a mouse click being held down
+		 * and the mouse removes, and how to treat the components in this case.
+		 * @param e is a MouseEvent containing the point of a mouse during a drag,
+		 */
 		public void mouseDragged(MouseEvent e){
 			if(ATMFields.NFCPhone.getBounds().contains(e.getPoint())) {
 				if (selected != "nonNFCPhone" && selected != "debitCard" && 
@@ -237,7 +252,11 @@ public class ATM_GUI extends JFrame {
 			}catch(Exception phone){}
 			repaint();
 		}
-
+		/**
+		 * mouseReleased contains information to react to a mouse click being released
+		 *  and how to treat the components in this case.
+		 * @param e is a MouseEvent containing the point of a mouse during the release of a click.
+		 */
 		public void mouseReleased(MouseEvent e) {
 			if(selected != null) {
 				/*
