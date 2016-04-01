@@ -2,12 +2,19 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * Created by Lionel on 2016-03-21.
+ * 
+ * @author Group 13
+ * Class contains the option buttons (Enter, Correct, Cancel) and their properties.
+ *
  */
 public class ATMOptionPanel extends JPanel {
 
     protected JButton enter, correction, cancel;
 
+    /**
+     * Constructor to initialize and set button properties.
+     * @param listener is a listener to determine if a button was clicked.
+     */
     public ATMOptionPanel(ATM_GUI.ATMListener listener){
         super(new GridLayout(4, 1, 0, 10));
         setBackground(ATM_GUI.background);
