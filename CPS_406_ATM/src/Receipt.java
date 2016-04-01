@@ -3,7 +3,12 @@ import java.text.*;
 import java.util.Date;
 import javax.swing.*;
 
-
+/**
+ * 
+ * @author Group 13
+ * The Receipt class provides the visual log of activities performed by the user.
+ *
+ */
 public class Receipt extends JFrame {
 	/*
 	 * Use Case 14. Print Receipt
@@ -28,6 +33,10 @@ public class Receipt extends JFrame {
 	int xPos = (int)ATMFields.printer.getX();
 	int yPos = (int)ATMFields.printer.getY();
 
+	/**
+	 * Constructor initializes size, position and properties.
+	 * The top of the receipt contains preset text that is initialized as well.
+	 */
 	public Receipt (){
 		setLocation(xPos,yPos);
 		setVisible(visible);
@@ -72,6 +81,10 @@ public class Receipt extends JFrame {
 		pack(); 
 	}
 
+	/**
+	 * Public method allows other classes to set the visibility of the receipt.
+	 * @param state is passed onto the set visible function.
+	 */
 	public void setVisibility (boolean state){
 		visible = state;
 		setVisible(visible);
@@ -79,6 +92,12 @@ public class Receipt extends JFrame {
 		repaint();
 	}
 
+	/**
+	 * Add item appends to the receipt's messagePane panel with the most recent action's of the user.
+	 * @param action indicates whether the user withdrew or deposited an amount.
+	 * @param amount indicates the amount of the action.
+	 * @param account indicates the account the action interacted with.
+	 */
 	public void addItem(int action, double amount, int account){
 		JPanel newBalance = new JPanel (new GridLayout(4,2));
 		newBalance.setSize(width,width);
