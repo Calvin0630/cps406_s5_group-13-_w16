@@ -751,6 +751,6 @@ public class ATMScreen extends JLayeredPane{
 			ATMFields.displayWithdraw(withdrawTotal);
 		withdrawTotal = 0; 
 		ATM_GUI.fields.repaint();
-		setCurrentScreen(MAIN_MENU);
+		setCurrentScreen(WELCOME);
 	}
 }
