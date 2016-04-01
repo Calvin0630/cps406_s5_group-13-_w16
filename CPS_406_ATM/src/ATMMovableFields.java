@@ -1,9 +1,9 @@
-import javax.swing.*;
 import java.awt.event.MouseEvent;
 import java.awt.geom.RectangularShape;
 
 /**
- * Created by Lionel on 2016-03-22.
+ * @author Group 13
+ * Interface ATMMoveableFields with method prototypes.
  */
 public interface ATMMovableFields {
     void moveField(MouseEvent event);
