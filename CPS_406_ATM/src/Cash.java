@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.* ;
 import java.awt.event.MouseEvent;
+import java.awt.font.FontRenderContext;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.RectangularShape;
 
@@ -106,9 +107,15 @@ public class Cash extends JComponent implements ATMMovableFields{
 		g2.setColor(Color.GREEN);
 		g2.fill(body);
 		g2.setColor(Color.black);
-		g2.drawString("$"+getValue(), xPos, yPos+height/4);
-		g2.drawString("$"+getValue(), xPos+width*3/4, yPos+height);
-		g2.drawString("x" + Integer.toString(numBills), xPos, yPos +  height);
+		
+		FontRenderContext context = g2.getFontRenderContext();
+		String value = "$"+getValue();
+		int textWidth = (int)(f.getStringBounds(value,context).getWidth());
+		int textHeight = (int)(f.getStringBounds(value,context).getHeight());
+		g2.drawString(value, xPos, yPos+textHeight*2/3);
+		g2.drawString(value, xPos+width-textWidth, yPos+height);
+		
+		g2.drawString("x" + Integer.toString(numBills), xPos, yPos +height);
 		int radius = height*2/3;
 		g2.setColor(Color.white);
 		Ellipse2D.Double circle = new Ellipse2D.Double(getBounds().getCenterX()-radius/2,
