@@ -1,6 +1,7 @@
 import javax.swing.JComponent;
 import java.awt.* ;
 import java.awt.event.MouseEvent;
+import java.awt.font.FontRenderContext;
 import java.awt.geom.RectangularShape;
 import java.text.DateFormat;
 import java.text.NumberFormat;
@@ -141,7 +142,13 @@ public class Cheque extends JComponent implements ATMMovableFields{
 		g2.fill(body);
 		g2.setColor(Color.black);
 		g2.drawString("Client name here.", xPos+width/20, yPos+height*1/10);
-		g2.drawString(form.format(getValue()), xPos+width*3/4, (int)body.getCenterY());
+		
+		FontRenderContext context = g2.getFontRenderContext();
+		String amount = form.format(getValue());
+		int textWidth = (int)(f.getStringBounds(amount,context).getWidth());
+		g2.drawString(amount, xPos+width-textWidth*5/4, (int)body.getCenterY());
+		
+		
 		g2.drawLine(xPos+width/10, (int)body.getCenterY(), xPos+width*2/3, (int)body.getCenterY());
 		g2.drawString(df.format(dateobj), xPos+width*3/4, yPos + height/4);
 		g2.drawString(String.format("%011d", ATM_GUI.accountDatabase.getAccountNumber()) + ":"
